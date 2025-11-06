@@ -1,10 +1,12 @@
 import { docs } from '@/.source';
+import { i18n } from '@/lib/i18n';
 import { type InferPageType, loader } from 'fumadocs-core/source';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
 
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
-  baseUrl: '/docs',
+  i18n,
+  baseUrl: '/en/docs',
   source: docs.toFumadocsSource(),
   plugins: [lucideIconsPlugin()],
 });

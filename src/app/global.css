@@ -1,3 +1,19 @@
 @import 'tailwindcss';
-@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/solar.css';
 @import 'fumadocs-ui/css/preset.css';
+
+
+:root {
+  --fd-layout-width: 100vw;
+  --fd-layout-height: 100vh;
+}
+
+@media print {
+  #nd-docs-layout {
+    --fd-sidebar-width: 0px !important;
+  }
+
+  #nd-sidebar {
+    display: none;
+  }
+}
