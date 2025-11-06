@@ -9,14 +9,11 @@ import {
 import { baseOptions } from '@/lib/layout.shared';
 import '../global.css';
 
-export default async function Layout({
-  params,
+export default function Layout({
   children,
 }: {
-  params: Promise<{ lang: string }>;
   children: ReactNode;
 }) {
-
   return (
     <HomeLayout
       {...baseOptions}

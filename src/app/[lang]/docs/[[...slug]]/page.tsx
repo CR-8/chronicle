@@ -52,6 +52,9 @@ export default async function Page({
         onRateAction={async (url, feedback) => {
           'use server';
           await posthog.capture('on_rate_docs', feedback);
+          return { 
+            githubUrl: 'https://github.com/CR-8/chronicle/issues'
+          };
         }}
       />
       <AISearchTrigger />
