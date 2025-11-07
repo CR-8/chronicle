@@ -17,6 +17,10 @@ export default async function Layout({
     <DocsLayout 
       {...baseOptions(lang)} 
       tree={source.pageTree[lang]}
+      sidebar={{
+        enabled: true,
+        collapsible: true,
+      }}
     >
       {children}
     </DocsLayout>

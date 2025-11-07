@@ -14,7 +14,7 @@ export function baseOptions(locale: string): BaseLayoutProps {
     i18n,
     nav: {
       title: (
-        <div className="font-bold text-xl flex gap-2 items-center justify-center lg:mx-14">
+        <div className="font-bold text-xl flex gap-2 items-center justify-center lg:ml-14">
           <svg
             preserveAspectRatio="xMidYMid meet"
             version="1.0"
