@@ -18,8 +18,7 @@ import {
   PopoverTrigger,
 } from 'fumadocs-ui/components/ui/popover';
 import { cva } from 'class-variance-authority';
-import { useParams, usePathname } from 'next/navigation';
-import { i18n } from '@/lib/i18n';
+import { usePathname } from 'next/navigation';
 
 const cache = new Map<string, string>();
 
@@ -75,65 +74,6 @@ export function LLMCopyButton({
 const optionVariants = cva(
   'text-sm p-2 rounded-lg inline-flex items-center gap-2 hover:text-fd-accent-foreground hover:bg-fd-accent [&_svg]:size-4',
 );
-
-export function LanguageSwitcher() {
-  const params = useParams();
-  const pathname = usePathname();
-  const currentLang = (params.lang as string) || i18n.defaultLanguage;
-
-  const languages = useMemo(() => {
-    return i18n.languages.map((lang) => {
-      // Get the current path without the language prefix
-      const pathWithoutLang = pathname.replace(`/${currentLang}`, '');
-      const newPath = lang === i18n.defaultLanguage 
-        ? pathWithoutLang || '/'
-        : `/${lang}${pathWithoutLang || '/docs'}`;
-
-      return {
-        code: lang,
-        name: lang === 'en' ? 'English' : 'हिन्दी',
-        flag: lang === 'en' ? '🇬🇧' : '🇮🇳',
-        href: newPath,
-      };
-    });
-  }, [currentLang, pathname]);
-
-  const currentLanguage = languages.find((lang) => lang.code === currentLang);
-
-  return (
-    <Popover>
-      <PopoverTrigger
-        className={cn(
-          buttonVariants({
-            color: 'secondary',
-            size: 'sm',
-            className: 'gap-2',
-          }),
-        )}
-      >
-        <Globe className="size-3.5 text-fd-muted-foreground" />
-        {currentLanguage?.flag} {currentLanguage?.name}
-        <ChevronDown className="size-3.5 text-fd-muted-foreground" />
-      </PopoverTrigger>
-      <PopoverContent className="flex flex-col w-auto min-w-[150px]">
-        {languages.map((lang) => (
-          <a
-            key={lang.code}
-            href={lang.href}
-            className={cn(
-              optionVariants(),
-              lang.code === currentLang && 'bg-fd-accent text-fd-accent-foreground',
-            )}
-          >
-            <span className="text-base">{lang.flag}</span>
-            {lang.name}
-            {lang.code === currentLang && <Check className="size-4 ms-auto" />}
-          </a>
-        ))}
-      </PopoverContent>
-    </Popover>
-  );
-}
 
 export function DownloadPDF() {
   const pathname = usePathname();

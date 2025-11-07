@@ -8,7 +8,7 @@ import {
 import { AISearchTrigger } from '@/components/search';
 import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/mdx-components';
-import { LLMCopyButton , ViewOptions , LanguageSwitcher , DownloadPDF } from '@/components/page-actions';
+import { LLMCopyButton , ViewOptions , DownloadPDF } from '@/components/page-actions';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
 import { Feedback } from '@/components/feedback';
@@ -36,7 +36,6 @@ export default async function Page({
             markdownUrl={`${page.url}.mdx`}
             githubUrl={`https://github.com/${owner}/${repo}/blob/dev/apps/docs/content/docs/${page.path}`}
           />
-          <LanguageSwitcher />
           <DownloadPDF />
         </div>
       <DocsDescription>{page.data.description}</DocsDescription>

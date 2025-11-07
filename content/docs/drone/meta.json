@@ -1,5 +1,6 @@
 {
-  "title": "Guides",
+  "title": "Drone",
   "description": "Step-by-step tutorials and guides",
-  "root": true
+  "root": true,
+  "icon": "Drone"
 }

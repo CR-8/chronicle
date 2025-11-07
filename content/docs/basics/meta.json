@@ -1,5 +1,6 @@
 {
   "title": "Basics",
   "description": "Basics and Welcome",
-  "root": true
+  "root": true,
+  "icon": "Sprout"
 }

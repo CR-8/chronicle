@@ -26,8 +26,8 @@ export default async function RootLayout({
   const lang = (await params).lang;
 
   return (
-    <html lang={lang}>
-      <body>
+    <html lang={lang} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <RootProvider
           i18n={provider(lang)}
         >
