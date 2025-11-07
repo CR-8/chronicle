@@ -7,13 +7,13 @@ export default function HomePage() {
       <p className="text-fd-muted-foreground">
         You can open{' '}
         <Link
-          href="/en/docs"
+          href="/en/docs/basics/welcome"
           className="text-fd-foreground font-semibold underline"
         >
           /en/docs for english documentation
         </Link>{' '}
         <Link
-          href="/hi/docs"
+          href="/hi/docs/basics/welcome"
           className="text-fd-foreground font-semibold underline"
         >
           /hi/docs for hindi documentation
