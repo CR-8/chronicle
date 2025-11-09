@@ -42,68 +42,34 @@ export default function BlogPage() {
           </div>
         </div>
       </div>
-
-      {/* Blog Posts Grid */}
-      <div className="container mx-auto px-4 py-12 md:py-16">
-        {posts.length === 0 ? (
-          <div className="text-center py-24">
-            <div className="inline-flex items-center justify-center size-16 rounded-full bg-fd-secondary mb-4">
-              <BookOpen className="size-8 text-fd-muted-foreground" />
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 p-8">
+        {posts.map((post) => (
+          <Link
+            key={post.url}
+            href={post.url}
+            className="block bg-fd-card border rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+          >
+            <div className="p-6">
+              <h2 className="text-xl font-semibold mb-2 text-fd-foreground">
+                {post.data.title}
+              </h2>
+              <p className="text-fd-muted-foreground mb-4 line-clamp-2 h-12">
+                {post.data.description}
+              </p>
+              <div className="flex items-center gap-4 text-sm text-fd-muted-foreground">
+                <span>{post.data.author}</span>
+                <span>•</span>
+                <time dateTime={post.data.date.toString()}>
+                  {new Date(post.data.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+              </div>
             </div>
-            <h2 className="text-2xl font-semibold mb-2">No posts yet</h2>
-            <p className="text-fd-muted-foreground">Check back soon for new content!</p>
-          </div>
-        ) : (
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {sortedPosts.map((post) => (
-              <Link
-                key={post.url}
-                href={post.url}
-                className="group block bg-fd-card border rounded-xl hover:shadow-lg hover:border-fd-primary/20 transition-all duration-300 overflow-hidden"
-              >
-                {/* Card Header with Gradient */}
-                <div className="h-2 bg-linear-to-r from-fd-primary/60 via-fd-primary/30 to-transparent" />
-                
-                <div className="p-6">
-                  {/* Metadata */}
-                  <div className="flex items-center gap-3 text-xs text-fd-muted-foreground mb-4">
-                    <div className="flex items-center gap-1.5">
-                      <User className="size-3.5" />
-                      <span>{post.data.author}</span>
-                    </div>
-                    <span>•</span>
-                    <div className="flex items-center gap-1.5">
-                      <Calendar className="size-3.5" />
-                      <time dateTime={post.data.date.toString()}>
-                        {new Date(post.data.date).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                        })}
-                      </time>
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h2 className="text-xl font-bold mb-3 text-fd-foreground group-hover:text-fd-primary transition-colors line-clamp-2">
-                    {post.data.title}
-                  </h2>
-
-                  {/* Description */}
-                  <p className="text-fd-muted-foreground mb-4 line-clamp-3 leading-relaxed">
-                    {post.data.description}
-                  </p>
-
-                  {/* Read More Link */}
-                  <div className="flex items-center gap-2 text-sm font-medium text-fd-primary group-hover:gap-3 transition-all">
-                    Read article
-                    <ArrowRight className="size-4" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
+          </Link>
+        ))}
       </div>
     </main>
   );
