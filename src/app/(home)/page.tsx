@@ -76,7 +76,7 @@ export default function HomePage() {
           </h1>
           <div className="flex flex-row items-center justify-center gap-4 flex-wrap w-fit">
             <Link
-              href="/en/docs"
+              href="/en/docs/basics/welcome"
               className={cn(buttonVariants(), 'max-sm:text-sm')}
             >
               Get Started
@@ -289,7 +289,7 @@ function RoboticsCategories() {
                 and troubleshooting guides.
               </p>
               <Link
-                href="/en/docs"
+                href="/en/docs/basics/welcome"
                 className={cn(buttonVariants())}
               >
                 View Projects
@@ -555,7 +555,7 @@ function OpenSource() {
         </p>
         <div className="flex flex-row items-center gap-2">
           <Link
-            href="/en/docs"
+            href="/en/docs/basics/welcome"
             className={cn(buttonVariants({ variant: 'primary' }))}
           >
             Start Learning
@@ -598,7 +598,7 @@ function OpenSource() {
           </span>
         </li>
         <li className="flex flex-row flex-wrap gap-2 mt-auto">
-          <Link href="/en/docs" className={cn(buttonVariants())}>
+          <Link href="/en/docs/basics/welcome" className={cn(buttonVariants())}>
             Explore Documentation
           </Link>
           <Link
