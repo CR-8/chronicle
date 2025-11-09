@@ -1,6 +1,7 @@
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import { defineI18nUI } from 'fumadocs-ui/i18n';
 import { i18n } from '@/lib/i18n';
+import type { Metadata } from 'next';
 import '@/app/global.css'
 
 
@@ -15,6 +16,16 @@ const { provider } = defineI18nUI(i18n, {
     },
   },
 });
+
+export const metadata: Metadata = {
+  title: 'Chronicle - Robotics Documentation Platform',
+  description: 'Comprehensive robotics documentation for autonomous, combat, drone, racing, and soccer robots. Learn with step-by-step guides, code examples, and tutorials for building amazing robots.',
+  keywords: ['robotics', 'autonomous robots', 'combat robots', 'drone programming', 'racing robots', 'soccer robots', 'robotics tutorials', 'robot documentation', 'Arduino', 'Raspberry Pi'],
+  authors: [{ name: 'Chronicle Team' }],
+  icons: {
+    icon: '/icon.svg',
+  },
+}
 
 export default async function RootLayout({
   params,

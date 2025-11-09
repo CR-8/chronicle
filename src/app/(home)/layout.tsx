@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { Metadata } from 'next';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import {
   NavbarMenu,
@@ -22,6 +23,26 @@ import {
   BookOpen
 } from 'lucide-react';
 import '../global.css';
+
+export const metadata: Metadata = {
+  title: 'Chronicle - Robotics Documentation Platform',
+  description: 'Comprehensive robotics documentation for autonomous, combat, drone, racing, and soccer robots. Learn with step-by-step guides, code examples, and tutorials for building amazing robots.',
+  keywords: ['robotics', 'autonomous robots', 'combat robots', 'drone programming', 'racing robots', 'soccer robots', 'robotics tutorials', 'robot documentation', 'Arduino', 'Raspberry Pi'],
+  authors: [{ name: 'Chronicle Team' }],
+  icons: {
+    icon: '/icon.svg',
+  },
+  openGraph: {
+    title: 'Chronicle - Robotics Documentation Platform',
+    description: 'Build amazing robots with Chronicle. Comprehensive guides for autonomous, combat, drone, racing, and soccer robotics.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Chronicle - Robotics Documentation Platform',
+    description: 'Build amazing robots with Chronicle. Comprehensive guides for autonomous, combat, drone, racing, and soccer robotics.',
+  },
+};
 
 const { provider } = defineI18nUI(i18n, {
   translations: {
@@ -48,55 +69,12 @@ export default function Layout({
             {...baseOptions('en')}
             links={[
               {
-                type: 'menu',
-                on: 'menu',
-                text: 'Documentation',
-                items: [
-                  {
-                    text: 'Basics',
-                    url: '/en/docs/basics/welcome',
-                    icon: <Sprout className="size-4" />,
-                    description: 'Get started with Chronicle basics',
-                  },
-                  {
-                    text: 'Autonomous',
-                    url: '/en/docs/autonomous/getting-started',
-                    icon: <Cpu className="size-4" />,
-                    description: 'Autonomous robot tutorials',
-                  },
-                  {
-                    text: 'Combat',
-                    url: '/en/docs/combat/start',
-                    icon: <Sword className="size-4" />,
-                    description: 'Combat robotics guide',
-                  },
-                  {
-                    text: 'Drone',
-                    url: '/en/docs/drone/get',
-                    icon: <Drone className="size-4" />,
-                    description: 'Drone programming tutorials',
-                  },
-                  {
-                    text: 'Race',
-                    url: '/en/docs/race/button',
-                    icon: <CarFront className="size-4" />,
-                    description: 'Racing robot components',
-                  },
-                  {
-                    text: 'Soccer',
-                    url: '/en/docs/soccer/getstarted',
-                    icon: <Volleyball className="size-4" />,
-                    description: 'Soccer robot setup',
-                  },
-                ],
-              },
-              {
                 type: 'custom',
                 on: 'nav',
                 children: (
                   <NavbarMenu>
                     <NavbarMenuTrigger>
-                      <Link href="/en/docs">Documentation</Link>
+                      <Link href="/en/docs/basics/welcome">Documentation</Link>
                     </NavbarMenuTrigger>
                     <NavbarMenuContent className="text-[15px]">
                       <NavbarMenuLink href="/en/docs/basics/welcome" className="md:row-span-2">

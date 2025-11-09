@@ -7,7 +7,7 @@ import { createMDXSource } from 'fumadocs-mdx/runtime/next';
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
   i18n,
-  baseUrl: '/en/docs/basics/welcome',
+  baseUrl: '/en/docs',
   source: docs.toFumadocsSource(),
   plugins: [lucideIconsPlugin()],
 });

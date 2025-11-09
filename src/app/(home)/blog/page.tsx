@@ -2,6 +2,18 @@ import Link from 'next/link';
 import { blog } from '@/lib/source';
 import { Calendar, User, ArrowRight, BookOpen } from 'lucide-react';
 import { BlogSearch } from '@/components/blog-search';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blogs',
+  description: 'Comprehensive robotics documentation for autonomous, combat, drone, racing, and soccer robots. Learn with step-by-step guides, code examples, and tutorials for building amazing robots.',
+  keywords: ['robotics', 'autonomous robots', 'combat robots', 'drone programming', 'racing robots', 'soccer robots', 'robotics tutorials', 'robot documentation', 'Arduino', 'Raspberry Pi'],
+  authors: [{ name: 'Chronicle Team' }],
+  icons: {
+    icon: '/icon.svg',
+  },
+}
+
 
 export default function BlogPage() {
   const posts = blog.getPages();

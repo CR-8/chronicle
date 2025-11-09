@@ -65,9 +65,14 @@ export function BlogSearch({ posts }: BlogSearchProps) {
       >
         <Search className="size-4" />
         <span>Search blog posts...</span>
-        <kbd className="ml-auto hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border bg-fd-muted px-1.5 font-mono text-xs font-medium text-fd-muted-foreground">
-          <span className="text-xs">⌘</span>K
-        </kbd>
+        <div className="ml-auto hidden sm:flex items-center gap-1">
+          <kbd className="h-5 select-none items-center gap-1 rounded border bg-fd-muted px-1.5 font-mono text-xs font-medium text-fd-muted-foreground inline-flex">
+            <span className="text-xs">Ctrl</span>
+          </kbd>
+          <kbd className="h-5 select-none items-center gap-1 rounded border bg-fd-muted px-1.5 font-mono text-xs font-medium text-fd-muted-foreground inline-flex">
+            <span className="text-xs">K</span>
+          </kbd>
+        </div>
       </button>
 
       {/* Search Dialog */}

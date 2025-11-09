@@ -1,21 +1,32 @@
-import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { i18n } from '@/lib/i18n';
+'use client';
 
-/**
- * Shared layout configurations
- *
- * you can customise layouts individually from:
- * Home Layout: app/(home)/layout.tsx
- * Docs Layout: app/docs/layout.tsx
- */
-export function baseOptions(locale: string): BaseLayoutProps {
-  return {
-    githubUrl: 'https://github.com',
-    i18n,
-    nav: {
-      title: (
-        <div className="flex gap-3 items-center0 lg:ml-12">
-          <svg
+import { useParams } from 'next/navigation';
+import { type ReactNode, useId } from 'react';
+import { cn } from '@/lib/cn';
+
+export function Body({
+  children,
+}: {
+  children: ReactNode;
+}): React.ReactElement {
+  const mode = useMode();
+
+  return (
+    <body className={cn(mode, 'relative flex min-h-screen flex-col')}>
+      {children}
+    </body>
+  );
+}
+
+export function useMode(): string | undefined {
+  const { slug } = useParams();
+  return Array.isArray(slug) && slug.length > 0 ? slug[0] : undefined;
+}
+
+export default function ChronicleIcon(props: React.SVGProps<SVGSVGElement>) {
+  const id = useId();
+  return (
+              <svg
             preserveAspectRatio="xMidYMid meet"
             version="1.0"
             viewBox="518.5 513.3 961.3 975.0"
@@ -30,12 +41,5 @@ export function baseOptions(locale: string): BaseLayoutProps {
               />
             </g>
           </svg>
-          <span className="font-bold text-xl">Chronicle</span>
-        </div>
-      ),
-    },
-    // see https://fumadocs.dev/docs/ui/navigation/links
-    links: [
-    ],
-  };
+  );
 }
