@@ -1,0 +1,108 @@
+---
+title: Robot Soccer Strategies
+description: Advanced strategies and techniques for competitive robot soccer.
+author: Chronicle Team
+date: 2024-11-07
+---
+
+## Introduction to Robot Soccer
+
+Robot soccer is one of the most challenging and exciting robotics competitions. It combines real-time decision making, teamwork, and precise control.
+
+## Core Skills Required
+
+### Ball Detection and Tracking
+
+Your robot needs to:
+- Identify the ball location
+- Track ball movement
+- Predict ball trajectory
+
+### Movement and Control
+
+Master these fundamental movements:
+- **Forward/Backward** - Basic locomotion
+- **Strafing** - Side-to-side movement
+- **Rotation** - Quick turns and orientation changes
+- **Dribbling** - Ball control while moving
+
+### Team Coordination
+
+In team matches, coordination is key:
+- Role assignment (striker, defender, goalkeeper)
+- Communication protocols
+- Positioning strategies
+
+## Game Strategies
+
+### Offensive Tactics
+
+1. **Ball Possession** - Control and maintain ball contact
+2. **Shooting Accuracy** - Aim for goal with power and precision
+3. **Passing** - Coordinate with teammates
+4. **Positioning** - Move to scoring opportunities
+
+### Defensive Tactics
+
+1. **Goal Protection** - Goalkeeper positioning
+2. **Interception** - Block opponent's passes
+3. **Pressure** - Challenge ball carrier
+4. **Recovery** - Return to defensive positions
+
+## Technical Implementation
+
+### Vision System
+
+```python
+def detect_ball(image):
+    # Process camera image
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    
+    # Define ball color range
+    lower_orange = np.array([10, 100, 100])
+    upper_orange = np.array([25, 255, 255])
+    
+    # Create mask and find contours
+    mask = cv2.inRange(hsv, lower_orange, upper_orange)
+    contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    
+    # Return ball position
+    if contours:
+        largest = max(contours, key=cv2.contourArea)
+        M = cv2.moments(largest)
+        cx = int(M['m10']/M['m00'])
+        cy = int(M['m01']/M['m00'])
+        return (cx, cy)
+    return None
+```
+
+### Movement Control
+
+Use PID control for smooth and accurate movement:
+
+```python
+class RobotController:
+    def __init__(self):
+        self.kp = 0.5
+        self.ki = 0.1
+        self.kd = 0.2
+        
+    def move_to_target(self, current_pos, target_pos):
+        error = calculate_error(current_pos, target_pos)
+        control_signal = self.pid_control(error)
+        apply_motor_speeds(control_signal)
+```
+
+## Competition Tips
+
+1. **Practice Scenarios** - Train for common game situations
+2. **Test Robustness** - Ensure reliability under pressure
+3. **Optimize Speed** - Balance speed with control
+4. **Analyze Opponents** - Study competitor strategies
+5. **Iterate Quickly** - Make rapid improvements between matches
+
+## Conclusion
+
+Robot soccer requires a combination of technical skills, strategic thinking, and teamwork. Start with the basics, practice regularly, and continuously refine your approach.
+
+Visit our [Soccer documentation](/en/docs/soccer/getstarted) for implementation details and code examples!

@@ -1,7 +1,8 @@
-import { docs } from '@/.source';
+import { docs, blogPosts } from '@/.source';
 import { i18n } from '@/lib/i18n';
 import { type InferPageType, loader } from 'fumadocs-core/source';
 import { lucideIconsPlugin } from 'fumadocs-core/source/lucide-icons';
+import { createMDXSource } from 'fumadocs-mdx/runtime/next';
 
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
@@ -9,6 +10,11 @@ export const source = loader({
   baseUrl: '/en/docs',
   source: docs.toFumadocsSource(),
   plugins: [lucideIconsPlugin()],
+});
+
+export const blog = loader({
+  baseUrl: '/blog',
+  source: createMDXSource(blogPosts),
 });
 
 export function getPageImage(page: InferPageType<typeof source>) {

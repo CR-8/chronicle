@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { source } from '@/lib/source';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { baseOptions } from '@/lib/layout.shared';
+import '@/app/global.css'
 // import { Sprout, Cpu, Sword, CarFront, Volleyball, Drone } from "lucide-react";
 
 export default async function Layout({

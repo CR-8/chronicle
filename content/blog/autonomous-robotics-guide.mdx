@@ -1,0 +1,82 @@
+---
+title: Building Your First Autonomous Robot
+description: A comprehensive guide to getting started with autonomous robotics using Chronicle.
+author: Chronicle Team
+date: 2024-11-08
+---
+
+## Introduction
+
+Building your first autonomous robot can be an exciting journey. This guide will walk you through the essential concepts and steps to get your robot moving autonomously.
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- Basic programming knowledge
+- A robot platform or simulation environment
+- Understanding of sensors and actuators
+- Familiarity with control systems
+
+## Key Concepts
+
+### Sensor Integration
+
+Autonomous robots rely on sensors to perceive their environment:
+
+- **Ultrasonic Sensors** - Distance measurement
+- **Cameras** - Visual perception
+- **IMU** - Orientation and acceleration
+- **Encoders** - Position tracking
+
+### Path Planning
+
+Planning the robot's path is crucial for autonomous navigation:
+
+1. Define the goal position
+2. Identify obstacles
+3. Calculate optimal path
+4. Execute movement commands
+
+### Control Algorithms
+
+Common control approaches include:
+
+- **PID Control** - For smooth and accurate movement
+- **State Machines** - For behavior management
+- **Neural Networks** - For advanced decision making
+
+## Your First Implementation
+
+Here's a simple example of autonomous navigation logic:
+
+```python
+def navigate_to_goal(current_pos, goal_pos):
+    while not reached_goal(current_pos, goal_pos):
+        # Sense the environment
+        obstacles = detect_obstacles()
+        
+        # Plan the next move
+        next_move = calculate_path(current_pos, goal_pos, obstacles)
+        
+        # Execute the move
+        execute_move(next_move)
+        
+        # Update position
+        current_pos = get_current_position()
+```
+
+## Next Steps
+
+Once you have the basics working:
+
+1. Improve obstacle avoidance
+2. Add multiple waypoints
+3. Implement mapping and localization
+4. Optimize for speed and efficiency
+
+Check out our [Autonomous documentation](/en/docs/autonomous/getting-started) for more detailed information!
+
+## Conclusion
+
+Building autonomous robots is a rewarding challenge. Start simple, iterate often, and don't be afraid to experiment. The Chronicle community is here to help you succeed!
