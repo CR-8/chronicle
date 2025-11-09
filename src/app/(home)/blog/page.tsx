@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { blog } from '@/lib/source';
 import { Calendar, User, ArrowRight, BookOpen } from 'lucide-react';
+import { BlogSearch } from '@/components/blog-search';
 
 export default function BlogPage() {
   const posts = blog.getPages();
@@ -9,6 +10,15 @@ export default function BlogPage() {
   const sortedPosts = [...posts].sort((a, b) => {
     return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
   });
+
+  // Prepare posts data for search
+  const postsData = sortedPosts.map((post) => ({
+    title: post.data.title,
+    description: post.data.description || '',
+    url: post.url,
+    author: post.data.author,
+    date: post.data.date.toString(),
+  }));
 
   return (
     <main className="min-h-screen">
@@ -23,9 +33,12 @@ export default function BlogPage() {
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-linear-to-br from-fd-foreground to-fd-muted-foreground bg-clip-text text-transparent">
               Stories & Insights
             </h1>
-            <p className="text-xl md:text-2xl text-fd-muted-foreground leading-relaxed">
+            <p className="text-xl md:text-2xl text-fd-muted-foreground leading-relaxed mb-8">
               Explore tutorials, updates, and technical insights from the Chronicle team
             </p>
+            
+            {/* Search Bar */}
+            {posts.length > 0 && <BlogSearch posts={postsData} />}
           </div>
         </div>
       </div>
@@ -41,35 +54,55 @@ export default function BlogPage() {
             <p className="text-fd-muted-foreground">Check back soon for new content!</p>
           </div>
         ) : (
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <Link
-            key={post.url}
-            href={post.url}
-            className="block bg-fd-card border rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden"
-          >
-            <div className="p-6">
-              <h2 className="text-xl font-semibold mb-2 text-fd-foreground">
-                {post.data.title}
-              </h2>
-              <p className="text-fd-muted-foreground mb-4 line-clamp-2">
-                {post.data.description}
-              </p>
-              <div className="flex items-center gap-4 text-sm text-fd-muted-foreground">
-                <span>{post.data.author}</span>
-                <span>•</span>
-                <time dateTime={post.data.date.toString()}>
-                  {new Date(post.data.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </time>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {sortedPosts.map((post) => (
+              <Link
+                key={post.url}
+                href={post.url}
+                className="group block bg-fd-card border rounded-xl hover:shadow-lg hover:border-fd-primary/20 transition-all duration-300 overflow-hidden"
+              >
+                {/* Card Header with Gradient */}
+                <div className="h-2 bg-linear-to-r from-fd-primary/60 via-fd-primary/30 to-transparent" />
+                
+                <div className="p-6">
+                  {/* Metadata */}
+                  <div className="flex items-center gap-3 text-xs text-fd-muted-foreground mb-4">
+                    <div className="flex items-center gap-1.5">
+                      <User className="size-3.5" />
+                      <span>{post.data.author}</span>
+                    </div>
+                    <span>•</span>
+                    <div className="flex items-center gap-1.5">
+                      <Calendar className="size-3.5" />
+                      <time dateTime={post.data.date.toString()}>
+                        {new Date(post.data.date).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric',
+                        })}
+                      </time>
+                    </div>
+                  </div>
+
+                  {/* Title */}
+                  <h2 className="text-xl font-bold mb-3 text-fd-foreground group-hover:text-fd-primary transition-colors line-clamp-2">
+                    {post.data.title}
+                  </h2>
+
+                  {/* Description */}
+                  <p className="text-fd-muted-foreground mb-4 line-clamp-3 leading-relaxed">
+                    {post.data.description}
+                  </p>
+
+                  {/* Read More Link */}
+                  <div className="flex items-center gap-2 text-sm font-medium text-fd-primary group-hover:gap-3 transition-all">
+                    Read article
+                    <ArrowRight className="size-4" />
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </main>
