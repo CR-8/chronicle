@@ -11,13 +11,19 @@ import {
 } from 'react';
 import { ArrowRight, TerminalIcon } from 'lucide-react';
 import { cn } from '@/lib/cn';
-import Image from 'next/image';
 import { cva } from 'class-variance-authority';
+import {
+  MeshGradient,
+  Dithering,
+  GrainGradient,
+} from '@paper-design/shaders-react';
+// import HeroImage from './hero-preview.jpeg';
 import { useTheme } from 'next-themes';
 
 export function Hero() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [imageReady, setImageReady] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -26,37 +32,46 @@ export function Hero() {
   return (
     <>
       {mounted && (
-        <div
+        <GrainGradient
           className="absolute inset-0 animate-fd-fade-in duration-1000"
-          style={{
-            background:
-              resolvedTheme === 'dark'
-                ? `radial-gradient(circle at 20% 50%, rgba(255, 87, 87, 0.3) 0%, transparent 50%),
-                   radial-gradient(circle at 80% 80%, rgba(255, 120, 100, 0.25) 0%, transparent 50%),
-                   radial-gradient(circle at 40% 20%, rgba(255, 100, 80, 0.2) 0%, transparent 40%)`
-                : `radial-gradient(circle at 20% 50%, rgba(255, 140, 100, 0.2) 0%, transparent 50%),
-                   radial-gradient(circle at 80% 80%, rgba(255, 160, 120, 0.15) 0%, transparent 50%),
-                   radial-gradient(circle at 40% 20%, rgba(255, 120, 100, 0.15) 0%, transparent 40%)`,
-            filter: 'blur(60px)',
-          }}
+          colors={
+            resolvedTheme === 'dark'
+              ? ['#39BE1C', '#9c2f05', '#7A2A0000']
+              : ['#fcfc51', '#ffa057', '#7A2A0020']
+          }
+          colorBack="#00000000"
+          softness={1}
+          intensity={0.9}
+          noise={0.5}
+          shape="corners"
+          speed={1}
         />
       )}
-      {/* Noise Texture Overlay */}
       {mounted && (
-        <div
-          className="absolute inset-0 opacity-[0.15]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          }}
+        <Dithering
+          width={720}
+          height={720}
+          colorBack="#00000000"
+          colorFront={resolvedTheme === 'dark' ? '#DF3F00' : '#fa8023'}
+          shape="sphere"
+          type="4x4"
+          scale={0.5}
+          size={3}
+          speed={0.5}
+          rotation={270}
+          className="absolute max-lg:bottom-[-50%] max-lg:left-[-200px] animate-fd-fade-in duration-800 lg:top-[-5%] lg:right-0"
         />
       )}
-      {/* Placeholder for robot/hero image */}
-      <div className="absolute top-[400px] left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[400px] rounded-xl border-2 border-fd-border/50 bg-fd-muted/20 backdrop-blur-sm lg:top-[350px] animate-in fade-in duration-400 flex items-center justify-center">
-        <div className="text-fd-muted-foreground text-sm">
-          {/* Replace with your robot/demo image */}
-          Chronicle Robot Preview
-        </div>
-      </div>
+      {/* <Image
+        src={HeroImage}
+        alt="Chronicle robot preview"
+        className={cn(
+          'absolute top-[460px] left-[20%] max-w-[1200px] rounded-xl border-2 lg:top-[400px]',
+          imageReady ? 'animate-in fade-in duration-400' : 'invisible',
+        )}
+        onLoad={() => setImageReady(true)}
+        priority
+      /> */}
     </>
   );
 }
@@ -88,7 +103,7 @@ export function CreateAppAnimation() {
     <span key="command_type">
       {installCmd.substring(0, tick)}
       {tick < timeCommandEnter && (
-        <div className="inline-block h-3 w-1 animate-pulse bg-fd-foreground" />
+        <div className="inline-block h-3 w-1 animate-pulse bg-white" />
       )}
     </span>,
   );
@@ -167,7 +182,7 @@ function LaunchAppWindow(props: HTMLAttributes<HTMLDivElement>) {
 }
 
 const previewButtonVariants = cva(
-  'w-24 h-8 text-sm font-medium transition-colors rounded-full',
+  'w-20 h-8 text-sm font-medium transition-colors rounded-full',
   {
     variants: {
       active: {
@@ -181,19 +196,28 @@ const previewButtonVariants = cva(
 export function PreviewImages(props: ComponentProps<'div'>) {
   const [active, setActive] = useState(0);
   const previews = [
-    { name: 'Basics' },
-    { name: 'Combat' },
-    { name: 'Drone' },
+    {
+      name: 'Basics',
+      color: 'from-green-500/20 to-blue-500/20',
+    },
+    {
+      name: 'Combat',
+      color: 'from-red-500/20 to-orange-500/20',
+    },
+    {
+      name: 'Drone',
+      color: 'from-purple-500/20 to-pink-500/20',
+    },
   ];
 
   return (
     <div {...props} className={cn('relative grid', props.className)}>
-      <div className="absolute flex flex-row left-1/2 -translate-x-1/2 bottom-4 z-2 p-0.5 rounded-full bg-fd-card border shadow-xl">
+      <div className="absolute flex flex-row left-1/2 -translate-x-1/2 bottom-4 z-10 p-0.5 rounded-full bg-fd-card border shadow-xl">
         <div
           role="none"
-          className="absolute bg-fd-primary rounded-full w-24 h-8 transition-transform z-[-1]"
+          className="absolute bg-fd-primary rounded-full w-20 h-8 transition-transform z-[-1]"
           style={{
-            transform: `translateX(calc(6rem * ${active}))`,
+            transform: `translateX(calc(5rem * ${active}))`,
           }}
         />
         {previews.map((item, i) => (
@@ -210,13 +234,18 @@ export function PreviewImages(props: ComponentProps<'div'>) {
         <div
           key={i}
           className={cn(
-            'col-start-1 row-start-1 select-none h-[400px] rounded-xl border bg-fd-muted/30 flex items-center justify-center',
+            'col-start-1 row-start-1 select-none rounded-xl border-2 bg-gradient-to-br',
+            item.color,
+            'min-h-[400px] flex items-center justify-center',
             active === i
               ? 'animate-in fade-in slide-in-from-bottom-12 duration-800'
               : 'invisible',
           )}
         >
-          <span className="text-fd-muted-foreground">{item.name} Preview</span>
+          <div className="text-center p-8">
+            <h3 className="text-2xl font-bold mb-2">{item.name} Documentation</h3>
+            <p className="text-fd-muted-foreground">Preview coming soon</p>
+          </div>
         </div>
       ))}
     </div>
@@ -248,7 +277,7 @@ export function Writing({
 
   return (
     <div className="col-span-full my-20">
-      <h2 className="text-4xl text-fd-primary mb-8 text-center font-medium tracking-tight">
+      <h2 className="text-4xl text-brand mb-8 text-center font-medium tracking-tight">
         Learn Robotics Programming.
       </h2>
       <p className="text-center mb-8 mx-auto w-full max-w-[800px]">
@@ -262,7 +291,7 @@ export function Writing({
             <button
               className={cn(
                 'text-lg font-medium transition-colors',
-                item.value === tab && 'text-fd-primary',
+                item.value === tab && 'text-brand',
               )}
               onClick={() => setTab(item.value)}
             >
@@ -281,5 +310,19 @@ export function Writing({
         </div>
       ))}
     </div>
+  );
+}
+
+export function AgnosticImage(props: ComponentProps<typeof MeshGradient>) {
+  const { resolvedTheme } = useTheme();
+  return (
+    <Dithering
+      colorBack="#00000000"
+      colorFront={resolvedTheme === 'dark' ? '#fc7744' : '#c6bb58'}
+      shape="warp"
+      type="4x4"
+      speed={0.4}
+      {...props}
+    />
   );
 }
