@@ -78,8 +78,8 @@ export default function Layout({
                     </NavbarMenuTrigger>
                     <NavbarMenuContent className="text-[15px]">
                       <NavbarMenuLink href="/en/docs/basics/welcome" className="md:row-span-2">
-                        <div className="p-4 rounded-lg bg-linear-to-br from-fd-primary/10 to-fd-primary/5 mb-2">
-                          <Sprout className="size-8 text-fd-primary" />
+                        <div className="p-4 rounded-lg bg-brand mb-2">
+                          <Sprout className="size-8 text-fd-primary-foreground" />
                         </div>
                         <p className="font-medium">Getting Started</p>
                         <p className="text-fd-muted-foreground text-sm">
@@ -91,7 +91,7 @@ export default function Layout({
                         href="/en/docs/autonomous/getting-started"
                         className="lg:col-start-2"
                       >
-                        <Cpu className="bg-fd-primary text-fd-primary-foreground p-1 mb-2 rounded-md size-6" />
+                        <Cpu className="bg-brand text-fd-primary-foreground p-1 mb-2 rounded-md size-6" />
                         <p className="font-medium">Autonomous</p>
                         <p className="text-fd-muted-foreground text-sm">
                           Build autonomous robots with AI capabilities.
@@ -102,7 +102,7 @@ export default function Layout({
                         href="/en/docs/combat/start"
                         className="lg:col-start-2"
                       >
-                        <Sword className="bg-fd-primary text-fd-primary-foreground p-1 mb-2 rounded-md size-6" />
+                        <Sword className="bg-brand text-fd-primary-foreground p-1 mb-2 rounded-md size-6" />
                         <p className="font-medium">Combat</p>
                         <p className="text-fd-muted-foreground text-sm">
                           Create powerful combat robots and battle strategies.
@@ -113,7 +113,7 @@ export default function Layout({
                         href="/en/docs/drone/get"
                         className="lg:col-start-3 lg:row-start-1"
                       >
-                        <Drone className="bg-fd-primary text-fd-primary-foreground p-1 mb-2 rounded-md size-6" />
+                        <Drone className="bg-brand text-fd-primary-foreground p-1 mb-2 rounded-md size-6" />
                         <p className="font-medium">Drone</p>
                         <p className="text-fd-muted-foreground text-sm">
                           Program and control drones with Chronicle.
@@ -124,7 +124,7 @@ export default function Layout({
                         href="/en/docs/race/button"
                         className="lg:col-start-3 lg:row-start-2"
                       >
-                        <CarFront className="bg-fd-primary text-fd-primary-foreground p-1 mb-2 rounded-md size-6" />
+                        <CarFront className="bg-brand text-fd-primary-foreground p-1 mb-2 rounded-md size-6" />
                         <p className="font-medium">Race</p>
                         <p className="text-fd-muted-foreground text-sm">
                           Build high-speed racing robots and components.

@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
+import { Marquee } from './marquee';
+import Image from 'next/image';
 import { cva } from 'class-variance-authority';
 import {
   BatteryChargingIcon,
@@ -36,7 +38,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-fd-primary text-fd-primary-foreground hover:bg-fd-primary/90',
+        primary: 'bg-brand text-brand-foreground hover:bg-fd-primary/90',
         secondary:
           'border bg-fd-secondary text-fd-secondary-foreground hover:bg-fd-accent',
       },
@@ -65,14 +67,14 @@ export default function HomePage() {
       <div className="relative flex min-h-[600px] h-[70vh] max-h-[900px] border rounded-2xl overflow-hidden mx-auto w-full max-w-[1400px] bg-origin-border">
         <Hero />
         <div className="flex flex-col z-2 px-4 size-full md:p-12 max-md:items-center max-md:text-center">
-          <p className="mt-12 text-xs text-fd-primary font-medium rounded-full p-2 border border-fd-primary/50 w-fit">
+          <p className="mt-12 text-xs text-brand font-medium rounded-full p-2 border border-fd-primary/50 w-fit">
             The robotics documentation platform
           </p>
           <h1 className="text-4xl my-8 leading-tight font-medium xl:text-5xl xl:mb-12">
             Build Amazing Robots
             <br className="md:hidden" /> with
             <br />
-            <span className="text-fd-primary">Chronicle</span>
+            <span className="text-brand">Chronicle</span>
           </h1>
           <div className="flex flex-row items-center justify-center gap-4 flex-wrap w-fit">
             <Link
@@ -97,12 +99,12 @@ export default function HomePage() {
       <div className="grid grid-cols-1 gap-10 mt-12 px-6 mx-auto w-full max-w-[1400px] md:px-12 lg:grid-cols-2">
         <p className="text-2xl tracking-tight leading-snug font-light col-span-full md:text-3xl xl:text-4xl">
           Chronicle is a comprehensive{' '}
-          <span className="text-fd-primary font-medium">robotics platform</span>{' '}
+          <span className="text-brand font-medium">robotics platform</span>{' '}
           for building autonomous, combat, drone, racing, and soccer robots.
           Learn with{' '}
-          <span className="text-fd-primary font-medium">step-by-step guides</span>,
+          <span className="text-brand font-medium">step-by-step guides</span>,
           explore{' '}
-          <span className="text-fd-primary font-medium">code examples</span>, and
+          <span className="text-brand font-medium">code examples</span>, and
           build your dream robot.
         </p>
 
@@ -173,11 +175,11 @@ function RoboticsCategories() {
               </p>
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 rounded-lg border bg-fd-secondary/50">
-                  <BookOpen className="size-5 mb-2 text-fd-primary" />
+                  <BookOpen className="size-5 mb-2 text-brand" />
                   <p className="text-xs font-medium">Welcome Guide</p>
                 </div>
                 <div className="p-3 rounded-lg border bg-fd-secondary/50">
-                  <Code2 className="size-5 mb-2 text-fd-primary" />
+                  <Code2 className="size-5 mb-2 text-brand" />
                   <p className="text-xs font-medium">Code Examples</p>
                 </div>
               </div>
@@ -218,19 +220,19 @@ function RoboticsCategories() {
               </p>
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 rounded-lg border bg-fd-secondary/50">
-                  <Cpu className="size-5 mb-2 text-fd-primary" />
+                  <Cpu className="size-5 mb-2 text-brand" />
                   <p className="text-xs font-medium">Autonomous AI</p>
                 </div>
                 <div className="p-3 rounded-lg border bg-fd-secondary/50">
-                  <Sword className="size-5 mb-2 text-fd-primary" />
+                  <Sword className="size-5 mb-2 text-brand" />
                   <p className="text-xs font-medium">Combat Systems</p>
                 </div>
                 <div className="p-3 rounded-lg border bg-fd-secondary/50">
-                  <Drone className="size-5 mb-2 text-fd-primary" />
+                  <Drone className="size-5 mb-2 text-brand" />
                   <p className="text-xs font-medium">Drone Control</p>
                 </div>
                 <div className="p-3 rounded-lg border bg-fd-secondary/50">
-                  <CarFront className="size-5 mb-2 text-fd-primary" />
+                  <CarFront className="size-5 mb-2 text-brand" />
                   <p className="text-xs font-medium">Speed Racing</p>
                 </div>
               </div>
@@ -305,10 +307,12 @@ function RoboticsCategories() {
 const feedback = [
   {
     user: 'Student Robotics Club',
+    avatar: 'https://avatars.githubusercontent.com/u/38025074',
     role: 'University Team',
     message: `Chronicle's documentation helped us build our first autonomous robot for competition. The guides are clear and the examples are perfect for learning!`,
   },
   {
+    avatar: 'https://avatars.githubusercontent.com/u/10645823',
     user: 'Alex Chen',
     role: 'Robotics Enthusiast',
     message: `The combat robotics section is incredible. Detailed strategies, code samples, and real competition insights. Best robotics docs I've found.`,
@@ -316,10 +320,12 @@ const feedback = [
   {
     user: 'Sarah Kumar',
     role: 'Drone Developer',
+    avatar: 'https://avatars.githubusercontent.com/u/35677084',
     message: 'Finally, a comprehensive drone programming guide that covers everything from basics to advanced flight control!',
   },
   {
     user: 'Team Phoenix',
+    avatar: 'https://avatars.githubusercontent.com/u/10645823',
     role: 'Racing Team',
     message: `Our racing robots improved significantly after following Chronicle's optimization guides. The technical depth is outstanding.`,
   },
@@ -342,30 +348,42 @@ function Feedback() {
           Read Success Stories
         </Link>
       </div>
-      <div
+<div
         className={cn(
           cardVariants({
             variant: 'secondary',
-            className: 'relative overflow-hidden p-0',
+            className: 'relative p-0',
           }),
         )}
       >
-        <div className="p-8 space-y-4 overflow-y-auto max-h-[400px]">
-          {feedback.map((item, i) => (
+        <div className="absolute inset-0 z-2 rounded-2xl" />
+        <Marquee className="p-8" pauseOnHover={true}>
+          {feedback.map((item) => (
             <div
-              key={i}
-              className="flex flex-col rounded-xl border bg-fd-card p-4 shadow-lg"
+              key={item.user}
+              className="flex flex-col rounded-xl border bg-fd-card text-landing-foreground p-4 shadow-lg w-[320px]"
             >
-              <p className="text-sm whitespace-pre-wrap mb-4">{item.message}</p>
-              <div>
-                <p className="text-sm font-medium">{item.user}</p>
-                <p className="text-xs text-fd-muted-foreground">
-                  {item.role}
-                </p>
+              <p className="text-sm whitespace-pre-wrap">{item.message}</p>
+
+              <div className="mt-auto flex flex-row items-center gap-2 pt-4">
+                <Image
+                  src={item.avatar}
+                  alt="avatar"
+                  width="32"
+                  height="32"
+                  unoptimized
+                  className="size-8 rounded-full"
+                />
+                <div>
+                  <p className="text-sm font-medium">{item.user}</p>
+                  <p className="text-xs text-fd-muted-foreground">
+                    {item.role}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
-        </div>
+        </Marquee>
       </div>
     </>
   );
@@ -378,7 +396,7 @@ function ForEngineers() {
         className={cn(
           headingVariants({
             variant: 'h2',
-            className: 'text-fd-primary text-center mb-4 col-span-full',
+            className: 'text-brand text-center mb-4 col-span-full',
           }),
         )}
       >
@@ -402,27 +420,27 @@ function ForEngineers() {
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           <div className="p-3 rounded-lg border text-center">
-            <Cpu className="size-6 mx-auto mb-2 text-fd-primary" />
+            <Cpu className="size-6 mx-auto mb-2 text-brand" />
             <p className="text-xs font-medium">Autonomous</p>
           </div>
           <div className="p-3 rounded-lg border text-center">
-            <Sword className="size-6 mx-auto mb-2 text-fd-primary" />
+            <Sword className="size-6 mx-auto mb-2 text-brand" />
             <p className="text-xs font-medium">Combat</p>
           </div>
           <div className="p-3 rounded-lg border text-center">
-            <Drone className="size-6 mx-auto mb-2 text-fd-primary" />
+            <Drone className="size-6 mx-auto mb-2 text-brand" />
             <p className="text-xs font-medium">Drone</p>
           </div>
           <div className="p-3 rounded-lg border text-center">
-            <CarFront className="size-6 mx-auto mb-2 text-fd-primary" />
+            <CarFront className="size-6 mx-auto mb-2 text-brand" />
             <p className="text-xs font-medium">Racing</p>
           </div>
           <div className="p-3 rounded-lg border text-center">
-            <Volleyball className="size-6 mx-auto mb-2 text-fd-primary" />
+            <Volleyball className="size-6 mx-auto mb-2 text-brand" />
             <p className="text-xs font-medium">Soccer</p>
           </div>
           <div className="p-3 rounded-lg border text-center">
-            <BookOpen className="size-6 mx-auto mb-2 text-fd-primary" />
+            <BookOpen className="size-6 mx-auto mb-2 text-brand" />
             <p className="text-xs font-medium">Basics</p>
           </div>
         </div>
@@ -445,14 +463,6 @@ function ForEngineers() {
           <li>Communication protocols</li>
           <li>AI and machine learning integration</li>
         </ul>
-      </div>
-
-      <div className={cn(cardVariants({ className: 'col-span-full' }))}>
-        <div className="flex items-center justify-center h-[200px] rounded-lg border bg-fd-secondary/30">
-          <span className="text-fd-muted-foreground">
-            Robot Components Diagram Placeholder
-          </span>
-        </div>
       </div>
 
       <div className={cn(cardVariants())}>
@@ -502,8 +512,8 @@ function Search() {
         {[
           ['Getting Started', 'Learn the basics of robotics'],
           ['Autonomous Robots', 'AI-powered robot programming'],
-          ['Combat Strategies', 'Build competitive combat bots'],
-          ['Drone Control', 'Master drone navigation'],
+          // ['Combat Strategies', 'Build competitive combat bots'],
+          // ['Drone Control', 'Master drone navigation'],
         ].map(([title, description], i) => (
           <div
             key={i}
@@ -530,7 +540,7 @@ function OpenSource() {
         className={cn(
           headingVariants({
             variant: 'h2',
-            className: 'mt-8 text-fd-primary text-center mb-4 col-span-full',
+            className: 'mt-8 text-brand text-center mb-4 col-span-full',
           }),
         )}
       >
