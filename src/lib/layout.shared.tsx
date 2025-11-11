@@ -10,7 +10,7 @@ import { i18n } from '@/lib/i18n';
  */
 export function baseOptions(locale: string): BaseLayoutProps {
   return {
-    githubUrl: 'https://github.com',
+    githubUrl: 'https://github.com/CR-8/chronicle',
     i18n,
     nav: {
       title: (

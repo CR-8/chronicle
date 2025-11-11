@@ -39,7 +39,7 @@ export default async function Layout({
       url: '/blog',
       icon: <BookOpen className="size-4" />,
     },
-        {
+    {
       text: 'Docs',
       url: `/${lang}/docs/basics/welcome`,
       icon: <BookOpen className="size-4" />,
