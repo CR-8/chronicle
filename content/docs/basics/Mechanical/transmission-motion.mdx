@@ -1,0 +1,687 @@
+---
+title: Transmission and Motion
+description: Wheels, gears, chains, belts, pulleys, mechanical advantage, efficiency calculations, and motion transmission systems
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Transmission and Motion
+
+Transmissions convert motor output into useful motion. Proper selection affects speed, torque, efficiency, and power consumption.
+
+## Wheels and Tires
+
+### Wheel Types
+
+#### Omni-Directional (Omni Wheel)
+
+```
+Structure:
+    Main wheel
+       ↓
+    ○───○  (small rollers around center)
+   ○ ◯ ○   (blue = roller axis)
+    ○───○
+
+Motion:
+├─ Forward: Main wheel pushes
+├─ Side: Rollers allow sideways glide
+├─ Rotate: In place rotation possible
+└─ Diagonal: Any direction!
+
+Advantages:
+✓ Holonomic motion (any direction)
+✓ No turning radius needed
+✓ Perfect 90° turns
+
+Disadvantages:
+✗ Expensive ($30-60 each)
+✗ Complex mechanically
+✗ Less traction (roller slip)
+✗ Requires 4 wheels minimum
+
+Best for: Soccer robots, navigation in tight spaces
+```
+
+#### Mecanum Wheel
+
+```
+Structure:
+  Angled rollers (45°)
+     ↙ ↓ ↘
+    □─◯─□  (rollers at 45°)
+     ↙ ↓ ↘
+
+Motion Pattern (4-wheel):
+Forward:   All wheels rotate same direction
+Strafe:    Left/right wheels opposite
+Rotate:    Front/back opposite pairs
+Diagonal:  Combinations of above
+
+Result: Holonomic motion like omni wheels
+
+Advantages:
+✓ Holonomic capability
+✓ Better traction than omni
+✓ Simpler mechanism
+
+Disadvantages:
+✗ Expensive
+✗ Requires precise alignment
+✗ Complex control software
+```
+
+#### Standard Wheel (Most Common)
+
+```
+Simple cylinder (rubber or plastic)
+     ↓
+  [O] = Wheel on axle
+
+Motion:
+├─ Forward/backward: Rotates
+├─ Steering: Must pivot entire wheel
+└─ Sideways: Zero slip (must turn)
+
+Advantages:
+✓ Very cheap ($5-15 each)
+✓ Simple mechanics
+✓ Reliable and robust
+✓ Good traction
+
+Disadvantages:
+✗ Requires turning radius
+✗ Three-point turns needed
+✗ Differential steering complex
+
+Best for: Most robots (wheeled platforms)
+```
+
+### Tire Material
+
+**Rubber:**
+```
+Advantages: Best grip, durable, all-weather
+Disadvantages: Heavy, wear over time, affected by temperature
+Best for: Outdoor robots, off-road, high traction required
+```
+
+**Polyurethane:**
+```
+Advantages: Good grip, durable, consistent
+Disadvantages: More expensive, overkill for most robots
+Best for: Commercial-grade robots
+```
+
+**Hard Plastic:**
+```
+Advantages: Cheap, light, never wears
+Disadvantages: Poor grip, slips on smooth surfaces
+Best for: Smooth floor line-followers, indoors only
+```
+
+### Wheel Size Selection
+
+```
+Small wheels (2-3 inches):
+├─ Pro: Faster acceleration, responsive
+├─ Con: Slower max speed, bouncy
+└─ Best for: Line-followers, tight spaces
+
+Medium wheels (4-6 inches):
+├─ Pro: Good balance, stable
+├─ Con: Average performance
+└─ Best for: General mobile robots
+
+Large wheels (8+ inches):
+├─ Pro: Highest speed, smooth over obstacles
+├─ Con: Slow acceleration, heavy
+└─ Best for: Racing, outdoor terrain
+```
+
+---
+
+## Gears
+
+### Gear Types
+
+#### Spur Gear (Parallel Shafts)
+
+```
+Structure:
+    Teeth
+      ▲
+  ◯─●─◯  (flat teeth)
+  ◯─●─◯
+    ◯▼◯
+
+Motion:
+Input shaft ──→ [Teeth mesh] ──→ Output shaft
+          90° rotation (shafts parallel)
+
+Ratio calculation:
+Output_speed = Input_speed × (Pinion_teeth / Gear_teeth)
+Torque multiplies inversely
+
+Example:
+Input: 1000 RPM, 10 teeth
+Output gear: 50 teeth
+Output: 1000 × (10/50) = 200 RPM, 5× torque
+
+Advantages:
+✓ Simple, reliable
+✓ Efficient (95%+)
+✓ Compact
+✓ Wide ratio range
+
+Disadvantages:
+✗ Noise at high speed
+✗ Shaft misalignment causes wear
+✗ Backlash (play) possible
+
+Best for: Motors to wheels, gearbox stages
+```
+
+#### Bevel Gear (90° Shafts)
+
+```
+Structure:
+    Shaft B
+      ↑
+  ◣───┤───◢
+  ◢───┤───◣  ← Angled teeth (cone shape)
+      ↑
+    Shaft A
+
+Motion: Right angle power transfer
+
+Advantages:
+✓ Compact 90° connection
+✓ Good efficiency
+
+Disadvantages:
+✗ Expensive
+✗ Complex to align
+✗ Harder to replace
+✗ Lower efficiency (80-90%)
+
+Best for: Robot arms (elbow joints), differentials
+```
+
+#### Planetary Gear (Compact)
+
+```
+Structure (Epicyclic):
+      Sun
+       ◯
+   ◯ ◢◣ ◯  ← Planets revolve
+   ◢ ◯ ◣
+      Ring
+
+Motion:
+Input: Sun or Ring
+Output: Carrier (planets)
+High ratio possible in compact space
+
+Ratios: 3:1 to 100:1 in same space as spur
+
+Advantages:
+✓ Extremely compact
+✓ Very high ratios possible
+✓ Smooth operation
+✓ Good efficiency
+
+Disadvantages:
+✗ Very expensive
+✗ Complex mechanics
+✗ Difficult to repair
+✗ Backlash harder to control
+
+Best for: Compact robot joints, servo gearboxes
+```
+
+#### Worm Gear (90° + High Ratio)
+
+```
+Structure:
+    Worm shaft
+        ↓ (screw-like)
+      ▔▔▔▔▔
+    ◯ ████ ◯
+    ◯ ████ ◯
+      ▁▁▁▁▁
+        ↑
+    Worm wheel
+
+Motion:
+Worm rotates 1 complete turn
+Worm wheel rotates 1 tooth (high ratio!)
+
+Ratio: 5:1 to 100:1 easily
+
+Advantages:
+✓ Extremely high ratio
+✓ Compact
+✓ Self-locking (no backdrive)
+✓ Smooth quiet operation
+
+Disadvantages:
+✗ Very expensive
+✗ Low efficiency (50-70%)
+✗ Heat generation
+✗ Limited to low-speed output
+
+Best for: Robot arm joints, precision positioning
+```
+
+### Gear Ratios
+
+```
+Formula:
+Ratio = Pinion_teeth / Gear_teeth
+
+Speed change:
+Output_RPM = Input_RPM / Ratio
+
+Torque change:
+Output_torque = Input_torque × Ratio × Efficiency
+
+Example Mobile Robot:
+├─ Motor: 1000 RPM, 0.5 N⋅m
+├─ Gearbox: 10:1 ratio, 95% efficiency
+├─ Output: 100 RPM, 4.75 N⋅m
+└─ Fast enough? Low torque? Adjust ratio!
+```
+
+---
+
+## Chains and Belts
+
+### Chain Drive
+
+```
+Structure:
+    Sprocket  
+    (tooth wheel)
+         ▲
+    ◯───────◯  ← Chain links
+    ◯───────◯
+         ▼
+    Sprocket
+
+Motion:
+Input sprocket → Chain → Output sprocket
+Mechanical connection (no slip!)
+
+Advantages:
+✓ No slip (positive drive)
+✓ Efficient (95%+)
+✓ Can span long distances
+✓ Tolerates misalignment
+✓ Easy ratio changes (swap sprockets)
+
+Disadvantages:
+✗ Requires lubrication
+✗ Noisy
+✗ Heavy
+✗ Needs tension adjustment
+✗ Wears over time
+
+Best for: Robot wheels, conveyor systems, outdoor robots
+```
+
+### Belt Drive
+
+```
+Structure:
+    Pulley
+      ◯
+    ┏━━━┓  ← Rubber belt
+    ┗━━━┛
+      ◯
+    Pulley
+
+Motion:
+Input pulley → Belt grip → Output pulley
+Friction drive (slight slip possible)
+
+Types:
+├─ Flat belt (simple, weak)
+├─ V-belt (wedge grip, powerful, still smooth)
+└─ Timing belt (teeth, positive drive)
+
+Advantages:
+✓ Smooth quiet operation
+✓ Isolates vibration
+✓ No maintenance (no lubrication)
+✓ Doesn't need precision alignment
+
+Disadvantages:
+✗ Slip possible (especially flat belts)
+✗ Speed sensitive (changes with wear)
+✗ Tension must be correct
+✗ Heat generation possible
+
+Best for: Smooth power transmission, conveyor, fans
+```
+
+### Ratio Calculation
+
+```
+Chain/Belt ratio depends on sprocket/pulley size:
+
+Ratio = Driven_size / Driver_size
+
+Example:
+Input pulley: 30mm diameter
+Output pulley: 90mm diameter
+Ratio = 90/30 = 3:1 (3x slower, 3x more torque)
+
+For chains (teeth count):
+Input sprocket: 20 teeth
+Output sprocket: 60 teeth
+Ratio = 60/20 = 3:1
+```
+
+---
+
+## Mechanical Advantage
+
+### Definition
+
+Mechanical advantage (MA) = Output force / Input force
+
+```
+Simple machine examples:
+
+Lever:
+    ↓ Force in
+    │
+────┼────────
+    │        ↓ Load out
+    
+MA = Lever_arm_in / Lever_arm_out
+
+Pulley:
+    ☐ ← Fixed
+    │
+    │ ── Rope
+    │  
+   Load
+
+MA = Number_of_rope_segments
+
+Incline:
+   ╱╲
+  ╱  ╲← Length
+ ╱────╲
+ Height
+
+MA = Length / Height
+```
+
+### Gearbox MA
+
+```
+Example 10:1 gearbox:
+
+Input: 1 newton force (small gear)
+Output: 10 newton force (large gear)
+Mechanical Advantage = 10
+
+Reality: Losses due to friction
+├─ Efficient gearbox: 95% = 9.5× MA
+├─ Chain drive: 95% = 9.5× MA
+├─ Belt drive: 90-95% = 9-9.5× MA
+└─ Worm gear: 60-70% = 6-7× MA
+```
+
+### Compound Systems
+
+```
+Example: Gearbox (10:1) + Belt (3:1) + Chain (2:1)
+
+Total ratio: 10 × 3 × 2 = 60:1
+
+Efficiency:
+├─ Gearbox: 95%
+├─ Belt: 92%
+├─ Chain: 95%
+└─ Total: 0.95 × 0.92 × 0.95 = 83% efficiency
+
+So: 60:1 mechanical advantage × 83% efficiency
+     = 50× useful output
+```
+
+---
+
+## Motor Selection for Movement
+
+### Torque Calculation
+
+Robot must overcome:
+1. Wheel friction
+2. Weight (on slopes)
+3. Acceleration resistance
+
+```
+Equation:
+Torque_required = (Friction_coefficient × Weight × gravity × Radius)
+                + (Weight × gravity × sin(angle) × Radius)
+                + (Mass × Radius × Acceleration)
+
+Example (flat ground):
+├─ Weight: 10 kg
+├─ Wheel radius: 0.05 m (5 cm)
+├─ Friction coefficient: 0.1
+├─ Torque = 0.1 × 10 × 9.81 × 0.05 = 0.49 N⋅m
+
+Two motors (front wheel drive):
+├─ Each motor needs: 0.49 N⋅m / 2 = 0.245 N⋅m
+└─ Standard motor: 0.3 N⋅m works fine
+```
+
+### Speed Calculation
+
+```
+Wheel speed = (Motor_RPM / Gear_ratio) × Wheel_circumference
+
+Example:
+├─ Motor: 300 RPM (after gearing)
+├─ Wheel diameter: 0.1 m (10 cm)
+├─ Circumference: π × 0.1 = 0.314 m
+└─ Speed: 300 × 0.314 / 60 = 1.57 m/s = 5.7 km/h
+
+Is this fast enough for competition? Depends on requirements!
+```
+
+---
+
+## Power Transmission Efficiency
+
+### Overall System Efficiency
+
+```
+Motor power → Losses → Final mechanical power
+
+Typical breakdown (10W motor):
+├─ Motor: 90% (inherent losses)
+├─ Gearbox: 95% (friction in gears)
+├─ Chain: 95% (friction, drive loss)
+└─ Wheels: 97% (rolling resistance)
+
+Total: 0.90 × 0.95 × 0.95 × 0.97 = 78% efficient
+
+So: 10W motor × 78% = 7.8W useful mechanical power
+```
+
+### Energy Loss Analysis
+
+```
+Where power goes (10W motor example):
+
+Motor: 1W lost as heat
+Gearbox: 0.5W lost (metal-to-metal friction)
+Chain: 0.25W lost (link friction)
+Wheels: 0.3W lost (rolling resistance)
+Total losses: 2.05W
+Useful: 7.95W
+
+Solutions to improve:
+├─ Better quality gears (reduce friction)
+├─ Lubricate chain regularly
+├─ Lower rolling resistance tires
+├─ Reduce weight
+└─ Use high-efficiency motor
+```
+
+---
+
+## Common Power Transmission Types
+
+| Type | Ratio Range | Efficiency | Noise | Maintenance | Cost |
+|------|-------------|-----------|-------|-------------|------|
+| **Spur Gear** | 2:1 - 50:1 | 95% | High | Low | Low |
+| **Planetary** | 3:1 - 100:1 | 92% | Very Low | Very Low | High |
+| **Worm Gear** | 5:1 - 100:1 | 60% | Very Low | Low | High |
+| **Chain Drive** | 2:1 - 30:1 | 95% | High | Medium | Low |
+| **Belt Drive** | 2:1 - 30:1 | 92% | Very Low | Low | Medium |
+| **Direct (no reduction)** | 1:1 | 98% | Medium | None | Very Low |
+
+---
+
+## Real-World Transmission Systems
+
+### Mobile Robot (Wheel Drive)
+
+```
+System:
+Motor → Gearbox (10:1) → Wheel
+
+Specs:
+├─ Motor: 300 RPM, 0.5 N⋅m
+├─ Gearbox: 10:1, 95% efficiency
+├─ Output: 30 RPM, 4.75 N⋅m
+├─ Wheel (5cm): Tangential force = Torque/Radius
+│  = 4.75 N⋅m / 0.05 m = 95 N (enough to move!)
+└─ Speed: 30 RPM × 2π × 0.05 / 60 = 0.157 m/s
+
+For 1 m/s speed needed?
+Required RPM: 1 m/s × 60 / (2π × 0.05) = 191 RPM
+Gearbox ratio: 300 / 191 = 1.57:1 (lower reduction)
+```
+
+### Robot Arm Joint
+
+```
+System:
+Motor → Planetary gear (20:1) → Link arm
+
+Specs:
+├─ Motor: 200 RPM, 0.2 N⋅m
+├─ Gearbox: 20:1, 92% efficiency
+├─ Joint output: 10 RPM, 3.68 N⋅m
+├─ Arm length: 0.3 m
+├─ Load: Can hold 1.2 kg at end
+│  (3.68 / 0.3 / 9.81 = 1.25 kg) ✓
+└─ Speed: 10 RPM allows precise positioning
+
+Tradeoff: Slow but strong (good for arms!)
+```
+
+### High-Speed Conveyor
+
+```
+System:
+Motor → Minimal reduction → Pulley
+
+Specs:
+├─ Motor: 1500 RPM, 0.1 N⋅m
+├─ Reduction: 2:1 (just for extra torque)
+├─ Output: 750 RPM, 0.19 N⋅m
+├─ Pulley radius: 0.05 m
+├─ Belt speed: 750 RPM × 2π × 0.05 / 60 = 3.93 m/s
+├─ Carrying capacity: Good for light items
+└─ Efficiency: 98% (direct drive, very efficient)
+
+Tradeoff: Fast but weak (good for conveyor!)
+```
+
+---
+
+## Troubleshooting
+
+<Callout type="warn" title="Common Transmission Problems">
+
+**Slipping belt/chain:**
+- Cause: Insufficient tension, worn belt, misalignment
+- Solution: Tighten, replace, realign pulleys/sprockets
+
+**High noise/vibration:**
+- Cause: Misalignment, damaged gear teeth, loose mountings
+- Solution: Check alignment, inspect for cracks, tighten fasteners
+
+**Excessive heat:**
+- Cause: High friction, poor lubrication, overload
+- Solution: Use lubricant, reduce load, check efficiency
+
+**Motor stalls:**
+- Cause: Insufficient torque, binding, overload
+- Solution: Reduce load, check for obstructions, increase gearing ratio
+
+**Loss of motion control:**
+- Cause: Backlash (play) in drivetrain
+- Solution: Pre-tension system, use anti-backlash gears, adjust geometry
+
+</Callout>
+
+---
+
+## Design Checklist
+
+**Before selecting transmission:**
+
+- [ ] What torque is required? (Calculate from load)
+- [ ] What speed is needed? (How fast must robot move?)
+- [ ] What's available space? (Compact or large?)
+- [ ] What's the budget? (Simple vs complex)
+- [ ] How much noise acceptable? (Quiet or OK?)
+- [ ] How often will maintenance occur? (Lubrication schedule?)
+- [ ] What's the duty cycle? (Continuous or intermittent?)
+- [ ] Must it be reversible? (Forwards and backwards?)
+
+**After selection:**
+
+- [ ] Motor and gearbox match in torque/speed output
+- [ ] Driven components can handle calculated force
+- [ ] Alignment is within tolerances
+- [ ] Fasteners are properly secured
+- [ ] Lubrication is applied per manufacturer spec
+- [ ] System tested under full load
+- [ ] Emergency stop works if applicable
+
+---
+
+## Summary
+
+**Wheels:**
+- Standard wheels: simplest, most common
+- Omni/Mecanum: holonomic motion, expensive
+- Size and material affect grip and speed
+
+**Gears:**
+- Spur: efficient, simple, noisy
+- Planetary: compact, high ratio
+- Worm: self-locking, but inefficient
+
+**Transmission types:**
+- Direct drive: efficient, high speed, low torque
+- Gearbox: adjustable speed/torque ratio
+- Chain/belt: can span distances, smooth operation
+
+**Key calculations:**
+- Torque required = Load considerations
+- Speed achievable = Motor RPM ÷ gear ratio
+- Efficiency = Product of all component efficiencies
+- Mechanical advantage = Force multiplication

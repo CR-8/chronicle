@@ -1,0 +1,41 @@
+SOLDERING 
+
+1. What is Soldering?
+Soldering is like gluing metal parts together using melted metal glue called solder. When solder melts and cools, it forms a strong and conductive connection.
+
+2. Why is Soldering Used?
+Soldering is used to connect electronic parts so electricity can flow. It is used in phones, TVs, toys, speakers, etc.
+
+3. What is Solder?
+Solder is a metal that melts easily. It melts before the wires do, so we can join wires safely.
+
+4. What is Flux?
+Flux is like cleaning helper. It removes dirt from metal so solder can stick properly.
+
+5. How Soldering is Done (Steps)
+1. Heat the metal area using soldering iron.
+2. Touch solder to the hot area so it melts.
+3. Let it cool and harden.
+
+6. Types of Wires
+- Solid Wire: One thick piece, strong but not bendy.
+- Stranded Wire: Many thin wires, very flexible.
+- Tinned Wire: Copper wire coated so it doesn’t rust.
+
+7. Component Mounting on PCB
+- Through-Hole: Component legs go through holes.
+- Surface Mount (SMT): Component sits on the surface.
+
+8. What a Good Solder Joint Looks Like
+- Smooth
+- Shiny
+- Cone-shaped
+- Not cracked or dull
+
+9. Safety Tips
+- Don’t touch hot iron tip.
+- Don’t breathe smoke.
+- Work in open air.
+- Wash hands after soldering.
+
+

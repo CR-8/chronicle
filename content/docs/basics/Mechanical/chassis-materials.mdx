@@ -1,0 +1,713 @@
+---
+title: Chassis and Materials
+description: Chassis design, material selection (aluminum, acrylic, carbon fiber, 3D printed), load distribution, structural analysis, and weight balancing
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Chassis and Materials
+
+The chassis is the structural backbone of a robot. Proper design ensures rigidity, lightweight operation, and reliable performance under load.
+
+## Chassis Types
+
+### Flat Plate Design
+
+Simplest structure:
+
+```
+Components:
+├─ Single or double aluminum plate
+├─ Components bolt directly to plate
+├─ Electronics mounted on top
+└─ Motors/wheels attached to bottom
+
+Advantages:
+✓ Very simple to build
+✓ Easy to modify
+✓ Low cost
+✓ Good for prototyping
+
+Disadvantages:
+✗ Less rigid (can flex)
+✗ Limited sensor mounting points
+✗ Looks industrial/unfinished
+✗ Difficult wiring organization
+```
+
+**Best for:** Simple prototypes, line-following robots, basic platforms
+
+### Frame Design (Structural Skeleton)
+
+Skeleton structure with mounting points:
+
+```
+Layout:
+└─ Frame corners
+   ├─ Aluminum channels or box tubing
+   ├─ Internal cross-bracing
+   ├─ Gussets at joints
+   └─ Mounting rails throughout
+
+Advantages:
+✓ Very rigid (minimal flex)
+✓ Many mounting options
+✓ Professional appearance
+✓ Organized wiring paths
+
+Disadvantages:
+✗ More complex to design
+✗ Requires precision drilling
+✗ Heavier than flat plate
+✗ Takes longer to build
+```
+
+**Best for:** Competition robots, manipulators, systems with multiple sensors
+
+### Modular Design (Plug-and-Play)
+
+Standardized mounting system:
+
+```
+System: 15mm or 20mm aluminum extrusion
+├─ Interlocking T-slot channels
+├─ Standard connector plates
+├─ Quick assembly/disassembly
+└─ Infinite reconfiguration
+
+Examples: ITEM, 80/20, Makerbeam systems
+
+Advantages:
+✓ Extremely fast to build
+✓ Modify design instantly
+✓ Professional appearance
+✓ Many off-the-shelf parts
+
+Disadvantages:
+✗ Expensive ($2-5 per cm)
+✗ Custom parts not possible
+✗ Heavier than custom
+✗ Overkill for simple robots
+```
+
+**Best for:** Research, rapid prototyping, educational platforms
+
+### Integrated Design (Custom Enclosure)
+
+Chassis as complete unit:
+
+```
+Approaches:
+1. Molded plastic shell (injection molding)
+2. CNC aluminum milling
+3. 3D printed body
+4. Carbon fiber composite
+
+Integration:
+├─ Electronics encased
+├─ IP protection (water/dust)
+├─ Aerodynamic design
+└─ Single component
+
+Advantages:
+✓ Minimal part count
+✓ Protected internals
+✓ Professional product
+✓ Optimized weight
+
+Disadvantages:
+✗ Expensive to prototype
+✗ Difficult to modify
+✗ Specialized manufacturing
+✗ Long lead times
+```
+
+**Best for:** Final products, commercial robots, finished designs
+
+---
+
+## Material Selection
+
+### Aluminum (Most Common)
+
+**Properties:**
+
+```
+Alloy: 6061-T6 (standard structural aluminum)
+Density: 2.7 g/cm³
+Strength: Moderate (good rigidity/weight ratio)
+Cost: Low ($1-5 per part)
+Workability: Excellent (easy to cut, drill, tap)
+Corrosion: Anodized finish prevents rust
+```
+
+**Advantages:**
+
+```
+✓ Lightweight (2.7 vs 7.8 for steel)
+✓ Doesn't rust (with anodizing)
+✓ Easy to machine and modify
+✓ Excellent heat dissipation
+✓ Recyclable
+✓ Standard in robotics
+```
+
+**Disadvantages:**
+
+```
+✗ Lower strength than steel (same weight needs larger profile)
+✗ Slightly more expensive than steel
+✗ Can dent/bend
+✗ CTE mismatch with electronics
+```
+
+**Best for:** Main chassis, mounting rails, motor mounts
+
+**Example Application:**
+
+```
+Competition robot:
+├─ 1/8" thick aluminum plate base
+├─ 1" x 1" aluminum angle braces
+├─ 1/4" thick aluminum sheet for panels
+└─ Total weight: ~2 kg with all mounts
+```
+
+---
+
+### Acrylic (Transparent Plastic)
+
+**Properties:**
+
+```
+Type: Thermoplastic (cast or extruded)
+Density: 1.2 g/cm³
+Strength: Moderate (brittle, can shatter)
+Cost: Very low ($0.50 per part)
+Workability: Good (cut, drill, bond)
+Transparency: Crystal clear (excellent for viewing)
+```
+
+**Advantages:**
+
+```
+✓ Very lightweight
+✓ Extremely cheap
+✓ Can see through (sensor debugging)
+✓ Easy to cut with water jet
+✓ Quick prototyping
+✓ Easy mounting (drilling doesn't damage)
+```
+
+**Disadvantages:**
+
+```
+✗ Brittle (shatters on impact)
+✗ Scratches easily
+✗ Lower rigidity (flexes more)
+✗ UV sensitive (discolors over time)
+✗ Can crack from stress concentration
+```
+
+**Best for:** Sensor shields, protective covers, camera mounts, prototypes
+
+**Example Application:**
+
+```
+Mobile robot:
+├─ Acrylic side panels
+├─ Shows motor/wheel arrangement
+├─ Lightweight protection
+└─ Very quick to manufacture
+```
+
+---
+
+### Carbon Fiber (High-Performance)
+
+**Properties:**
+
+```
+Type: Composite (carbon + epoxy resin)
+Density: 1.6 g/cm³
+Strength: Extremely high (steel strength at 1/4 weight)
+Cost: High ($5-20 per part)
+Workability: Moderate (must cut carefully, no drilling)
+Rigidity: Exceptional
+```
+
+**Advantages:**
+
+```
+✓ Highest strength-to-weight ratio
+✓ Extremely rigid (minimal flex)
+✓ Professional appearance
+✓ Excellent for high-speed robots
+✓ Thermal stability
+```
+
+**Disadvantages:**
+
+```
+✗ Very expensive
+✗ Difficult to modify (must plan ahead)
+✗ Conductive (can cause electrical noise)
+✗ Complex manufacturing
+✗ Requires specialized tools to cut
+```
+
+**Best for:** Racing drones, high-speed competitors, weight-critical designs
+
+**Example Application:**
+
+```
+Quadcopter frame:
+├─ Carbon fiber tubing for arms
+├─ 5x minimum rigidity vs aluminum
+├─ 40% lighter than aluminum equivalent
+└─ Survives crashes better
+```
+
+---
+
+### Steel (Maximum Strength)
+
+**Properties:**
+
+```
+Alloy: Mild steel (1018 or 1045)
+Density: 7.8 g/cm³
+Strength: Very high (2.5x aluminum same profile)
+Cost: Low ($1-3 per part)
+Workability: Good (requires more force to cut/drill)
+Corrosion: Rust without coating
+```
+
+**Advantages:**
+
+```
+✓ Maximum strength (can use thinner profiles)
+✓ Cheapest per pound
+✓ Excellent weldability
+✓ Can be heat-treated for extra strength
+✓ Works well in harsh environments
+```
+
+**Disadvantages:**
+
+```
+✗ Heavy (3x density of aluminum)
+✗ Rusts quickly (must paint/powder coat)
+✗ Harder to modify
+✗ Conducts heat (can interfere with electronics)
+```
+
+**Best for:** Heavy manipulators, ground vehicles, harsh environments
+
+**Example Application:**
+
+```
+Heavy robotic arm:
+├─ Steel tubing for joints
+├─ Supports 50+ kg payload
+├─ Powder coated for rust protection
+└─ Welded for permanent joints
+```
+
+---
+
+### 3D Printed Plastic (ABS/PLA)
+
+**Properties:**
+
+```
+Materials: ABS (strong, toxic fumes) or PLA (biodegradable)
+Density: 1.0-1.2 g/cm³
+Strength: Moderate (depends on infill %)
+Cost: Very low ($0.10-0.50 per part after initial setup)
+Workability: Excellent (re-design and reprint instantly)
+Manufacturing: Hours to days per part
+```
+
+**Advantages:**
+
+```
+✓ Ultra-fast prototyping (design to part in hours)
+✓ Complex geometry possible
+✓ Very cheap at scale
+✓ Easy to modify designs
+✓ Minimal waste
+✓ Custom shapes/pockets/bosses
+```
+
+**Disadvantages:**
+
+```
+✗ Lower strength than machined materials
+✗ Requires post-processing (cleaning, reinforcement)
+✗ Quality varies (layer delamination possible)
+✗ Temperature sensitive (warping in sun)
+✗ Layer lines reduce strength
+```
+
+**Best for:** Custom brackets, sensor mounts, prototype chassis
+
+**Example Application:**
+
+```
+Mobile robot custom mount:
+├─ Design in CAD
+├─ Print overnight (8-12 hours)
+├─ Test fit
+├─ Iterate design (repeat above)
+└─ Minimal cost per iteration
+```
+
+---
+
+## Material Comparison Table
+
+| Property | Aluminum | Acrylic | Carbon Fiber | Steel | 3D Plastic |
+|----------|----------|---------|--------------|-------|-----------|
+| **Density (g/cm³)** | 2.7 | 1.2 | 1.6 | 7.8 | 1.0-1.2 |
+| **Strength** | Moderate | Low | Extreme | Very High | Moderate |
+| **Rigidity** | Good | Fair | Excellent | Excellent | Fair |
+| **Cost ($/piece)** | $1-5 | $0.50 | $5-20 | $1-3 | $0.10-0.50 |
+| **Workability** | Excellent | Good | Moderate | Good | Excellent |
+| **Corrosion Resistance** | Excellent (anodized) | Excellent | Excellent | Poor (rust) | Good |
+| **Durability** | Excellent | Poor (brittle) | Excellent | Excellent | Fair |
+| **Thermal** | Good conductor | Insulator | Good | Good conductor | Insulator |
+| **Best Use** | General chassis | Prototypes | High-perf | Heavy duty | Custom parts |
+
+---
+
+## Load Distribution Analysis
+
+### Center of Mass (COM)
+
+Keep COM low and centered:
+
+```
+Unbalanced (BAD):
+Heavy battery mounted high
+└─ Tips over easily, unstable
+
+Balanced (GOOD):
+Heavy components mounted low
+└─ Stable, predictable handling
+```
+
+### Distributed Load Calculation
+
+Example: 20 kg mobile robot
+
+```
+Components (kg):
+├─ Base plate: 2
+├─ Motors (x4): 2
+├─ Battery: 5
+├─ Electronics: 1
+├─ Gripper: 10
+└─ Total: 20 kg
+
+Load per corner (4-legged):
+20 kg ÷ 4 = 5 kg per corner
+
+Stress on mounting bolt (M5 aluminum):
+Shear stress = Load ÷ Area
+Area (M5) = 19.6 mm² = 0.000196 m²
+Stress = 5 kg × 9.81 m/s² ÷ 0.000196 = 250 MPa
+Safe? Yes (aluminum yield: 40 MPa) - but use larger bolt!
+
+Better: Use M8 (50 mm²) = 100 MPa ✓
+```
+
+### Stress Points
+
+```
+Locations that fail first:
+├─ Motor mounting points (vibration + load)
+├─ Wheel axles (repetitive stress)
+├─ Battery strap points (sudden acceleration)
+└─ Electronic component solder joints (thermal cycling)
+
+Solutions:
+✓ Over-size all fasteners by 1-2 sizes
+✓ Use lock washers and thread locker
+✓ Add gussets at high-stress corners
+✓ Isolate vibration with dampers
+✓ Regular inspection for cracks
+```
+
+---
+
+## Structural Design Principles
+
+### Triangulation (Most Rigid)
+
+```
+Structure:
+    A
+   /|\
+  / | \
+ B--+--C
+
+Benefits:
+✓ Diagonal braces prevent flexing
+✓ Three-point suspension is rigid
+✓ Four-point can flex (become parallelogram)
+```
+
+### Gusset Placement
+
+Reinforce at corners:
+
+```
+Without gusset:        With gusset:
+    A                      A
+   /|                      /|
+  / |                     /||
+ B  C      →             B |C
+           └─ Gusset      \|
+                           ↓
+                        Rigid!
+```
+
+### Box Tubing Rigidity
+
+```
+Profile comparison (same cross-section area):
+
+Solid rod:    Hollow tube:    Box tubing:
+    |            O              □
+    |          O   O            ◻
+   
+Rigidity:     1x               8x              12x
+
+Best for robotics: Box tubing (strong and lightweight)
+```
+
+---
+
+## Weight Balancing
+
+### Front-to-Back Balance
+
+Mobile robot example:
+
+```
+Unbalanced (nose down):
+Heavy battery in front → Tips forward downhill
+
+Balanced:
+Weight distributed → Stable on any slope
+
+Calculation:
+COM = (m₁ × x₁ + m₂ × x₂) / (m₁ + m₂)
+Adjust component position until COM = wheelbase/2
+```
+
+### Side-to-Side Balance
+
+```
+Left-to-right distribution:
+Unbalanced → Drifts left/right in turns
+Balanced → Straight-line tracking
+
+Solution: Mirror component placement
+```
+
+### Height Matters
+
+Lower COM = More stable:
+
+```
+High COM: Unstable, tips easily ┌─┐
+                                │ │
+                                │C│← High COM
+                                └─┘
+
+Low COM: Stable, won't tip ┌────────┐
+                           │        │
+                           │   C    │← Low COM
+                           └────────┘
+```
+
+---
+
+## Assembly Best Practices
+
+### Fastener Selection
+
+```
+Bolt head threads into nut:
+├─ M3: Micro assemblies, PCB standoffs
+├─ M4: Small components, electronics
+├─ M5: General assembly, sensors
+├─ M6: Medium loads, motor mounts
+├─ M8: Heavy loads, wheel axles
+
+Material:
+✓ Steel (strong, cheap)
+✓ Stainless (corrosion resistant)
+✓ Aluminum (non-magnetic, lightweight)
+```
+
+### Torque Values (Don't Overtighten!)
+
+```
+M4 bolt: 5-7 N⋅m
+M5 bolt: 8-12 N⋅m
+M6 bolt: 14-18 N⋅m
+M8 bolt: 28-36 N⋅m
+
+Rule: Tighten until snug, then stop
+```
+
+### Thread Locking
+
+Prevent vibration loosening:
+
+```
+Options:
+├─ Lock washers (cheap, obvious)
+├─ Nylon-insert lock nut (reliable)
+├─ Thread locker fluid (permanent)
+└─ Split pin (simple, visible)
+
+Application: All outdoor/moving robots
+```
+
+---
+
+## Design Considerations
+
+<Callout type="warn" title="Critical Design Factors">
+
+**Rigidity:**
+- Chassis flex causes sensor misalignment
+- Wheels may not contact ground evenly
+- Motors may work harder (more power draw)
+- Solution: Over-dimension structural members
+
+**Access:**
+- Design for easy motor/battery removal
+- Electronics should be replaceable
+- Don't sandwich everything tight
+- Solution: Modular panels
+
+**Thermal:**
+- Electronics generate heat
+- Poor airflow → component failure
+- Solution: Add vents, space components
+
+**Vibration:**
+- Motors create vibration
+- Loose fasteners fail quickly
+- Solution: Lock washers, thread locker, dampers
+
+</Callout>
+
+---
+
+## Real-World Examples
+
+### Example 1: Line-Following Robot
+
+```
+Requirements:
+├─ Fast (must be lightweight)
+├─ Precise (rigid frame)
+└─ Simple assembly
+
+Solution:
+├─ Aluminum 2020 extrusion (very light)
+├─ 3D printed motor mounts
+├─ Triangulated braces
+├─ Total weight: 300g
+└─ Cost: $50
+
+Material breakdown:
+Aluminum frame: 30%
+Plastic parts: 20%
+Electronics: 50% by cost
+```
+
+### Example 2: Robotic Manipulator Arm
+
+```
+Requirements:
+├─ Heavy (10 kg payload)
+├─ Rigid (precise positioning)
+└─ Long reach (2+ meters)
+
+Solution:
+├─ Aluminum box tubing (1" x 1")
+├─ Steel shoulder/elbow joints
+├─ Carbon fiber for lightweight links
+├─ Welded joints
+├─ Total weight: 15 kg
+└─ Cost: $500+
+
+Forces: Must support 10 kg × gravity at 2m reach
+Torque = 10 kg × 9.81 m/s² × 2 m = 196 N⋅m
+Requires very strong motor and gearing
+```
+
+### Example 3: Quadcopter Frame
+
+```
+Requirements:
+├─ Minimal weight (must fly)
+├─ Rigid (stability in wind)
+└─ Impact resistant
+
+Solution:
+├─ Carbon fiber tubing (arms)
+├─ 3D printed motor mounts
+├─ Aluminum frame plate
+├─ GPS antenna support
+├─ Total weight: 1.2 kg (with battery)
+└─ Cost: $300+
+
+Crash durability: Can withstand 2m free fall
+```
+
+---
+
+## Troubleshooting
+
+| Problem | Cause | Solution |
+|---------|-------|----------|
+| **Chassis flexes** | Weak material or undersized members | Use next size larger extrusion, add bracing |
+| **Wheels not level** | Uneven assembly | Check flatness with level, adjust feet |
+| **Bolts keep loosening** | Vibration | Use lock washers, apply thread locker |
+| **Rusting** | Steel without coating | Powder coat or use stainless steel |
+| **Too heavy** | Over-engineered | Switch to aluminum or carbon fiber |
+| **Cracks appearing** | Stress concentration | Add fillets/gussets at corners |
+| **Misalignment** | Thermal expansion | Use more fastening points, allow for adjustment |
+
+---
+
+## Summary
+
+**Chassis types:**
+- Flat plate (simplest, weakest)
+- Frame (good balance)
+- Modular (fastest, expensive)
+- Integrated (professional, difficult)
+
+**Material selection:**
+- Aluminum: Best general choice
+- Acrylic: Quick prototypes
+- Carbon fiber: Weight-critical
+- Steel: Heavy duty
+- 3D plastic: Custom parts
+
+**Design principles:**
+- Use triangulation for rigidity
+- Keep COM low and centered
+- Don't over-torque fasteners
+- Plan for vibration
+- Design for assembly access

@@ -1,0 +1,71 @@
+Connectors in Robotics
+
+Introduction - 
+-Robots need electricity to move, sense, and think.
+-Motors, sensors, and controllers need to be connected for power and information flow.
+-Connectors are like plugs that join two wires so electricity can pass.
+-Just like plugging in a phone charger, robots “plug in” their parts using connectors.
+
+Common Connectors Used in Robots
+
+1) FRC Connectors -
+-Used in FIRST Robotics Competition (FRC) robots.
+-Strong, safe, and carry high power.
+-Stay connected even when robot shakes or moves.
+-Commonly used for battery and motor wires.
+-Example: Anderson Powerpole (locks tightly but easy to unplug).
+
+Advantages: Great for large and powerful robots.
+Disadvantages: Slightly large and more expensive.
+
+
+2) Dupont Connectors - 
+-Small black plastic connectors for signal wires.
+-Common with Arduino, Raspberry Pi, and small sensors.
+-Found on jumper wires and breadboards.
+-Useful for testing and learning projects.
+
+Advantages: Cheap and easy to use.
+Disadvantages: Can fall off if robot shakes or moves a lot.
+
+
+3) RC Connectors -
+-Used in RC cars, drones, and small robots.
+-Carry medium to high power for batteries and motors.
+-Examples:
+	JST: Small red plugs for low power.
+	XT30, XT60, XT90: Yellow plugs for stronger power.
+	EC3, EC5: Larger blue plugs for even more power.
+	Deans (T-Plug): Red T-shaped plug.
+
+Advantages: Strong, compact, reliable.
+Disadvantages: Requires soldering to attach wires.
+
+4) T-Plug (Deans Connector) -
+-Red T-shaped plug.
+-Connects batteries to motor controllers.
+-Carries high current (power).
+
+Advantages: Very strong and secure.
+Disadvantages: Can be hard to unplug if tight.
+
+5) Male and Female Pins -
+-Work like plugs and sockets:
+-Male pin: Metal stick part.
+-Female pin: Hole where male pin fits.
+-Electricity flows when connected.
+-Used in Dupont cables, Arduino boards, and jumper wires.
+
+Advantages: Easy to connect and remove.
+Disadvantages: Can wiggle loose if not secured.
+
+6) Terminal Block -
+-Small green or blue plastic block with screws.
+-Wires are inserted and screws tightened to hold them.
+-Used for:
+	Power distribution
+	Motor connections
+-Testing circuits or building setups
+
+Advantages: Strong, reusable, no soldering needed.
+Disadvantages: Takes more space and longer to set up.

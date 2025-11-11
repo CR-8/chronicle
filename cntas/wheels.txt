@@ -1,0 +1,62 @@
+Wheels in Robotics
+
+Wheel - 
+-A circular part that allows a robot to move.
+-Can be made of rubber, plastic, metal, or other materials.
+
+Diameter -
+-The distance across the wheel through its center.
+-Bigger wheels cover more distance per rotation.
+
+RPM (Revolutions Per Minute) -
+-How many times the wheel rotates in one minute.
+-Higher RPM → wheel spins faster → robot moves faster.
+
+Speed -
+-How fast the robot moves (distance per time).
+-Depends on wheel diameter and RPM.
+
+Torque -
+-Rotational force applied to the wheel.
+-More torque → wheel can move heavier loads or climb slopes.
+
+Load -
+-The weight the robot carries.
+-More load requires more torque to maintain speed.
+
+Distance Traveled -
+-How far the robot moves.
+-Depends on number of wheel rotations and wheel diameter.
+
+Material -
+-The wheel’s substance (Nylon).
+-Affects grip, friction, durability, and slip.
+
+
+Relations Between the Terms
+
+Wheel Diameter → Distance per Rotation
+Larger diameter → wheel covers more distance per rotation.
+Distance traveled = Wheel Circumference × Number of Rotations
+Circumference = π × Diameter
+
+RPM & Speed -
+Speed = (Wheel Circumference × RPM) ÷ 60
+Faster RPM → higher speed for same wheel diameter.
+
+Torque & Load -
+More load requires higher torque to maintain same RPM.
+Torque needed ∝ Load × Wheel Radius
+
+Diameter & Torque -
+For the same torque, larger wheels accelerate slower but cover more distance per rotation.
+Smaller wheels → faster acceleration, less distance per rotation.
+
+Material & Friction -
+Material affects grip and slip.
+Low-friction wheels → less torque needed but may slip.
+High-friction wheels → better grip but may need more torque to move.
+
+Distance Traveled -
+Distance traveled = Number of Wheel Rotations × π × Diameter
+Can also be controlled by speed and time: Distance = Speed × Time

@@ -1,0 +1,710 @@
+---
+title: Basic Sensors and Detection
+description: Infrared sensors, ultrasonic sensors, light sensors, temperature sensors, sensor comparison, and practical robotics applications
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Basic Sensors and Detection
+
+Sensors give robots awareness of their environment. Selecting appropriate sensors depends on application requirements and environmental conditions.
+
+## Sensor Categories
+
+### Passive vs Active
+
+**Passive Sensors:**
+```
+Detect without emitting energy
+├─ Infrared thermometer (detects radiated heat)
+├─ Light sensor (detects ambient light)
+├─ Microphone (detects sound)
+└─ Magnetometer (detects magnetic field)
+
+Advantages:
+✓ No power consumption (minimal)
+✓ No interference with other sensors
+✓ Don't reveal position (stealthy)
+
+Disadvantages:
+✗ Limited range
+✗ Environmental dependent
+✗ Less precise
+```
+
+**Active Sensors:**
+```
+Emit energy and detect reflection/response
+├─ Ultrasonic (emits sound, detects echo)
+├─ Infrared range finder (emits light, detects reflection)
+├─ LIDAR (emits laser, detects reflection)
+└─ Radar (emits radio waves, detects reflection)
+
+Advantages:
+✓ Longer range
+✓ More precise
+✓ Work in dark
+
+Disadvantages:
+✗ Higher power consumption
+✗ Can interfere with each other
+✗ Reveal presence to others
+```
+
+### Output Types
+
+**Analog Output:**
+```
+Continuous voltage (0-5V typically)
+├─ Light sensor: 0V dark, 5V bright
+├─ Temperature sensor: Changes voltage with temp
+└─ Potentiometer: Voltage represents position
+
+Requires: ADC (Analog-to-Digital Converter)
+Arduino reads with: analogRead() function
+Resolution: 10-bit (0-1023 values)
+```
+
+**Digital Output:**
+```
+On/off states only (HIGH/LOW)
+├─ Motion detector: 1 if motion, 0 if not
+├─ Touch sensor: 1 if pressed, 0 if not
+├─ Limit switch: 1 at boundary, 0 otherwise
+
+Simple interfacing
+Arduino reads with: digitalWrite() function
+No ADC needed
+Less information (binary only)
+```
+
+**Serial Output:**
+```
+Data transmitted via protocol
+├─ I2C: Multiple sensors on 2 wires
+├─ SPI: Higher speed, 4+ wires
+├─ UART: Simple serial, 2 wires
+└─ 1-Wire: Single wire communication
+
+Advantages:
+✓ Multiple sensors, fewer wires
+✓ Richer data (more than binary)
+✓ Often multi-sensor modules
+
+Disadvantages:
+✗ More complex programming
+✗ Slower than analog
+✗ Requires specific protocols
+```
+
+---
+
+## Infrared (IR) Sensors
+
+### IR Reflected (Proximity)
+
+Detects objects by reflected infrared light:
+
+```
+Sensor operation:
+┌─────────────────┐
+│ IR emitter LED  │─→ Emits IR light
+│ IR photodiode   │← Detects reflected light
+└─────────────────┘
+        ↓
+    If object nearby: Strong reflection (HIGH)
+    If object far: Weak reflection (LOW)
+    If no object: No reflection (LOW)
+```
+
+**Specifications:**
+
+| Parameter | Value | Notes |
+|-----------|-------|-------|
+| **Range** | 2-25 cm | Depends on model, reflectivity |
+| **Output** | Digital | HIGH/LOW, some analog |
+| **Power** | 5V, ~20mA | Simple power requirement |
+| **Cost** | $2-10 | Very affordable |
+| **Update rate** | 100+ Hz | Fast response |
+
+**Applications:**
+- Line-following robots (detect black line)
+- Object detection (wall avoidance)
+- Color detection (light vs dark surface)
+
+**Example Sensor - TCRT5000:**
+```
+Pinout:
+GND ─┐
+     ├─ 4-pin module
+VCC ─┤
+OUT ─┤ Analog or digital output
+     ├
+CFG ─┘ Configuration (comparator enable)
+
+Usage:
+1. Place 2-3mm above surface
+2. Adjust potentiometer for sensitivity
+3. Digital output: ~1cm range (on/off only)
+4. Analog output: ~2-3cm range (variable distance)
+```
+
+### IR Distance Sensor (Sharp GP2D120)
+
+Analog output proportional to distance:
+
+```
+Principle: Triangulation
+┌──────────────────┐
+│ IR emitter       │→ Projects IR light
+│ Position sensor  │ Detects reflection angle
+└──────────────────┘
+     ↓
+  Angle change = Distance change
+  Output voltage: 0V (far) to 3V (close)
+```
+
+**Performance:**
+
+| Distance | Output Voltage |
+|----------|-----------------|
+| 4 cm | 2.5V (closest) |
+| 12 cm | 1.5V |
+| 30 cm | 0.5V |
+| > 30 cm | ~0.3V (unreliable) |
+
+**Code Example - Arduino:**
+
+```cpp
+int sensorPin = A0;  // Analog input
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int rawValue = analogRead(sensorPin);  // 0-1023
+  float voltage = rawValue * 5.0 / 1023.0;
+  
+  // Convert voltage to distance
+  // Formula varies by sensor model
+  float distance_cm = 27.86 * pow(voltage, -1.15);
+  
+  Serial.print("Distance: ");
+  Serial.print(distance_cm);
+  Serial.println(" cm");
+  
+  delay(100);
+}
+```
+
+---
+
+## Ultrasonic Sensors
+
+### HC-SR04 (Most Common)
+
+Measures distance using sound echo:
+
+```
+Operation:
+Trigger pulse
+    ↓
+┌──────────────────┐
+│ TRIG: Send pulse │─→ 40kHz ultrasonic wave
+│ ECHO: Detect     │← Waits for reflection
+└──────────────────┘
+    ↓
+Time delay = Distance × 2
+distance = (time × speed_of_sound) / 2
+```
+
+**Pinout:**
+
+```
+VCC  (5V power)
+GND  (Ground)
+TRIG (Trigger input - pulse to start measurement)
+ECHO (Echo output - HIGH duration = distance)
+```
+
+**Specifications:**
+
+| Parameter | Value |
+|-----------|-------|
+| **Range** | 2-400 cm |
+| **Accuracy** | ±3 cm |
+| **Power** | 5V, ~15mA |
+| **Update Rate** | 50 Hz max |
+| **Cost** | $3-8 |
+| **Supply voltage** | 5V (3.3V also works) |
+
+**Code Example:**
+
+```cpp
+const int TRIG_PIN = 9;
+const int ECHO_PIN = 10;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+}
+
+void loop() {
+  // Send trigger pulse
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  
+  // Measure echo time
+  long duration = pulseIn(ECHO_PIN, HIGH);
+  
+  // Calculate distance
+  // Speed of sound = 340 m/s = 0.034 cm/µs
+  long distance = duration * 0.034 / 2;
+  
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+  
+  delay(100);
+}
+```
+
+### Ultrasonic Multi-Sensor Setup
+
+```
+Three sensors (front, left, right):
+
+Arduino pins:
+├─ Front: TRIG=9, ECHO=10
+├─ Left: TRIG=5, ECHO=6
+├─ Right: TRIG=3, ECHO=4
+
+Wiring:
+All sensors share VCC and GND
+Each has separate TRIG and ECHO pins
+```
+
+---
+
+## Light Sensors
+
+### Light Dependent Resistor (LDR / Photoresistor)
+
+Resistance changes with light:
+
+```
+Characteristics:
+├─ Dark: ~1 MΩ (very high resistance)
+├─ Bright: ~10 kΩ (much lower)
+├─ Response: Slow (~100ms)
+└─ Cost: $0.50
+
+Circuit:
+        VCC (5V)
+         │
+        ┌┴┐ (LDR)
+        │ │ ← Resistance = 1MΩ (dark) to 10kΩ (bright)
+        └┬┘
+         │
+        10k (pulldown resistor)
+         │
+        GND
+
+Analog output = Voltage at junction
+```
+
+**Applications:**
+- Ambient light detection
+- Light following (phototaxis)
+- Day/night detection
+
+**Calibration:**
+
+```cpp
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int lightLevel = analogRead(A0);  // 0-1023
+  
+  Serial.println(lightLevel);
+  
+  // Interpretation:
+  // 0-200: Very dark (night)
+  // 200-500: Dim (shadow, evening)
+  // 500-800: Normal indoor
+  // 800-1023: Bright (sunlight)
+}
+```
+
+### Ambient Light Sensor (TSL2561)
+
+Digital I2C output with better accuracy:
+
+```
+Advantages over LDR:
+✓ More accurate (better linearity)
+✓ Temperature compensated
+✓ I2C interface (easy integration)
+✓ Two channels (visible + infrared)
+
+Disadvantages:
+✗ More expensive ($5-15)
+✗ Requires I2C library
+✗ Smaller detection area
+
+Output: Lux (standard light intensity unit)
+0 lux: Complete darkness
+1000 lux: Normal office lighting
+10000 lux: Sunlight
+```
+
+---
+
+## Temperature Sensors
+
+### Thermistor (NTC)
+
+Resistance changes with temperature:
+
+```
+NTC (Negative Temperature Coefficient):
+├─ Hot: Lower resistance
+├─ Cold: Higher resistance
+└─ Linear relationship: R = R₀ × e^(β(1/T - 1/T₀))
+
+Common: 10kΩ @ 25°C
+
+Advantages:
+✓ Very cheap ($0.50)
+✓ No power supply
+✓ Simple circuit
+
+Disadvantages:
+✗ Non-linear response
+✗ Must calibrate
+✗ Slow response
+```
+
+**Voltage Divider Circuit:**
+
+```
+       VCC (5V)
+         │
+        ┌┴┐ (Thermistor)
+        │ │ ← Resistance changes with temp
+        └┬┘
+         ├─→ To ADC (A0)
+        ┌┴┐ (10k reference)
+        │ │ ← Known reference resistor
+        └┬┘
+         │
+        GND
+
+Voltage = VCC × R_ref / (R_thermistor + R_ref)
+Higher temp = Lower resistance = Lower voltage
+```
+
+**Calibration Code:**
+
+```cpp
+// Constants for 10k thermistor
+const float A = 1.009249522e-3;
+const float B = 2.378405444e-4;
+const float C = 2.019202697e-7;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int rawValue = analogRead(A0);
+  float voltage = rawValue * 5.0 / 1023.0;
+  
+  // Voltage divider: V_therm = 5 * R_ref / (R_ref + R_therm)
+  // For 10k reference: R_therm = 10k * (5 - V_therm) / V_therm
+  
+  float resistance = 10000 * (5 - voltage) / voltage;
+  
+  // Steinhart-Hart equation
+  float logR = log(resistance);
+  float tempK = 1 / (A + B * logR + C * logR * logR * logR);
+  float tempC = tempK - 273.15;
+  
+  Serial.print("Temp: ");
+  Serial.print(tempC);
+  Serial.println(" C");
+  
+  delay(1000);
+}
+```
+
+### Digital Temperature Sensor (DS18B20)
+
+1-Wire interface, very accurate:
+
+```
+Specifications:
+├─ Range: -55 to +125°C
+├─ Accuracy: ±0.5°C
+├─ Resolution: Programmable (9-12 bit)
+├─ Interface: 1-Wire (single data line)
+└─ Cost: $2-5
+
+Advantages:
+✓ Very accurate
+✓ Single wire interface
+✓ No calibration needed
+✓ Multiple sensors on one wire
+
+Disadvantages:
+✗ Slower updates (0.75s minimum)
+✗ More complex programming
+✗ Requires 1-Wire library
+```
+
+---
+
+## Sensor Comparison Table
+
+| Sensor | Type | Range | Accuracy | Power | Cost | Best For |
+|--------|------|-------|----------|-------|------|----------|
+| **IR Reflective** | Digital | 1 cm | ±0.5 cm | 5V, 20mA | $3 | Line following |
+| **Sharp IR** | Analog | 4-30 cm | ±10% | 5V, 30mA | $10 | Obstacle avoidance |
+| **Ultrasonic** | Analog | 2-400 cm | ±3 cm | 5V, 15mA | $5 | Distance measurement |
+| **LDR** | Analog | Ambient | Poor | 5V, 1mA | $0.50 | Light detection |
+| **Light Sensor** | I2C | Ambient | ±10% | 3.3V, 5mA | $8 | Accurate lux |
+| **Thermistor** | Analog | -20 to +100°C | ±2°C | 5V, 1mA | $0.50 | Quick temperature |
+| **DS18B20** | 1-Wire | -55 to +125°C | ±0.5°C | 5V, 10mA | $3 | Accurate temperature |
+
+---
+
+## Sensor Interfacing Circuits
+
+### IR Reflective with Comparator
+
+```
+Circuit:
+         5V
+          │
+         10k
+          ├─────┬─────→ Analog output
+          │     │
+        IR-D    │
+        └─┬─────┼─→ To comparator input
+          │     │
+         10k   10k potentiometer
+          │     │
+          └─────┴─→ GND
+
+Comparator output:
+├─ If Analog > Reference: HIGH (object detected)
+└─ If Analog < Reference: LOW (no object)
+```
+
+### Ultrasonic Multiple Sensors
+
+```
+Wiring pattern (3 sensors):
+
+Sensor 1 (Front):
+├─ TRIG → Arduino pin 9
+└─ ECHO → Arduino pin 10
+
+Sensor 2 (Left):
+├─ TRIG → Arduino pin 5
+└─ ECHO → Arduino pin 6
+
+Sensor 3 (Right):
+├─ TRIG → Arduino pin 3
+└─ ECHO → Arduino pin 4
+
+All share:
+├─ VCC (5V common)
+└─ GND (common ground)
+```
+
+### I2C Sensor Chain
+
+```
+Multiple sensors on 2 wires:
+
+        Arduino
+        │
+    ┌───┴────┬────┐
+    │        │    │
+   5V       GND   SCL (A5)
+    │        │    │
+    ├────────┼─────→ 4.7k pullup
+    │        │
+    └───────────→ SDA (A4)
+         │
+     ┌────────────────────┐
+     │ Temperature Sensor │ ← Address 0x4C
+     │ (DS1631)           │
+     ├────────────────────┤
+     │ Light Sensor       │ ← Address 0x39
+     │ (TSL2561)          │
+     ├────────────────────┤
+     │ Humidity Sensor    │ ← Address 0x27
+     │ (HIH-4030)         │
+     └────────────────────┘
+
+Result: 3 sensors, 4 wires total!
+```
+
+---
+
+## Real-World Applications
+
+### Line-Following Robot
+
+```
+Setup:
+├─ Two IR reflective sensors (left, right)
+├─ Black line on white background
+└─ Simple digital outputs
+
+Logic:
+    Left | Right | Action
+    ────┼───────┼────────
+     0  │  0    │ Both on line → Go forward
+     1  │  0    │ Left off     → Turn right
+     0  │  1    │ Right off    → Turn left
+     1  │  1    │ Both off     → Search
+
+Result: Robot follows line autonomously
+```
+
+### Collision Avoidance
+
+```
+Setup:
+├─ Three ultrasonic sensors (front, left, right)
+├─ Alert distance: 30 cm
+└─ Stop distance: 15 cm
+
+Algorithm:
+1. Read all three sensors
+2. If front < 30 cm: Alert (slower speed)
+3. If front < 15 cm: Stop
+4. If left < 30 cm: Turn right
+5. If right < 30 cm: Turn left
+6. Otherwise: Continue
+
+Result: Robot navigates around obstacles
+```
+
+### Light-Following (Phototaxis)
+
+```
+Setup:
+├─ Two light sensors (left, right)
+├─ Light source to follow
+└─ Ambient light subtraction
+
+Algorithm:
+1. Read left and right light levels
+2. Calculate difference
+3. If left brighter: Turn left
+4. If right brighter: Turn right
+5. If equal: Go straight
+
+Result: Robot moves toward light
+```
+
+---
+
+## Common Issues
+
+<Callout type="warn" title="Sensor Problems and Solutions">
+
+**Ultrasonic not detecting:**
+- Cause: Object too close (< 2cm) or too far
+- Cause: Soft material (absorbs sound)
+- Solution: Check range limits, use reflective surface
+
+**IR sensor unreliable:**
+- Cause: Ambient light interference
+- Cause: Sensor too high above surface
+- Solution: Shield from direct light, mount 2-3mm from surface
+
+**Temperature reading erratic:**
+- Cause: Poor circuit design (noise)
+- Cause: No delay between readings
+- Solution: Add capacitor (0.1µF), increase delay to 1 second
+
+**Multiple sensors interfering:**
+- Cause: Ultrasonic sensors trigger each other
+- Solution: Read sequentially with delays, use different frequencies
+
+**Slow sensor response:**
+- Cause: Using delay() in reading loop
+- Solution: Use interrupt or non-blocking timing
+
+</Callout>
+
+---
+
+## Best Practices
+
+**Sensor Mounting:**
+- Mount firmly (vibration causes noise)
+- Orient correctly (some sensors are directional)
+- Keep clean (dust/dirt reduces accuracy)
+- Protect from weather (if outdoor)
+
+**Electrical Integration:**
+- Add capacitors near power pins (0.1µF typical)
+- Keep sensor wires short (reduce noise)
+- Route sensor wires away from power lines
+- Use shielded cable for long runs
+
+**Software:**
+- Add filtering (average multiple readings)
+- Implement deadband (ignore small changes)
+- Use appropriate sampling rate (too fast = noise)
+- Calibrate before deployment
+
+**Testing:**
+- Test each sensor individually
+- Verify output range (0-1023 for 10-bit ADC)
+- Check response time
+- Test in target environment
+
+---
+
+## Summary
+
+**Sensor types:**
+- Passive (thermometer, light sensor)
+- Active (ultrasonic, IR distance)
+- Digital output (simple, binary)
+- Analog output (detailed, needs ADC)
+- Serial output (multi-sensor, I2C/SPI)
+
+**Common sensors for robotics:**
+- IR reflective: Line following
+- Ultrasonic: Obstacle detection
+- Temperature: Monitor systems
+- Light: Navigation toward light
+
+**Key specifications:**
+- Range: How far sensor can detect
+- Accuracy: How precise measurement is
+- Update rate: How fast sensor responds
+- Power consumption: Battery drain
+- Cost: Budget considerations
+
+**Integration:**
+- Proper mounting and orientation
+- Electrical filtering for noise reduction
+- Software filtering for stability
+- Testing in actual environment

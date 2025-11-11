@@ -1,0 +1,105 @@
+GRINDING & GRAINING – COMPLETE DETAILED NOTES
+
+PART–1 : GRINDING
+
+1. Introduction
+Grinding is a precision finishing machining process that removes very small quantities of material from the surface of a workpiece using a rotating abrasive wheel. Each abrasive grain on the wheel acts as a microscopic cutting edge, producing a smooth, accurate, and refined surface.
+
+Uses:
+- Improve dimensional accuracy
+- Achieve high surface finish
+- Sharpen cutting tools
+- Remove machining marks and surface defects
+
+2. Principle of Grinding
+The grinding wheel rotates at high speed. Each abrasive grain removes tiny chips from the workpiece. Continuous removal leads to a smooth and accurate surface.
+
+3. Grinding Wheel
+A grinding wheel consists of abrasive grains, bonding material, and pores (voids).
+
+Abrasive Materials:
+- Aluminium Oxide (Al2O3): For steel and ferrous metals
+- Silicon Carbide (SiC): For non-ferrous metals and glass
+- Diamond: For carbide tools and ceramics
+- Cubic Boron Nitride (CBN): For hardened steels
+
+Bond Types:
+- Vitrified Bond: General grinding
+- Resinoid Bond: High-speed grinding
+- Rubber Bond: Polishing wheels
+- Metal Bond: Diamond and precision wheels
+
+4. Types of Grinding Wheels
+- Straight Wheel: General surface and cylindrical grinding
+- Cylinder Wheel: Large surface grinding
+- Cup Wheel: Tool sharpening
+- Dish Wheel: Tool and die work
+- Segmented Wheel: Heavy stock removal
+- Diamond Wheel: Hard materials grinding
+
+5. Types of Grinding Processes
+- Surface Grinding: Flat surfaces
+- Cylindrical Grinding: Outer surfaces of round parts
+- Internal Grinding: Inside holes
+- Centerless Grinding: Mass production of rods, pins
+- Tool and Cutter Grinding: Sharpening cutting tools
+
+6. Grinding Parameters
+- Wheel Speed: Too high causes burns, too low gives poor finish
+- Feed Rate: High feed = rough finish; Low feed = smooth finish
+- Coolant: Reduces heat and increases wheel life
+
+7. Advantages
+- High accuracy and surface finish
+- Suitable for hard materials
+- Useful for sharpening tools
+
+8. Limitations
+- Slow material removal
+- Generates heat (needs coolant)
+- Requires skilled operator
+
+9. Applications
+- Machine tool manufacturing
+- Automotive engine components
+- Aerospace finishing
+- Tool sharpening
+
+
+PART–2 : GRAINING
+
+1. Introduction
+Graining is a surface finishing process used to create uniform texture or decorative patterns on metal surfaces. It improves appearance and removes minor scratches.
+
+Common applications:
+- Stainless steel panels
+- Aluminum sheets
+- Kitchen and architectural surfaces
+
+2. Purpose of Graining
+- Improve appearance
+- Remove minor defects
+- Reduce glare
+- Increase grip
+- Prepare for coating or polishing
+
+3. Tools Used in Graining
+- Abrasive Belt: Straight grain
+- Sandpaper: Fine manual finish
+- Wire Brush Wheel: Rough texture
+- Scotch-Brite Wheel: Satin finish
+- Flap Wheel: Even blended finish
+- Orbital Sander: Circular patterns
+
+4. Graining Patterns
+- Straight Grain: Single direction lines
+- Cross Grain: Two-direction texture
+- Circular Grain: Swirl patterns
+- Matte/Satin Finish: Soft, low-gloss surface
+
+5. Difference Between Grinding and Graining
+Grinding: For precision and dimensional accuracy using abrasive wheels.
+Graining: For appearance and texture using belts and brushes.
+
+Conclusion:
+Grinding focuses on accuracy and removal of material. Graining focuses on surface texture and visual finish. Both processes are important in manufacturing and finishing applications.

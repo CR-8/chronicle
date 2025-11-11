@@ -1,0 +1,797 @@
+---
+title: Encoders and Feedback Systems
+description: Rotary encoders, linear encoders, current sensors, position feedback, odometry, motion verification, and closed-loop control
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Encoders and Feedback Systems
+
+Feedback systems allow robots to verify motion, measure distance, and enable precise control. Without feedback, robots become victims of slip and error.
+
+## Feedback Necessity
+
+### Open-Loop Control (No Feedback)
+
+```
+Motor command → Robot moves → Hope it worked!
+
+Issues:
+├─ Wheel slip: Commands 1m, travels 0.8m
+├─ Battery voltage drop: Speed reduces over time
+├─ Uneven terrain: Different wheel speeds
+├─ Load variations: Heavy cargo slows robot
+└─ Accumulating error: 100 steps = ±20% error
+
+Result: Robot drifts from intended path
+```
+
+### Closed-Loop Control (With Feedback)
+
+```
+Command → Robot moves → Measure → Compare → Adjust
+                       └─────────────────────┘
+                         Feedback loop
+
+Benefits:
+✓ Corrects for slip automatically
+✓ Adapts to battery voltage changes
+✓ Handles terrain variations
+✓ Precise movement despite load
+✓ Error doesn't accumulate
+```
+
+---
+
+## Rotary Encoders
+
+### Mechanical (Shaft) Encoder
+
+Rotating disc with teeth:
+
+```
+Physical structure:
+         Disc with N holes
+              ↓
+    ┌────────────┐
+    │  O O O O   │ ← N equally-spaced holes
+    │ O         │
+    │  O       O │
+    │    O O O   │
+    └────────────┘
+    
+Fixed sensor (optical or magnetic)
+     ↓
+  Detects holes as disc rotates
+```
+
+**Operation:**
+
+```
+As disc rotates:
+One complete rotation = N pulses
+
+Resolution = 360° / N
+├─ 20-hole disc: 18° per pulse
+├─ 60-hole disc: 6° per pulse
+├─ 360-hole disc: 1° per pulse
+└─ More holes = Better resolution
+
+Distance = (Pulses × Wheel_circumference) / Holes_per_rotation
+```
+
+**Common Types:**
+
+```
+Optical encoder:
+├─ Infrared LED and photodiode
+├─ Detects light through holes
+├─ Most common, cheap ($10-30)
+└─ Works on metal or plastic
+
+Magnetic encoder:
+├─ Magnet and hall effect sensor
+├─ Detects magnetic field through holes
+├─ More robust, works through plastic
+└─ Slightly more expensive ($15-40)
+
+Absolute encoder:
+├─ Returns exact position (not relative)
+├─ More expensive ($100+)
+└─ Overkill for most robots
+```
+
+### Incremental Encoder
+
+Counts pulses as shaft rotates:
+
+```
+Two channel outputs:
+├─ Channel A (Square wave 1)
+└─ Channel B (Square wave 2, 90° offset)
+
+    Channel A: ┌─┐ ┌─┐ ┌─┐
+               └─┘ └─┘ └─┘
+    
+    Channel B: ┌─┐ ┌─┐ ┌─┐
+             ┌─┘ └─┘ └─┘
+
+Direction detection:
+If A leads B: Forward rotation
+If B leads A: Reverse rotation
+
+Speed = (Pulses_per_second / Holes_per_rotation) × 360°
+```
+
+**Example: Robot Encoder**
+
+```
+Motor encoder: 48 pulses/rotation
+Wheel diameter: 10 cm (circumference = 31.4 cm)
+
+Per pulse movement: 31.4 cm / 48 = 6.54 mm
+Distance = Pulse_count × 6.54 mm
+
+If wheel rotates 100 times:
+Distance = 100 × 48 × 6.54 mm = 314 cm (≈ π meters)
+```
+
+### Quadrature Decoding
+
+Processing encoder outputs:
+
+```
+State machine:
+    A B State Motion
+    0 0   0   No motion
+    0 1   1   Forward (A→B)
+    1 1   2   No motion
+    1 0   3   Backward (B→A)
+
+Detect state changes to count pulses accurately
+
+Arduino library: Use digitalRead() on both pins
+Or use hardware interrupt for speed
+```
+
+**Code Example - Quadrature Decoding:**
+
+```cpp
+volatile long encoderCount = 0;
+volatile int lastA = 0;
+volatile int lastB = 0;
+
+// ISR (Interrupt Service Routine)
+void encoderISR() {
+  int currentA = digitalRead(ENC_A);
+  int currentB = digitalRead(ENC_B);
+  
+  if (lastA != currentA) {
+    if (lastB == currentA) {
+      encoderCount++;  // Forward
+    } else {
+      encoderCount--;  // Backward
+    }
+    lastA = currentA;
+  }
+}
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(ENC_A, INPUT);
+  pinMode(ENC_B, INPUT);
+  
+  attachInterrupt(digitalPinToInterrupt(ENC_A), encoderISR, CHANGE);
+}
+
+void loop() {
+  Serial.print("Pulses: ");
+  Serial.println(encoderCount);
+  
+  delay(1000);
+}
+```
+
+---
+
+## Linear Encoders
+
+### String Potentiometer
+
+Rotary encoder on retractable cable:
+
+```
+Physical setup:
+    Cable wound on spool
+           ↓
+    ┌──────────────┐
+    │   Spool      │ ← Connected to potentiometer
+    │              │
+    └──┬───────────┘
+       │
+       │ Cable extends/retracts
+       │ (Spool rotates)
+       │
+    ╭─────╮
+    │ Load│ ← Cable pulls load
+    ╰──────╯
+```
+
+**Properties:**
+
+```
+Range: Up to 10 meters (typical)
+Resolution: Depends on potentiometer (±1% typical)
+Output: Analog voltage 0-5V (proportional to distance)
+Cost: $50-150
+Best for: Vertical actuators, sliding tables
+```
+
+**Calibration:**
+
+```cpp
+float stringLength;
+int rawValue = analogRead(A0);
+float distance = (rawValue / 1023.0) * MAX_DISTANCE;
+
+// Calibration:
+// 1. Measure actual position at various points
+// 2. Create lookup table
+// 3. Use map() or interpolation for accuracy
+```
+
+### LVDT (Linear Variable Differential Transformer)
+
+Position sensor for linear motion:
+
+```
+Operating principle:
+├─ Primary coil (AC powered)
+├─ Secondary coils (two, opposite sides)
+├─ Moving ferrite core (connected to load)
+└─ Core position changes voltage difference
+
+Output: Voltage proportional to core displacement
+±10V typical, centered at 0V (middle position)
+```
+
+**Advantages:**
+```
+✓ Very accurate (±0.05%)
+✓ No contact (no wear)
+✓ Robust (works in harsh environments)
+✓ Large range possible
+```
+
+**Disadvantages:**
+```
+✗ Expensive ($100-500)
+✗ Requires AC excitation circuit
+✗ Complex signal processing
+```
+
+---
+
+## Speed Feedback
+
+### Hall Effect Sensor
+
+Detects magnetic field (proximity):
+
+```
+Operating principle:
+Moving magnet
+       ↓
+   ┌────┐
+   │ ⊙N⊙ │ ← Hall effect IC detects field
+   │ ⊙S⊙ │
+   └────┘
+       ↓
+   Output: HIGH when magnet present
+           LOW when magnet absent
+```
+
+**Motor Application:**
+
+```
+Brushless motor uses Hall sensors to know
+exactly when to switch winding current
+(commutation = switching energy between windings)
+
+For speed measurement:
+├─ Magnet on wheel
+├─ Hall sensor detects each pass
+├─ Measure time between pulses
+└─ Speed = Distance_per_pulse / Time_between_pulses
+```
+
+**Code Example - Speed Measurement:**
+
+```cpp
+volatile unsigned long lastPulseTime = 0;
+volatile unsigned long pulseInterval = 0;
+
+void hallISR() {
+  unsigned long currentTime = micros();
+  pulseInterval = currentTime - lastPulseTime;
+  lastPulseTime = currentTime;
+}
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(HALL_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(HALL_PIN), hallISR, RISING);
+}
+
+void loop() {
+  // Speed = Distance_per_pulse / Time_between_pulses
+  float wheelCircumference = 31.4;  // cm
+  float speed_cm_per_s = wheelCircumference * 1e6 / pulseInterval;
+  
+  Serial.print("Speed: ");
+  Serial.print(speed_cm_per_s);
+  Serial.println(" cm/s");
+  
+  delay(500);
+}
+```
+
+---
+
+## Current Sensors
+
+Measure motor current to detect load/stall:
+
+### ACS712 (Hall Effect Current Sensor)
+
+```
+Principle:
+Current flows through shunt resistor
+     ↓
+Hall effect IC measures magnetic field
+     ↓
+Output: Voltage proportional to current
+
+Sensitivity: 185 mV/A (adjustable model)
+Range: ±5A, ±20A, or ±30A models
+Output: ~2.5V at 0A (bipolar)
+```
+
+**Pinout:**
+
+```
+Current in  → [1] [8] ← VCC
+Current in  → [2] [7] ← GND
+Sensitive   → [3] [6] ← Output
+Sensitive   → [4] [5] ← Filter cap
+```
+
+**Code Example:**
+
+```cpp
+void setup() {
+  Serial.begin(9600);
+  pinMode(A0, INPUT);
+}
+
+void loop() {
+  int rawValue = analogRead(A0);
+  float voltage = (rawValue / 1023.0) * 5.0;
+  
+  // ACS712-5A: 185mV/A, centered at 2.5V
+  float current = (voltage - 2.5) / 0.185;
+  
+  Serial.print("Current: ");
+  Serial.print(current);
+  Serial.println(" A");
+  
+  delay(100);
+}
+```
+
+### Stall Detection
+
+```
+Algorithm:
+1. Command motor to move
+2. Read current sensor
+3. If current > threshold for > duration:
+   Robot is stalled (blocked, overloaded)
+4. Action: Stop motor, reverse, or alert
+
+Example thresholds:
+├─ Normal operation: 0.5-2A
+├─ Stall detection: > 3A for > 1 second
+└─ Action: Stop before motor burns out
+```
+
+---
+
+## Odometry
+
+Estimating robot position from wheel movement:
+
+### Basic 2-Wheel Odometry
+
+```
+Robot with two independently driven wheels:
+
+        Left wheel        Right wheel
+            ↓                   ↓
+         Encoder           Encoder
+            ↓                   ↓
+    Distance_left   Distance_right
+            └────────────┬─────────┘
+                         ↓
+              Calculate robot position
+```
+
+**Calculation:**
+
+```
+Assuming wheels at distance L apart:
+Left wheel moves: ΔL_left
+Right wheel moves: ΔL_right
+
+Distance traveled forward:
+ΔD = (ΔL_left + ΔL_right) / 2
+
+Angle turned:
+ΔΘ = (ΔL_right - ΔL_left) / L
+
+Position update:
+X_new = X + ΔD × cos(Θ)
+Y_new = Y + ΔD × sin(Θ)
+Θ_new = Θ + ΔΘ
+```
+
+**Code Example - Simple Odometry:**
+
+```cpp
+// Constants
+float wheelDiameter = 10.0;  // cm
+float wheelSeparation = 25.0; // cm center-to-center
+float pulsesPerRotation = 48;
+float metersPerPulse = (wheelDiameter * 3.14159 / 100) / pulsesPerRotation;
+
+// Position tracking
+float x = 0, y = 0, theta = 0;
+volatile long leftCount = 0, rightCount = 0;
+
+void updateOdometry() {
+  static long lastLeftCount = 0, lastRightCount = 0;
+  
+  // Calculate distance moved per wheel
+  long leftDelta = leftCount - lastLeftCount;
+  long rightDelta = rightCount - lastRightCount;
+  
+  float leftDistance = leftDelta * metersPerPulse * 100;  // cm
+  float rightDistance = rightDelta * metersPerPulse * 100;
+  
+  // Calculate forward distance and turn angle
+  float forwardDistance = (leftDistance + rightDistance) / 2;
+  float turnAngle = (rightDistance - leftDistance) / wheelSeparation;
+  
+  // Update position
+  x += forwardDistance * cos(theta);
+  y += forwardDistance * sin(theta);
+  theta += turnAngle;
+  
+  lastLeftCount = leftCount;
+  lastRightCount = rightCount;
+}
+
+void loop() {
+  updateOdometry();
+  
+  Serial.print("X:");
+  Serial.print(x);
+  Serial.print(" Y:");
+  Serial.print(y);
+  Serial.print(" Θ:");
+  Serial.println(theta);
+  
+  delay(100);
+}
+```
+
+### Odometry Drift
+
+```
+Problem: Errors accumulate!
+
+Sources of error:
+├─ Wheel diameter uncertainty (±2%)
+├─ Unequal wheels (one slightly larger)
+├─ Wheel slip (1-5% depending on surface)
+├─ Gyro/angle sensor not included
+└─ Rounding errors in code
+
+Drift rate: ~1% per meter traveled
+After 100m: Position error ~1m!
+
+Solutions:
+✓ Use IMU (inertial measurement unit) for angle
+✓ Use LIDAR or camera for periodic resets
+✓ Calibrate wheels regularly
+✓ Use higher resolution encoders
+✓ Careful code (floating point precision)
+```
+
+---
+
+## IMU (Inertial Measurement Unit)
+
+Measures acceleration and rotation:
+
+### MPU6050 (Popular 6-DOF IMU)
+
+```
+Sensors:
+├─ Accelerometer (3 axes): Measures acceleration
+├─ Gyroscope (3 axes): Measures rotation rate
+└─ Temperature sensor (bonus)
+
+I2C interface: Easy Arduino connection
+Cost: $5-15
+```
+
+**Gyroscope Measurements:**
+
+```
+Gyro output: Angular velocity (°/s)
+
+Integration to get angle:
+Angle = Initial_angle + ∫ angular_velocity dt
+
+Example:
+├─ Rotating 360°/s (fast spin)
+├─ Sample every 100ms
+├─ Angle_change_per_sample = 360 × 0.1 = 36°
+└─ 10 samples = 360° (full rotation)
+```
+
+**Code Example - IMU + Odometry:**
+
+```cpp
+#include <Wire.h>
+#include <MPU6050.h>
+
+MPU6050 mpu;
+float theta = 0;
+unsigned long lastTime = 0;
+
+void setup() {
+  Serial.begin(9600);
+  Wire.begin();
+  mpu.initialize();
+}
+
+void loop() {
+  // Read gyro rotation rate
+  float gyroZ = mpu.getRotationZ() / 131.0;  // Convert to °/s
+  
+  // Time since last update
+  unsigned long currentTime = millis();
+  float deltaTime = (currentTime - lastTime) / 1000.0;
+  lastTime = currentTime;
+  
+  // Integrate gyro to get heading
+  theta += gyroZ * deltaTime;
+  
+  Serial.print("Heading: ");
+  Serial.println(theta);
+  
+  delay(10);
+}
+```
+
+---
+
+## Position Verification
+
+### LIDAR (Light Detection and Ranging)
+
+Laser-based distance scanning:
+
+```
+Principle:
+Laser beam rotates 360°
+     ↓
+Detects distance to objects in all directions
+     ↓
+Creates distance map
+
+Point cloud: (angle, distance) pairs
+├─ 400+ points per rotation
+├─ Rotation rate: 5-10 Hz typical
+└─ Range: 1-30 meters
+
+Usage:
+✓ Simultaneous Localization and Mapping (SLAM)
+✓ Obstacle detection
+✓ Position verification
+```
+
+**Cost:**
+```
+Budget ($50-200):
+├─ Neato LIDAR: $100 used parts
+├─ SLAMTEC RPLidar: $100-200
+└─ Limited range, slower
+
+Professional ($500+):
+├─ Sick LMS111: Excellent range/speed
+├─ Hokuyo UST-10: Very fast
+└─ Automotive-grade quality
+```
+
+### Camera-Based Localization
+
+```
+Visual odometry:
+├─ Compare consecutive camera frames
+├─ Detect feature motion
+├─ Estimate distance traveled
+└─ More accurate than wheel odometry
+
+Advantages:
+✓ Doesn't drift like wheel odometry
+✓ Works on any surface
+✓ Vision-based obstacle avoidance
+
+Disadvantages:
+✗ Computationally intensive
+✗ Fails in poor lighting
+✗ Requires image processing skills
+```
+
+---
+
+## Closed-Loop Motor Control
+
+### PID Controller with Feedback
+
+```
+Target velocity: 100 RPM
+Current velocity: 95 RPM (from encoder)
+Error: 5 RPM
+
+Controller adjustment:
+Motor_command = P×Error + I×Integral_error + D×Error_rate
+
+Result:
+Voltage increases slightly
+Motor speed increases to 100 RPM
+Error becomes zero
+Controller reduces voltage
+Steady state achieved!
+```
+
+**Motor Speed Control Code:**
+
+```cpp
+float setpoint = 100;  // RPM
+float kP = 0.5;
+float kI = 0.1;
+float kD = 0.2;
+
+float error = 0;
+float integral = 0;
+float lastError = 0;
+
+void loop() {
+  // Read encoder to get current speed
+  float currentSpeed = getEncoderSpeed();
+  
+  error = setpoint - currentSpeed;
+  integral += error;
+  float derivative = error - lastError;
+  
+  float output = kP * error + kI * integral + kD * derivative;
+  
+  // Limit output to valid range
+  output = constrain(output, -255, 255);
+  
+  // Set motor speed
+  analogWrite(MOTOR_PIN, abs(output));
+  digitalWrite(MOTOR_DIR, output > 0 ? HIGH : LOW);
+  
+  lastError = error;
+  
+  delay(50);  // Update every 50ms
+}
+```
+
+---
+
+## Real-World Example: Position Tracking
+
+Complete system combining multiple feedback sources:
+
+```
+Robot: Wheeled platform with LIDAR and encoders
+
+Sensors:
+├─ Two wheel encoders: Dead reckoning
+├─ Gyroscope: Heading verification
+└─ LIDAR: Periodic position correction
+
+Algorithm:
+1. Use encoders for fast position updates
+2. Use gyro to verify heading accuracy
+3. Every 1 second:
+   - Scan with LIDAR
+   - Compare expected vs actual surroundings
+   - If mismatch: Correct position
+4. Continue motion
+
+Result:
+✓ Fast response (using encoders)
+✓ Low drift (gyro verification)
+✓ No accumulation (LIDAR correction)
+✓ Robust to wheel slip
+```
+
+---
+
+## Troubleshooting Feedback Systems
+
+<Callout type="warn" title="Encoder and Feedback Issues">
+
+**No encoder pulses:**
+- Cause: Encoder not connected, broken cable, sensor misaligned
+- Solution: Check connections, realign sensor to disc
+
+**Intermittent pulses:**
+- Cause: Loose connection, dirty encoder disc
+- Solution: Reseat connectors, clean disc with isopropyl alcohol
+
+**Encoder counts backward:**
+- Cause: Encoder wires reversed
+- Solution: Swap Channel A and B, or reverse in software
+
+**Position drifts over distance:**
+- Cause: Wheel slip, encoder resolution too low
+- Solution: Increase encoder resolution, use LIDAR for correction
+
+**Gyro drift:**
+- Cause: Temperature change, gyro bias
+- Solution: Calibrate before motion, use accelerometer fusion
+
+**Oscillating control:**
+- Cause: PID gains too aggressive
+- Solution: Reduce P and D gains, start conservative and tune
+
+</Callout>
+
+---
+
+## Summary
+
+**Feedback necessity:**
+- Without feedback: Robots drift with slip and wear
+- With feedback: Corrects for errors automatically
+
+**Encoders:**
+- Rotary: Most common for mobile robots
+- Linear: For sliding mechanisms
+- Quadrature: Detects direction
+
+**Speed feedback:**
+- Hall sensors: Magnet detection
+- Current measurement: Detects stall
+- Useful for commutation and stall protection
+
+**Odometry:**
+- Combines wheel encoders for position
+- Drifts over distance (requires correction)
+- Fusion with IMU or LIDAR improves accuracy
+
+**Complete systems:**
+- Combine multiple sensors for robustness
+- Wheel encoders for fast updates
+- LIDAR/camera for drift correction
+- PID loops for precise control
+- Periodic verification against known features

@@ -1,0 +1,70 @@
+---
+title: मोटर ड्राइवर
+description: L298N, L293D, BTS7960, DRV8833, वायरिंग, और Arduino कोड
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# मोटर ड्राइवर
+
+डीसी मोटर को नियंत्रित करने के लिए।
+
+## L298N (सर्वश्रेष्ठ शुरुआत के लिए)
+
+```
+पिन:
+├─ IN1, IN2: मोटर A नियंत्रण
+├─ IN3, IN4: मोटर B नियंत्रण
+├─ ENA, ENB: PWM गति
+├─ GND: ग्राउंड
+└─ +12V: शक्ति
+
+Truth Table (मोटर A):
+IN1 | IN2 | क्रिया
+────┼─────┼─────────
+ 1  │  0  │ आगे
+ 0  │  1  │ पीछे
+ 0  │  0  │ तटस्थ
+ 1  │  1  │ ब्रेक
+
+ENA = 0: बंद
+ENA = 128: 50%
+ENA = 255: 100%
+```
+
+## Arduino कोड उदाहरण
+
+```cpp
+#define IN1 8
+#define IN2 9
+#define ENA 10
+
+void setup() {
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(ENA, OUTPUT);
+}
+
+void loop() {
+  // आगे
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, 200);
+  delay(2000);
+  
+  // पीछे
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  analogWrite(ENA, 200);
+  delay(2000);
+}
+```
+
+---
+
+## सारांश
+
+**L298N:** 2 मोटर तक
+**DRV8833:** कॉम्पैक्ट
+**बड़े प्रोजेक्ट:** BTS7960

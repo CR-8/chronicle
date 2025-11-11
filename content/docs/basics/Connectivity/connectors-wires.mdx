@@ -1,0 +1,359 @@
+---
+title: Connectors and Wires
+description: Connector types (XT60, JST, bullet), wire gauges (AWG), insulation, color coding, and proper sizing for robotic circuits
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Connectors and Wires
+
+Proper connectors and wire sizing are critical for safety, reliability, and performance. Wrong choices lead to overheating, fires, or system failures.
+
+## Wire Gauge Selection
+
+### AWG (American Wire Gauge)
+
+Wire size for different currents:
+
+| AWG | Diameter | Current (safe) | Resistance | Best For |
+|-----|----------|----------|------------|----------|
+| **28 AWG** | 0.3 mm | 0.5 A | High | Signal wires |
+| **24 AWG** | 0.5 mm | 2 A | Medium | Sensor wires |
+| **20 AWG** | 0.8 mm | 5 A | Medium | Motor signals |
+| **16 AWG** | 1.3 mm | 10 A | Low | Power distribution |
+| **14 AWG** | 1.6 mm | 15 A | Low | Main power |
+| **12 AWG** | 2.0 mm | 20 A | Very low | High-power systems |
+| **10 AWG** | 2.6 mm | 30 A | Very low | Heavy-duty |
+
+**Rule of thumb:**
+```
+Derating factor: 80% of table value for safety margin
+
+Example: 16 AWG rated 10A
+Safe continuous: 10A × 0.8 = 8A recommended
+```
+
+### Voltage Drop Over Wire
+
+```
+V_drop = Current × Resistance × Length
+
+16 AWG (~0.004 Ω/foot):
+1 foot @ 5A = 0.02V (acceptable)
+10 feet @ 5A = 0.2V (5% of 5V, borderline)
+
+Minimum requirement: < 3% voltage drop
+Max length = (3% × Supply V) / (I × wire resistance)
+```
+
+---
+
+## Common Connectors
+
+### XT60 (Most Popular)
+
+```
+Current rating: 60A continuous, 150A burst
+Voltage: 250V max
+Uses: Battery to ESC, PDB
+
+Connector structure:
+┌─ Positive (large contact)
+├─ Negative (large contact)
+└─ Shroud (prevents short circuit)
+
+Advantages:
+✓ Cheap (~$1 pair)
+✓ Common in drones
+✓ Built-in shroud prevents shorts
+✓ Easy soldering
+
+Disadvantages:
+✗ Not suitable for > 60A continuous
+✗ Can wear out quickly with frequent plugging
+```
+
+### XT90 (High-Current)
+
+```
+Current rating: 90A continuous, 200A burst
+Voltage: 250V max
+
+Advantages:
+✓ Higher current than XT60
+✓ Spark-prevention circuit (optional)
+✓ Robust contacts
+
+Disadvantages:
+✗ More expensive ($2-3)
+✗ Slightly larger than XT60
+```
+
+### JST Connectors
+
+```
+PH series: 2.0mm spacing, small robot applications
+XH series: 2.54mm spacing, common in hobby
+
+Current: 2-5A typical (small)
+Voltage: 250V
+
+Use: Servo connectors, small battery packs
+Advantage: Compact
+Disadvantage: Low current, easy to disconnect accidentally
+```
+
+### Bullet Connectors
+
+```
+Sizes: 2.0mm, 3.5mm, 5.5mm
+Current: 5A (2.0mm) to 30A (5.5mm)
+Voltage: 250V
+
+Use: Motor to ESC connections
+Simple design, cheap, widely available
+```
+
+### Tamiya Connector
+
+```
+Old standard (still used in some applications)
+Current: 10A typical
+Issues: Unreliable, loose connections
+Modern: Avoid, use XT60 instead
+```
+
+---
+
+## Connector Selection by Current
+
+```
+< 2A: JST PH/XH
+2-10A: XT60, 3.5mm bullet
+10-30A: XT90, 5.5mm bullet, Anderson PowerPole
+> 30A: Custom solution, heavy-duty connector
+```
+
+---
+
+## Proper Soldering
+
+### Solder Joint Anatomy
+
+```
+Good joint:           Bad joint:
+┌──────┐              ┌──┐ ← Insufficient solder
+│      │              │ │
+└──────┘ Smooth       └─┘ Lumpy/cold joint
+Shiny, convex        Dull, concave
+```
+
+### Solder Quality
+
+**Lead-free (modern):**
+- Melting point: 217-227°C
+- Better for environment
+- Slightly harder to work with
+
+**Lead-based (old):**
+- Melting point: 183°C
+- Easier to solder
+- Health hazard
+
+### Soldering Steps
+
+1. Heat both parts (connector and wire)
+2. Apply solder to joint (not directly to iron!)
+3. Heat until solder flows smoothly
+4. Remove iron and let cool
+5. Result: Strong, shiny joint
+
+**Common mistakes:**
+- Using too much solder (makes joint weak)
+- Cold joint (solder didn't melt properly)
+- Using flux-less solder (weak joints)
+
+---
+
+## Wire Color Coding
+
+### Power Distribution
+
+```
+Red: Positive (+)
+Black: Negative/Ground (-)
+Yellow: Switched power
+Orange: Auxiliary power
+```
+
+### Control Signals
+
+```
+White: Signal/Clock
+Green: Signal/Data
+Blue: Signal ground reference
+```
+
+### Best Practice for Robotics
+
+```
+Main power:
+- Red thick wire from battery +
+- Black thick wire from battery -
+
+Motor connections:
+- Power lines in red/black
+- Signal wires in smaller gauge
+- Label wires with shrink tube
+```
+
+---
+
+## Wire Harness Construction
+
+### Bundling
+
+Organize wires in same direction:
+
+```
+Good:   Wires bundled together, velcro strap
+        ↓
+Bad:    Wires scattered all over robot
+        ↗ ↙ ↖
+```
+
+### Labeling
+
+Use heat shrink tube with labels:
+
+```
+Format: [FUNCTION]-[PIN]
+
+Examples:
+- MOT_LEFT_PWM-D3
+- BATT_POS (marked with red)
+- I2C_SDA-A4
+
+Benefits:
+✓ Easy troubleshooting
+✓ Maintenance simplification
+✓ Documentation
+```
+
+### Strain Relief
+
+Prevent wire breakage at connector:
+
+```
+Without relief: Wire flexes right at connector → breaks
+    [Connector]
+         ↓ ← Flexing here
+
+With relief: Strain distributed over longer area
+    [Connector]
+    [→Strain relief boot→]
+              ↓ ← Bending here (better)
+```
+
+---
+
+## Connector Maintenance
+
+### Oxidation Prevention
+
+Over time, contacts oxidize (turn green/white):
+
+```
+Contact cleaner: Use electronics-grade contact spray
+Clean annually: Especially if robot not used regularly
+Protecting spray: Thin coating prevents oxidation
+```
+
+### Preventing Loose Connections
+
+```
+Problem: Connection feels loose after many cycles
+
+Solutions:
+1. Check solder joint (might be cold)
+2. Tighten connector screw (if applicable)
+3. Use conformal coating (prevents corrosion)
+4. Replace connector (if worn out)
+```
+
+---
+
+## Safety Practices
+
+<Callout type="warn" title="Electrical Safety">
+
+**High-current hazards:**
+- ⚠️ Never short battery terminals directly
+- ⚠️ Use fuses/breakers for over-current protection
+- ⚠️ Never modify high-current connectors while powered
+- ⚠️ Keep water away from high-voltage systems (> 30V)
+
+**Safe practices:**
+✓ Always use correct wire gauge
+✓ Check connectors before plugging in
+✓ Use insulated tools for high-voltage work
+✓ Wear insulated gloves for > 50V systems
+✓ Never work on live circuits without need
+
+</Callout>
+
+---
+
+## Common Connector Problems
+
+| Problem | Cause | Fix |
+|---------|-------|-----|
+| **Loose connection** | Worn connector, cold solder | Replace connector or re-solder |
+| **Connector won't fit** | Bent pins | Gently straighten or replace |
+| **Melted connector** | Excessive current | Use larger gauge wire, bigger connector |
+| **Green oxidation** | Exposure to moisture | Clean with contact cleaner |
+| **Intermittent connection** | Corroded contact | Clean terminals, apply dielectric grease |
+
+---
+
+## Checklist for Connector Installation
+
+- [ ] Correct wire gauge for current
+- [ ] Connector rated for voltage and current
+- [ ] Solder joint shiny and smooth
+- [ ] No exposed copper (safety hazard)
+- [ ] Proper heat shrink or insulation
+- [ ] Wire labeled clearly
+- [ ] Strain relief installed
+- [ ] Connection tested before deployment
+- [ ] Fuse/breaker rated appropriately
+- [ ] Polarity correct (+ to +, − to −)
+
+---
+
+## Summary
+
+**Wire Gauge Selection:**
+
+✓ 28 AWG: Signal only
+✓ 20 AWG: Servo/sensor power
+✓ 16 AWG: Motor power (< 10A)
+✓ 12 AWG: High-current (> 10A)
+✓ Always derate to 80% of table value
+
+**Connector Selection:**
+
+✓ < 10A: XT60 (standard for small robots)
+✓ 10-50A: XT90 (medium-power robots)
+✓ Servo/logic: JST connectors
+✓ > 50A: Heavy-duty connectors
+
+**Best Practices:**
+
+✓ Use correct gauge wire
+✓ Solder properly (shiny joint)
+✓ Label all connections
+✓ Add strain relief
+✓ Check polarity before plugging
+✓ Maintain regularly (clean contacts)

@@ -1,0 +1,383 @@
+---
+title: Motor Drivers
+description: L298N, L293D, BTS7960, DRV8833 specifications, pinouts, connections, and how to interface with microcontrollers
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Motor Drivers
+
+Motor drivers are the interface between the microcontroller (logic level) and high-power motors (requiring much higher current). They amplify the control signal and switch motor power.
+
+## Why Motor Drivers?
+
+### The Problem
+
+Microcontroller outputs:
+```
+Maximum current: ~40 mA
+Maximum voltage: 5V
+
+Motor needs:
+Minimum current: 1-2 A
+Voltage: 6-24V
+```
+
+Connecting directly = instant failure!
+
+**Solution: Motor driver IC**
+
+```
+Microcontroller (5V, 40mA) → Motor driver IC → Motor (12V, 10A)
+                            (amplifies signal)
+```
+
+---
+
+## Common Motor Driver ICs
+
+### L298N (Most Popular)
+
+**Specifications:**
+```
+Max current: 2A per channel (3A peak)
+Voltage range: 5-35V
+Logic voltage: 5V
+Channels: 2 (two motors or one stepper)
+Type: Dual H-bridge
+Cost: ~$3-5
+```
+
+**Pinout:**
+
+```
+        L298N
+    ┌───────────┐
+    │1  GND  16│ ← Reference/ground
+    │2  IN1  15│ ← Motor A direction 1
+    │3  IN2  14│ ← Motor A direction 2
+    │4  OUT1 13│ ← Motor A output 1 (to motor)
+    │5  OUT2 12│ ← Motor A output 2 (to motor)
+    │6  GND  11│ ← Ground
+    │7  +5V  10│ ← Logic supply
+    │8  ENA   9│ ← Motor A speed (PWM)
+    │   ...
+    │   INB, ENB, OUTB, etc.
+    └───────────┘
+```
+
+**Advantages:**
+✓ Cheap and reliable
+✓ Easy to use
+✓ Works with 5V logic
+✓ High voltage range
+
+**Disadvantages:**
+✗ Only 2A per channel (limited)
+✗ Heat dissipation needed
+✗ Mechanical relay slow switching
+
+---
+
+### L293D (Compact version)
+
+**Specifications:**
+```
+Max current: 600mA per channel
+Voltage range: 4.5-36V
+Logic voltage: 5V
+Channels: 2
+Type: Quad transistor driver
+Cost: ~$2-3
+```
+
+**Uses:** Small motors, educational robots
+
+**vs L298N:**
+- L293D: Lower current, more compact, cheaper
+- L298N: Higher current, slightly larger
+
+---
+
+### BTS7960 (High-current)
+
+**Specifications:**
+```
+Max current: 43A continuous
+Voltage range: 5-27V
+Logic voltage: 3.3-5V
+Channels: 2
+Type: Integrated MOSFET
+Cost: ~$15-20
+```
+
+**For:** Powerful robots, heavy-duty applications
+
+**Advantages:**
+✓ Very high current capability
+✓ Efficient (MOSFET-based)
+✓ Built-in protection
+✓ Better heat dissipation
+
+**Disadvantages:**
+✗ More expensive
+✗ Overkill for small robots
+✗ Needs good PCB layout
+
+---
+
+### DRV8833 (Small/ultra-compact)
+
+**Specifications:**
+```
+Max current: 2A per channel
+Voltage range: 2.7-10.8V
+Logic voltage: 3.3V
+Channels: 2
+Type: Dual H-bridge
+Cost: ~$5-8
+```
+
+**For:** Micro robots, low-voltage systems
+
+---
+
+## L298N Wiring Example
+
+### Two DC Motors Setup
+
+```
+Power Supply (12V):
+    ├─→ L298N +12V (pin 4, 11)
+    ├─→ GND (pin 2, 13)
+    └─→ Capacitor (filtering)
+
+Motor A:
+    ├─→ OUT1 (pin 2) → Motor +
+    ├─→ OUT2 (pin 3) → Motor −
+    └─→ Motor ground → GND
+
+Motor B:
+    ├─→ OUT3 (pin 12) → Motor +
+    ├─→ OUT4 (pin 13) → Motor −
+    └─→ Motor ground → GND
+
+Microcontroller (Arduino):
+    ├─→ Pin 5V → L298N +5V (pin 16)
+    ├─→ Pin GND → L298N GND (pin 1)
+    ├─→ Digital pin 8 → IN1 (pin 5)
+    ├─→ Digital pin 9 → IN2 (pin 6)
+    ├─→ PWM pin 3 → ENA (pin 9)
+    ├─→ Digital pin 10 → IN3 (pin 12)
+    ├─→ Digital pin 11 → IN4 (pin 13)
+    └─→ PWM pin 6 → ENB (pin 8)
+```
+
+### Truth Table (L298N)
+
+For Motor A (IN1, IN2, ENA):
+
+| ENA (PWM) | IN1 | IN2 | Motor Action |
+|-----------|-----|-----|--------------|
+| 0% | X | X | Stop (coast) |
+| 50% | 1 | 0 | Forward half-speed |
+| 100% | 1 | 0 | Forward full-speed |
+| 100% | 0 | 1 | Backward full-speed |
+| 100% | 1 | 1 | Stop (brake) |
+| 100% | 0 | 0 | Stop (coast) |
+
+---
+
+## Arduino Code Example
+
+### Basic Motor Control
+
+```cpp
+// L298N Motor A
+const int motorA_IN1 = 8;
+const int motorA_IN2 = 9;
+const int motorA_ENA = 3;  // PWM
+
+// L298N Motor B
+const int motorB_IN1 = 10;
+const int motorB_IN2 = 11;
+const int motorB_ENB = 6;  // PWM
+
+void setup() {
+  pinMode(motorA_IN1, OUTPUT);
+  pinMode(motorA_IN2, OUTPUT);
+  pinMode(motorA_ENA, OUTPUT);
+  pinMode(motorB_IN1, OUTPUT);
+  pinMode(motorB_IN2, OUTPUT);
+  pinMode(motorB_ENB, OUTPUT);
+}
+
+void forward(int speed) {
+  // Both motors forward
+  digitalWrite(motorA_IN1, HIGH);
+  digitalWrite(motorA_IN2, LOW);
+  analogWrite(motorA_ENA, speed);
+  
+  digitalWrite(motorB_IN1, HIGH);
+  digitalWrite(motorB_IN2, LOW);
+  analogWrite(motorB_ENB, speed);
+}
+
+void backward(int speed) {
+  // Both motors backward
+  digitalWrite(motorA_IN1, LOW);
+  digitalWrite(motorA_IN2, HIGH);
+  analogWrite(motorA_ENA, speed);
+  
+  digitalWrite(motorB_IN1, LOW);
+  digitalWrite(motorB_IN2, HIGH);
+  analogWrite(motorB_ENB, speed);
+}
+
+void turnLeft(int speed) {
+  // Left slower, right faster
+  analogWrite(motorA_ENA, speed / 2);
+  analogWrite(motorB_ENB, speed);
+}
+
+void stop() {
+  analogWrite(motorA_ENA, 0);
+  analogWrite(motorB_ENB, 0);
+}
+
+void loop() {
+  forward(255);      // Full speed forward
+  delay(2000);
+  turnLeft(200);     // Turn left
+  delay(1000);
+  backward(150);     // Half speed backward
+  delay(2000);
+  stop();             // Stop
+  delay(1000);
+}
+```
+
+---
+
+## Motor Driver Selection Guide
+
+### By Robot Type
+
+| Robot Type | Typical Current | Recommended Driver | Reason |
+|-----------|-----------------|-------------------|--------|
+| **Small robot (< 2kg)** | 2-5A | L293D or L298N | Sufficient, cheap |
+| **Medium robot (2-10kg)** | 5-20A | L298N or BTS7960 | Good balance |
+| **Heavy robot (> 10kg)** | 20-50A | BTS7960 or custom | Handles high current |
+| **Micro/aerial** | 0.5-2A | DRV8833 or L293D | Lightweight |
+
+### By Number of Motors
+
+| Motors | L298N | L293D | Options |
+|--------|-------|-------|---------|
+| **1 DC** | Yes (1 channel) | Yes | Use 1 channel |
+| **2 DC** | Yes (2 channels) | Yes | Perfect fit |
+| **4 DC** | Need 2× | Need 2× | Stack drivers |
+| **1 Stepper** | Yes | Yes | Needs 2 channels |
+| **2 Servos** | No | No | Use PWM direct |
+
+---
+
+## Protection and Reliability
+
+### Prevent Driver Damage
+
+**1. Flyback Diodes**
+
+Motors create voltage spikes when powered off:
+
+```
+Without diode: Spike destroys transistors!
+With diode: Spike safely dissipated
+
+Connection:
+Diode cathode → Motor power
+Diode anode → Motor ground
+(Diode conducts on spike, shorts it safely)
+```
+
+**2. Capacitors**
+
+Filter power supply noise:
+
+```
+Battery → [Fuse] → [100µF capacitor] → Motor driver
+                   Smooths voltage ripple
+```
+
+**3. Heatsink**
+
+For high-current drivers:
+
+```
+BTS7960 at 30A draws: P = I² × R = 30² × 0.5 = 450W heat!
+Solution: Aluminum heatsink with thermal paste
+```
+
+### Common Failures
+
+| Problem | Cause | Prevention |
+|---------|-------|-----------|
+| **Driver dies** | Motor spike | Add flyback diodes |
+| **Erratic behavior** | Noise on power | Add capacitors |
+| **Thermal shutdown** | Continuous high current | Add heatsink or larger driver |
+| **Won't drive motor** | Bad connection | Check all solder joints |
+| **Motor jerky** | PWM frequency too low | Use 5+ kHz frequency |
+
+---
+
+## BTS7960 (Advanced)
+
+For high-power applications:
+
+```
+BTS7960 pinout:
+RIN (Motor A direction from MCU)
+LIN (Motor A reverse from MCU)  
+RPWM (PWM signal)
+LPWM (PWM signal reverse)
+IS (Current sense - optional)
+VS (Voltage sense - optional)
+GND, +5V, +12V (to motor)
+```
+
+Advantages:
+✓ 43A continuous current
+✓ Efficient MOSFET design
+✓ Built-in diagnostic outputs
+✓ Better thermal characteristics
+
+---
+
+## Summary
+
+**Motor Driver Quick Selection:**
+
+✓ **L298N:** Best all-around (2A, cheap, popular)
+✓ **L293D:** Compact, micro version of L298N
+✓ **BTS7960:** High-power applications (43A)
+✓ **DRV8833:** Ultra-compact, low-voltage
+
+**Wiring Checklist:**
+
+- [ ] Power supply connected to motor driver
+- [ ] Motors connected to output terminals
+- [ ] Control signals from microcontroller
+- [ ] Common ground between all components
+- [ ] Flyback diodes across motors
+- [ ] Power filter capacitor added
+- [ ] Tested with low voltage first
+
+**Testing Tips:**
+
+1. Connect with no motor first (bench test)
+2. Verify voltage at all pins (multimeter)
+3. Test with manual PWM input first
+4. Add protection (fuses, capacitors)
+5. Run thermal test under load
+6. Only then add complex control logic

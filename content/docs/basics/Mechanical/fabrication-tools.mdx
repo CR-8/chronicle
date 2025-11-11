@@ -1,0 +1,809 @@
+---
+title: Fabrication and Tools
+description: Drilling, cutting, grinding, soldering, welding basics, tool safety, best practices, and material-specific techniques
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Fabrication and Tools
+
+Proper tools and techniques transform raw materials into robot components. Quality fabrication determines reliability and performance.
+
+## Workshop Safety
+
+<Callout type="warn" title="Critical Safety Rules">
+
+**Personal Protective Equipment (PPE):**
+- ⚠️ Safety glasses: Mandatory (metal shavings/splinters)
+- ⚠️ Gloves: When handling sharp edges
+- ⚠️ Hearing protection: For loud tools (drill press, angle grinder)
+- ⚠️ Dust mask: When creating dust (grinding, cutting)
+- ⚠️ Closed-toe shoes: Never sandals in workshop
+
+**General Rules:**
+- ⚠️ Never rush (hurry causes accidents)
+- ⚠️ Keep hands away from moving parts
+- ⚠️ Stop immediately if something feels wrong
+- ⚠️ Secure work properly (clamped, not hand-held)
+- ⚠️ Know where emergency stop is
+- ⚠️ Unplug tools before changing bits/blades
+- ⚠️ Never leave running tool unattended
+
+</Callout>
+
+---
+
+## Drilling
+
+### Drill Bits
+
+```
+Common sizes for robotics:
+
+Metric:        (for M3-M6 bolts)
+├─ 2.5 mm: Clearance for M2
+├─ 3.3 mm: Tap hole for M4
+├─ 4.2 mm: Clearance for M4
+├─ 5.1 mm: Tap hole for M6
+└─ 6.5 mm: Clearance for M6
+
+Non-metric:    (imperial)
+├─ #40 (3.2 mm): Small assemblies
+├─ #10 (4.7 mm): Medium assemblies
+└─ #F (6.6 mm): Large bolts
+
+Material types:
+├─ High-speed steel (HSS): General purpose, cheap
+├─ Cobalt (HSSE): Harder materials, lasts longer
+└─ Carbide: Very expensive, for production
+```
+
+### Drilling Technique
+
+```
+Steps:
+
+1. Mark location with center punch
+   └─ Small dent guides drill, prevents slipping
+
+2. Start with pilot hole
+   └─ Use smaller bit first (reduces wear)
+
+3. Use cutting fluid
+   └─ Aluminum: Cutting oil
+   └─ Steel: Soluble oil (mixed with water)
+   └─ Plastic: Light oil or dry
+   └─ Benefit: Reduces friction, extends bit life
+
+4. Drill with steady pressure
+   └─ Let the drill bite (don't force)
+   └─ Too fast → bit breaks
+   └─ Too slow → dulls bit
+   └─ Medium speed works best
+
+5. Back out occasionally
+   └─ Clears chips from flutes
+   └─ Prevents jamming and bit breakage
+
+6. Stop before bit exits
+   └─ Last moment high pressure breaks bit
+   └─ Slow down as you exit
+```
+
+### Drill Press vs Hand Drill
+
+**Hand Drill:**
+```
+Pros: Portable, simple, inexpensive
+Cons: Hard to keep vertical, less precise, slow
+Speed control: Manual (squeezing trigger)
+Best for: Quick holes, field repairs, single parts
+```
+
+**Drill Press (Stationary):**
+```
+Pros: Very precise, vertical guaranteed, handles large bits
+Cons: Stationary (big workspace needed), expensive
+Speed control: Belt/pulley adjustment, automatic feed
+Best for: Production runs, precise holes, thick material
+```
+
+**Speed Chart (for drill press):**
+
+| Material | Diameter | Speed (RPM) |
+|----------|----------|------------|
+| **Aluminum** | 3mm | 500-1000 |
+| **Aluminum** | 10mm | 300-500 |
+| **Steel** | 3mm | 300-500 |
+| **Steel** | 10mm | 150-300 |
+| **Plastic** | 3mm | 1000-2000 |
+| **Plastic** | 10mm | 500-1000 |
+
+---
+
+## Cutting
+
+### Hacksaw (Manual)
+
+```
+Best for: Cutting aluminum tube/bar
+
+Technique:
+1. Secure work in vise
+2. Mark cut line with marker
+3. Use steady downstroke, light upstroke
+4. Keep blade perpendicular to work
+5. Let saw do the work (don't force)
+6. Last few strokes: slow pressure (prevent snap)
+
+Speed: 1-2 inches (25-50mm) per minute
+
+Maintenance:
+├─ Replace blade when dull
+├─ Keep blade teeth clean
+└─ Check tension regularly (should be tight)
+```
+
+### Rotary Tool (Dremel)
+
+```
+Cutting discs: Small, fast cutting
+
+Best for: Plastic, acrylic, thin aluminum
+
+Technique:
+1. Secure work properly (it will try to spin!)
+2. Use low angle to material
+3. Let tool speed do cutting (don't force)
+4. Wear face shield (sparks!)
+5. Keep hands clear of rotating disc
+
+Speed: Very high (30,000+ RPM)
+Result: Fast cuts but less precise than saw
+
+Safety: Discs shatter if bent, can cause injury!
+```
+
+### Angle Grinder
+
+```
+Cutting discs: Large, powerful
+
+Best for: Steel, thick aluminum
+
+Setup:
+├─ Large disc (4-5 inch)
+├─ Very high speed (12,000 RPM)
+├─ Powerful motor
+└─ Serious tool!
+
+Technique:
+1. Secure work in vise or clamp
+2. Wear full face shield (sparks fly far!)
+3. Grip grinder firmly with both hands
+4. Let disc speed do cutting
+5. Don't twist disc in cut (will bind, throw work)
+
+Safety: ⚠️ Respect this tool! Serious injury possible
+```
+
+### Water Jet
+
+Professional CNC system:
+
+```
+Advantages:
+✓ Precise cuts (±0.1mm)
+✓ No heat affected zone
+✓ Works on ANY material
+✓ Complex shapes possible
+
+Disadvantages:
+✗ Expensive service ($30-100 per hour)
+✗ Long lead times
+✗ Minimum batch cost
+
+Best for: One-off parts, production runs, prototypes
+```
+
+---
+
+## Grinding and Shaping
+
+### Surface Grinding
+
+```
+Electric bench grinder:
+
+Setup:
+├─ Coarse wheel (grinding)
+├─ Fine wheel (finishing)
+├─ Eye shield
+└─ 3000-5000 RPM
+
+Uses:
+├─ Sharpen tools
+├─ Smooth welds
+├─ Remove burrs
+├─ Flat surfaces
+
+Technique:
+1. Secure work against toolrest (not moving wheel!)
+2. Light pressure (wheel does work)
+3. Multiple passes (don't grind hard)
+4. Keep surface wet to prevent overheating
+
+Safety:
+✓ Wheel guard installed
+✓ Eye protection mandatory
+✓ No dangling clothing
+```
+
+### Hand Files
+
+```
+Types:
+├─ Flat file: General smoothing
+├─ Round file: Internal curves
+├─ Triangular file: Corners
+└─ Needle files: Small details
+
+Technique:
+1. Secure work in vise
+2. Cut on forward stroke (pressure)
+3. Light on return stroke
+4. Steady angle (don't rock)
+5. Use full length of file
+
+Best for: Final finishing touches, deburring
+```
+
+### Deburring
+
+```
+Removes sharp edges after cutting/drilling
+
+Methods:
+├─ Hand file: Manual, controlled
+├─ Chamfer bit: Quick, consistent
+├─ Sandpaper: Fine finishing
+└─ Deburring tool: Specialized, expensive
+
+Why important:
+✓ Prevents cuts
+✓ Improves appearance
+✓ Reduces stress concentration
+✓ Better mechanical fits
+
+Typical: 0.5mm chamfer on all edges
+```
+
+---
+
+## Soldering (Metal Joining)
+
+### Setup
+
+```
+Soldering iron: 25-60W for electronics
+Gas torch: For larger pieces
+
+Types:
+├─ 60/40 solder: Lead (toxic), easier to use
+├─ Lead-free: Environmental, higher temp
+└─ Silver solder: Stronger, more expensive
+```
+
+### Joint Preparation
+
+```
+Steps:
+1. Clean surfaces
+   └─ Remove oxidation with brush/sandpaper
+   
+2. Apply flux
+   └─ Chemical cleaning agent
+   └─ Helps solder flow
+   
+3. Heat joint (not solder!)
+   └─ Temperature > solder melting point
+   └─ Heat metal to accept solder
+   
+4. Apply solder
+   └─ Solder flows on hot metal
+   └─ Fills gap between parts
+   
+5. Cool without moving
+   └─ Solder hardens
+   └─ Joint is complete
+```
+
+### Joint Types
+
+```
+Lap joint (strongest):
+  ┌─────┐
+  │     │ ← Overlap area
+  └─────┘
+
+Butt joint (weaker):
+  ┌─────┐ ┌─────┐
+  │     │ │     │ ← No overlap
+  └─────┘ └─────┘
+
+Tee joint:
+  ┌─────────┐
+  │         │ ← T-shaped
+  │    ┌────┘
+  │    │
+  └────┘
+```
+
+### Quality Assessment
+
+```
+Good solder joint:
+✓ Shiny appearance
+✓ Smooth surface
+✓ Solder fully flows
+✓ No voids or cracks
+
+Bad solder joint:
+✗ Dull/grainy appearance
+✗ Lumpy surface
+✗ Cold joint (not fully melted)
+✗ Cracks visible
+
+Fix: Reheat and reflow
+```
+
+---
+
+## Welding
+
+### Types
+
+#### MIG (Metal Inert Gas)
+
+```
+Most beginner-friendly welding
+
+Setup:
+├─ Wire fed automatically
+├─ Gas (Argon/CO2) shields weld
+├─ Handheld gun
+└─ 120V household outlet
+
+Advantages:
+✓ Easy to learn
+✓ Fast process
+✓ Clean joints
+✓ Good for thin materials
+
+Disadvantages:
+✗ Less strength than TIG
+✗ Quality varies with technique
+✗ Requires ventilation
+
+Best for: Learning, thin aluminum, general fabrication
+```
+
+#### TIG (Tungsten Inert Gas)
+
+```
+Most precise welding
+
+Setup:
+├─ Tungsten electrode (non-consumable)
+├─ Separate filler rod (manual feed)
+├─ Gas (Argon) shields weld
+└─ Foot pedal controls heat
+
+Advantages:
+✓ Very strong joints
+✓ Precise control
+✓ Works on all metals
+✓ Best quality
+
+Disadvantages:
+✗ Steep learning curve
+✗ Slow process
+✗ Requires steady hands
+✗ More expensive
+
+Best for: Critical structures, aerospace applications
+```
+
+#### Stick Welding (SMAW)
+
+```
+Traditional method
+
+Setup:
+├─ Coated electrode (consumable)
+├─ Direct current
+├─ Flux coating creates shield
+
+Advantages:
+✓ Very robust
+✓ Works outdoors
+✓ Strong joints
+
+Disadvantages:
+✗ Dirty (creates slag)
+✗ Requires cleanup
+✗ Less precision
+
+Best for: Heavy structural work, outdoor fabrication
+```
+
+### Welding Safety
+
+<Callout type="warn" title="Welding Hazards">
+
+**Arc light:**
+- ⚠️ Extremely bright (causes permanent eye damage)
+- ⚠️ Must wear welding helmet (auto-darkening preferred)
+- ⚠️ Bystanders also need eye protection
+- ⚠️ Never look at arc without protection
+
+**Heat:**
+- ⚠️ Molten metal spatter causes severe burns
+- ⚠️ Wear leather apron and gloves
+- ⚠️ Keep flammable materials away
+- ⚠️ Welded metal stays hot (use tongs)
+
+**Fumes:**
+- ⚠️ Welding produces toxic fumes
+- ⚠️ Use ventilation or extraction
+- ⚠️ Work outdoors if possible
+- ⚠️ Wear respirator for sensitive materials
+
+**Electrical:**
+- ⚠️ High voltage equipment
+- ⚠️ Never touch electrode to skin
+- ⚠️ Turn off before maintenance
+- ⚠️ Keep connections dry
+
+</Callout>
+
+### Basic Technique
+
+```
+Setup:
+1. Clean joint area (remove oxide)
+2. Clamp pieces at correct angle
+3. Set correct amperage for material/thickness
+4. Secure ground clamp to workpiece
+
+Process:
+1. Position torch/gun at 45° angle
+2. Strike arc (touch electrode to metal)
+3. Maintain short arc (3-4mm gap)
+4. Move steadily along joint
+5. Build bead (overlapping passes)
+6. Let cool (don't move immediately)
+
+Result: Strong permanent joint
+```
+
+---
+
+## Material-Specific Techniques
+
+### Aluminum
+
+```
+Characteristics:
+├─ Low melting point (660°C)
+├─ Corrodes easily
+├─ Oxidation layer prevents bonding
+└─ Excellent thermal conductor
+
+Cutting:
+✓ Use sharp blades (dull bits grab)
+✓ High speed (2000+ RPM for small bits)
+✓ Cutting fluid mandatory
+✗ Slow feeds cause heating
+✗ Soft metal – handle carefully
+
+Drilling:
+✓ Use aluminum-specific bits if available
+✓ Slow speed (500 RPM for 10mm bit)
+✓ Cutting fluid essential
+✓ Support from underneath (prevent tear)
+
+Welding:
+✓ Use TIG or MIG with Argon gas
+✓ Remove oxide layer with stainless wire brush first
+✓ Higher heat than steel
+✓ Cools quickly (can distort)
+
+Best fastener: Aluminum or stainless (steel rusts in aluminum)
+```
+
+### Steel
+
+```
+Characteristics:
+├─ High melting point (1500°C+)
+├─ Very strong
+├─ Rusts without protection
+└─ Magnetic
+
+Cutting:
+✓ Medium speeds (200-500 RPM for 10mm bit)
+✓ Cutting fluid important
+✓ Steady pressure (doesn't require as much finesse)
+
+Drilling:
+✓ Standard HSS bits work well
+✓ Slower speeds than aluminum
+✓ Cooling fluid reduces bit wear
+✓ Easier to drill than aluminum (less grabbing)
+
+Welding:
+✓ Any welding method works
+✓ Stick welding most common
+✓ Simpler technique than aluminum
+✓ Cools slower (can distort even more)
+
+Post-processing: Paint or powder coat for rust protection
+```
+
+### Acrylic (Plastic)
+
+```
+Characteristics:
+├─ Low melting point (160-180°C)
+├─ Brittle (cracks from stress)
+├─ Transparent
+└─ Lightweight
+
+Cutting:
+✓ Use band saw or rotary tool
+✓ Fast speeds (no cutting fluid)
+✗ Slow speed causes melting
+✗ Don't use abrasive discs (melt it)
+
+Drilling:
+✓ High speed (2000+ RPM for small bits)
+✓ Light pressure (don't force)
+✗ Metal drilling speeds melt it
+✗ Twist drill bit recommended
+✓ No cutting fluid (creates toxic fumes with acrylics)
+
+Joining:
+├─ Solvent bonding: Apply acrylic cement
+├─ Mechanical: Bolts with washers (prevent cracking)
+└─ Avoid welding (will melt)
+
+Finishing: Polishing removes scratches and frost appearance
+```
+
+### Carbon Fiber
+
+```
+Characteristics:
+├─ Extremely strong
+├─ Lightweight
+├─ Non-conductive (generally)
+├─ Composite material (fiber + epoxy)
+└─ Very expensive
+
+Cutting:
+✓ Use carbide blades (standard bits dull instantly)
+✓ Careful cuts (can delaminate)
+✗ Standard tools will destroy it
+
+Drilling:
+✓ Carbide bits mandatory
+✓ Very slow speed (prevent heat/delamination)
+✓ Back-up support (prevent tear-out)
+✓ Wear respirator (fiber dust harmful)
+
+Best practices:
+✓ Mark cut lines carefully
+✓ Sharp tools essential (dulled tools cause shattering)
+✓ Support edges during machining
+✓ Minimize vibration
+
+Avoid: Welding, solvent bonding (damages composite)
+```
+
+---
+
+## Tool Selection for Robots
+
+### Minimal Setup (Budget: $100-200)
+
+```
+Essential tools:
+├─ Hand drill (20W, two-speed)
+├─ Hacksaw with blades
+├─ Assorted drill bits
+├─ Files (flat, round, triangular)
+├─ Adjustable wrench
+├─ Screwdriver set
+├─ Hand clamps (2x)
+├─ Safety glasses and gloves
+└─ Measuring tape
+
+Capabilities:
+✓ Drill holes up to 1/4"
+✓ Cut aluminum bar/tube
+✓ Smooth edges
+✓ Basic assembly
+
+Limitations:
+✗ No precision (hand-drilled holes ±2-3mm)
+✗ Slow process
+✗ Difficult for hard materials
+```
+
+### Intermediate Setup (Budget: $500-1000)
+
+```
+Add to above:
+├─ Rotary tool (Dremel) with bits
+├─ Bench vise (heavy, accurate)
+├─ Hacksaw + replacement blades
+├─ Cutting/grinding wheel set
+├─ Desoldering equipment
+├─ Soldering station (better than iron)
+├─ Vice grips and C-clamps
+└─ Angle ruler and calipers
+
+Capabilities:
+✓ Precision holes (±1mm)
+✓ Cut plastic, thin aluminum
+✓ Basic metalworking
+✓ Repair/maintain equipment
+
+Benefits:
+✓ Much faster work
+✓ Better quality results
+✓ Can handle more complex projects
+```
+
+### Professional Setup (Budget: $2000+)
+
+```
+Add to above:
+├─ Drill press (stationary)
+├─ Angle grinder with cutting wheel
+├─ Bench grinder with wheels
+├─ MIG welder
+├─ Band saw (CNC optional)
+├─ Pneumatic impact driver
+├─ Precision measuring tools
+└─ Work storage/organization
+
+Capabilities:
+✓ Production-quality parts
+✓ Complex fabrication
+✓ Welding capability
+✓ Precision measurements
+
+Best for: Serious robotics labs, small manufacturing
+```
+
+---
+
+## Quality Control
+
+### Dimensional Accuracy
+
+```
+Check with calipers (±0.1mm):
+├─ Hole diameters match specifications
+├─ Edge straightness
+├─ Parallel surfaces
+└─ Overall dimensions
+
+Tolerance chart:
+├─ ±2mm: Basic prototyping OK
+├─ ±1mm: Good enough for most robots
+├─ ±0.5mm: Precision assemblies
+└─ ±0.1mm: High-performance systems
+```
+
+### Visual Inspection
+
+```
+Before assembly:
+☐ No cracks or fractures
+☐ No surface contamination
+☐ Holes free of burrs
+☐ Edges properly deburred
+☐ Paint/coating smooth
+☐ Fastener seats clean
+```
+
+### Functional Testing
+
+```
+After fabrication:
+☐ Parts fit together
+☐ Fasteners tight (don't strip holes)
+☐ Motion smooth (not binding)
+☐ Load-bearing capability OK
+☐ Electrical paths isolated (no shorts)
+```
+
+---
+
+## Common Mistakes
+
+| Mistake | Result | Prevention |
+|---------|--------|-----------|
+| **Dull drill bit** | Bit slips, tears material, breaks | Replace bit regularly, test on scrap |
+| **Forcing cut** | Tool binds, work spins, injury | Let tool speed do work, steady pressure |
+| **Wrong cutting fluid** | Overheating, bit dulls quickly | Use material-appropriate fluid |
+| **Not clamping work** | Part moves, inaccuracy, danger | Secure firmly before starting |
+| **Measuring wrong** | Hole in wrong place, wasted part | Measure twice, mark clearly, verify |
+| **Rushing process** | Quality issues, accidents | Take time, breathe, focus |
+
+---
+
+## Workshop Setup Checklist
+
+**Space and Safety:**
+- [ ] Well-lit workbench (overhead + task light)
+- [ ] Floor clear of debris
+- [ ] PPE accessible (glasses, gloves, masks)
+- [ ] Fire extinguisher nearby
+- [ ] First aid kit in workshop
+- [ ] Good ventilation (fan or outdoor work area)
+
+**Tools Organized:**
+- [ ] Drill bits stored in order (not loose)
+- [ ] Cutting tools sharp and accessible
+- [ ] Measuring tools protected from damage
+- [ ] Hand tools sorted by type
+- [ ] Fasteners organized by size
+
+**Equipment Maintained:**
+- [ ] Tools cleaned after use
+- [ ] Vise jaws not damaged
+- [ ] Power tools plugged in properly
+- [ ] Extension cords not damaged
+- [ ] Batteries charged for cordless tools
+
+**Materials Ready:**
+- [ ] Stock aluminum/steel available
+- [ ] Fasteners in common sizes
+- [ ] Cutting fluid or lubricant
+- [ ] Sandpaper/files for finishing
+- [ ] Marking tools (pencil, center punch)
+
+---
+
+## Summary
+
+**Safety first:**
+- Wear proper PPE always
+- Respect moving equipment
+- Secure work properly
+
+**Cutting materials:**
+- Sharp tools work best
+- Appropriate speed for material
+- Cutting fluid extends tool life
+
+**Joining methods:**
+- Soldering: Electronics, small parts
+- Welding: Permanent strong joints
+- Mechanical: Bolts, screws, rivets
+
+**Material techniques:**
+- Aluminum: Use sharp bits, cutting fluid
+- Steel: Slower speeds, cooling fluid
+- Plastic: Fast speeds, no fluid
+- Carbon fiber: Carbide tools essential
+
+**Quality assurance:**
+- Measure dimensions accurately
+- Visual inspection for defects
+- Test functionality before assembly

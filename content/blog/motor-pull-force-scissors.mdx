@@ -1,0 +1,109 @@
+---
+title: How to Calculate the Pull Force of Scissors Using a Motor
+description: Learn the simple physics behind calculating linear force from torque — perfect for motor-driven cutting mechanisms
+date: 2025-11-11
+author: Chronicle
+tags: ["Motors", "Physics", "Torque", "Beginner-Friendly"]
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# How to Calculate the Pull Force of Scissors Using a Motor
+
+## 🧠 The Scenario
+
+A stepper motor with a worm gearbox powers an industrial scissor system that cuts through brush materials.
+
+Here's what we know:
+
+- The motor produces **0.4 Nm** of torque
+- The worm gear multiplies that to **20 Nm**
+- The arm length is **0.15 m** (distance from pivot to where force is applied)
+- The brush setup weighs about **1 kg**
+
+Now, the challenge: find the **pull force** — the linear force at the end of the scissor arm.
+
+## ⚙ The Physics Behind It (Simple Version)
+
+Torque is basically "how hard something twists."  
+Force is "how hard something pulls or pushes."  
+They're connected by one simple relationship:
+
+**T = F × r**
+
+Where:
+- **T** = torque (in Newton-meters)
+- **F** = force (in Newtons)
+- **r** = distance from the pivot point (in meters)
+
+If you rearrange it to find force:
+
+**F = T ÷ r**
+
+That's it! You're just dividing the twisting power by how long the lever arm is.
+
+## 🧩 Plug in the Numbers
+
+F = 20 Nm ÷ 0.15 m = **133.33 N**
+
+This means the scissors apply a pulling force of around **133 Newtons**, which is roughly equivalent to lifting about **13.5 kg** straight up.
+
+That's quite strong — plenty for cutting lightweight materials like brushes or thin plastics.
+
+## 🔍 But Wait… There's More
+
+That's the ideal case. In real life:
+
+- **Friction** in the gears and joints will reduce the actual output force
+- The **scissor geometry** (angle and pivot placement) affects how efficiently input force turns into cutting force
+- If your motor runs in steps, there could be slight **variations or vibration** during cutting
+
+So while 133 N is the theoretical pull, you might only see around **100–110 N** of effective cutting force after losses.
+
+## 📊 Quick Reference Table
+
+| Parameter | Value | Meaning |
+|---|---|---|
+| Motor torque | 0.4 Nm | Torque before gear |
+| Gearbox torque | 20 Nm | Torque after worm gear |
+| Arm length | 0.15 m | Distance from pivot |
+| **Pull force** | **≈133 N** | **Linear force applied** |
+| Real-world output | ~100–110 N | Accounting for losses |
+
+## 💡 In Human Terms
+
+Imagine holding a pair of scissors with a 15 cm handle, and you twist them with the same strength as lifting a 13 kg dumbbell.
+
+That's the kind of pull force your motor setup can create — more than enough to slice through brush materials cleanly.
+
+<Callout type="info" title="Pro Tip">
+If you want to measure it practically:
+1. Attach a spring scale (like a luggage scale) at the scissor arm's end
+2. Apply power and see how much pull it exerts before cutting
+3. Compare against your calculation
+
+That'll give you a real-world confirmation of your math.
+</Callout>
+
+## 🛠 Practical Checklist
+
+✅ Measure your actual torque output (test with a torque wrench or dynamometer)  
+✅ Measure the pivot-to-blade distance accurately  
+✅ Account for ~15-20% efficiency loss due to friction  
+✅ Test with a load cell if precision is critical  
+✅ Remember: more gear ratio = more force, but slower speed  
+
+## 🧾 Final Thoughts
+
+The user's curiosity about pull force led to a simple but crucial insight:
+
+> You can always find linear force from torque — just divide by the radius (or arm length).
+
+It's the kind of physics every robotic designer should have in their back pocket. Small math, big impact.
+
+---
+
+**Based on a real discussion from Robotics Stack Exchange** 🤖
+
+#Robotics #Physics #Motors #Torque #EngineeringSimplified
