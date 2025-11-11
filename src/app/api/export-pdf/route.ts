@@ -7,19 +7,31 @@ export const dynamic = 'force-dynamic';
 async function generatePDF(pathname: string) {
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--no-first-run',
+      '--no-zygote',
+      '--disable-gpu',
+    ],
+    executablePath: process.env.CHROME_EXECUTABLE_PATH || undefined,
   });
 
   const page = await browser.newPage();
   
   // Construct the full URL
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL;
   const fullUrl = `${baseUrl}${pathname}`;
 
   await page.goto(fullUrl, {
     waitUntil: 'networkidle2',
     timeout: 30000,
   });
+
+  // Wait for content to render
+  await page.waitForSelector('article', { timeout: 5000 }).catch(() => {});
 
   // Generate PDF
   const pdfBuffer = await page.pdf({
@@ -31,6 +43,7 @@ async function generatePDF(pathname: string) {
       bottom: '20px',
       left: '20px',
     },
+    format: 'A4',
   });
 
   await browser.close();
