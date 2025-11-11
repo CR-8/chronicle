@@ -4,6 +4,8 @@ import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { baseOptions } from '@/lib/layout.shared';
 import '@/app/global.css'
 import { Metadata } from 'next';
+import Link from 'next/link';
+import { BookOpen, House } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Chronicle - Robotics Documentation Platform',
@@ -25,9 +27,28 @@ export default async function Layout({
 }) {
   const { lang } = await params;
 
+  const options = baseOptions(lang);
+  options.links = [
+    {
+      text: 'Home',
+      url: `/`,
+      icon: <House className="size-4" />,
+    },
+    {
+      text: 'Blog',
+      url: '/blog',
+      icon: <BookOpen className="size-4" />,
+    },
+        {
+      text: 'Docs',
+      url: `/${lang}/docs/basics/welcome`,
+      icon: <BookOpen className="size-4" />,
+    },
+  ];
+
   return (
-    <DocsLayout 
-      {...baseOptions(lang)} 
+    <DocsLayout
+      {...options}
       tree={source.pageTree[lang]}
       sidebar={{
         enabled: true,

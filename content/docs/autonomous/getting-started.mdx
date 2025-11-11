@@ -1,18 +1,251 @@
 ---
-title: Getting Started
-description: Quick start guide
+title: Getting Started with Autonomous Robotics
+description: Begin your journey into autonomous robotics with comprehensive guides, algorithms, and practical implementations
 ---
 
-## Getting Started
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-Welcome to Chronicle! This guide will help you get started.
+# Getting Started with Autonomous Robotics
 
-### Installation
+Welcome to autonomous robotics! This section covers everything from basic autonomous concepts to advanced AI-powered robot navigation, path planning, and decision-making systems.
 
-Follow these steps to install and set up the project.
+## 🚀 What is Autonomous Robotics?
 
-### Next Steps
+Autonomous robots can operate independently without human intervention. They use sensors, algorithms, and AI to perceive their environment, make decisions, and execute tasks.
 
-- Read the documentation
-- Explore components
-- Build your first page
+### Key Components
+- **Perception**: Sensors and computer vision
+- **Planning**: Path finding and decision making
+- **Control**: Motor control and actuation
+- **Localization**: Knowing where you are
+- **Mapping**: Understanding the environment
+
+## 📋 Prerequisites
+
+<Callout type="info" title="Before You Start">
+
+**Hardware Requirements:**
+- Microcontroller (Arduino, ESP32, Raspberry Pi)
+- Sensors (ultrasonic, IR, IMU, camera)
+- Motors and motor drivers
+- Power system (batteries, regulators)
+
+**Software Requirements:**
+- Arduino IDE or VS Code with PlatformIO
+- Python (for Raspberry Pi projects)
+- Basic programming knowledge
+
+**Knowledge Prerequisites:**
+- Basic electronics and circuits
+- Programming fundamentals
+- Basic robotics concepts
+
+</Callout>
+
+## 🛠️ Quick Start Guide
+
+<Steps>
+<Step>
+**Set Up Your Development Environment**
+
+Choose your platform and install the necessary software:
+- Arduino: Install Arduino IDE
+- Raspberry Pi: Set up Raspberry Pi OS
+- ESP32: Install ESP-IDF or Arduino IDE
+</Step>
+
+<Step>
+**Build Your First Autonomous Robot**
+
+Start with a simple line-following robot:
+1. Assemble chassis and motors
+2. Add IR sensors for line detection
+3. Program basic following algorithm
+4. Test and tune performance
+</Step>
+
+<Step>
+**Learn Core Concepts**
+
+Study fundamental autonomous concepts:
+- Sensor fusion and filtering
+- PID control for stability
+- Basic path planning algorithms
+- State machines for behavior
+</Step>
+
+<Step>
+**Advance to Complex Systems**
+
+Move to advanced topics:
+- Computer vision with OpenCV
+- SLAM (Simultaneous Localization and Mapping)
+- Machine learning for decision making
+- Multi-robot coordination
+</Step>
+</Steps>
+
+## 🎯 Learning Path
+
+### Beginner Level (1-2 weeks)
+
+<Tabs items={['Week 1: Basics', 'Week 2: Simple Autonomy']}>
+<Tab>
+**Week 1: Building Foundations**
+
+- [Line Following Robot](/docs/basics/control/sensor-basics)
+- [Obstacle Avoidance](/docs/basics/sensors/ultrasonic-sensors)
+- [Motor Control with PID](/docs/basics/motors/pid-control)
+- [Basic State Machines](/docs/basics/control/microcontrollers)
+
+**Projects:**
+- Simple line follower
+- Obstacle avoiding robot
+- Light-seeking robot
+</Tab>
+
+<Tab>
+**Week 2: Simple Autonomy**
+
+- [Sensor Integration](/docs/basics/sensors/sensor-fusion)
+- [Decision Making Algorithms](/docs/basics/control/decision-making)
+- [Path Planning Basics](/docs/autonomous/path-planning)
+- [Localization Techniques](/docs/autonomous/localization)
+
+**Projects:**
+- Maze solving robot
+- Sumo robot with strategy
+- Autonomous vacuum cleaner prototype
+</Tab>
+</Tabs>
+
+### Intermediate Level (2-4 weeks)
+
+- **Computer Vision**: OpenCV integration
+- **SLAM Algorithms**: Mapping and localization
+- **Advanced Path Planning**: A* and D* algorithms
+- **Machine Learning**: Basic neural networks for robotics
+
+### Advanced Level (4+ weeks)
+
+- **Multi-Robot Systems**: Swarm robotics
+- **Deep Learning**: Advanced computer vision
+- **Real-time Systems**: High-performance computing
+- **ROS Integration**: Robot Operating System
+
+## 🔧 Essential Tools & Libraries
+
+### Hardware Platforms
+- **Arduino Uno/Nano**: Great for beginners
+- **ESP32**: WiFi-enabled microcontrollers
+- **Raspberry Pi**: Full Linux computer for advanced projects
+- **Jetson Nano**: AI-accelerated computing
+
+### Software Tools
+- **Arduino IDE**: Primary development environment
+- **PlatformIO**: Advanced IDE with better features
+- **Python**: For Raspberry Pi and computer vision
+- **ROS**: Robot Operating System framework
+
+### Key Libraries
+- **Arduino**: Servo, Wire, SPI libraries
+- **Python**: OpenCV, NumPy, TensorFlow
+- **ROS**: Navigation, perception, and control packages
+
+## 📚 Recommended Reading Order
+
+1. **Start Here**: [Robotics Fundamentals](/docs/basics/introduction/definition-history)
+2. **Electronics**: [Circuit Basics](/docs/basics/circuits/kvl-kcl)
+3. **Control**: [Motor Control](/docs/basics/motors/motor-selection)
+4. **Sensors**: [Sensor Integration](/docs/basics/sensors/sensor-basics)
+5. **Algorithms**: [Path Planning](/docs/autonomous/path-planning)
+6. **AI**: [Computer Vision](/docs/autonomous/computer-vision)
+
+## 🏗️ Project Ideas by Difficulty
+
+### Beginner Projects
+- **Line Following Robot**: IR sensors + differential drive
+- **Obstacle Avoider**: Ultrasonic sensors + random walk
+- **Light Tracker**: LDR sensors + servo motors
+- **Edge Detector**: IR sensors + cliff detection
+
+### Intermediate Projects
+- **Maze Solver**: Flood fill algorithm + line sensors
+- **Wall Following**: PID control + ultrasonic sensors
+- **Color Sorter**: TCS3200 sensor + servo sorting mechanism
+- **Voice Controlled Robot**: Speech recognition + motor control
+
+### Advanced Projects
+- **Autonomous Delivery Robot**: SLAM + path planning
+- **Agricultural Robot**: Computer vision + GPS navigation
+- **Search and Rescue Robot**: Multi-sensor fusion + communication
+- **Swarm Robotics**: Multi-robot coordination and communication
+
+## 🔍 Common Challenges & Solutions
+
+<Callout type="warn" title="Troubleshooting Guide">
+
+**Sensor Noise:**
+- Use averaging filters
+- Implement median filtering
+- Add hysteresis to digital sensors
+
+**Motor Control Issues:**
+- Tune PID parameters carefully
+- Check power supply stability
+- Verify encoder connections
+
+**Path Planning Problems:**
+- Start with simple algorithms (Bug algorithm)
+- Gradually implement A* or Dijkstra
+- Test in simulation first
+
+**Power Management:**
+- Use appropriate battery chemistry
+- Implement voltage monitoring
+- Add power regulators for stability
+
+</Callout>
+
+## 📊 Performance Metrics
+
+Track these metrics to evaluate your autonomous robot:
+
+- **Path Efficiency**: Actual path length vs optimal
+- **Success Rate**: Percentage of completed missions
+- **Response Time**: Time to react to obstacles
+- **Power Consumption**: Energy used per task
+- **Localization Accuracy**: Position estimation error
+
+## 🎓 Learning Resources
+
+### Online Courses
+- **Coursera**: Robotics Specialization by University of Pennsylvania
+- **edX**: Autonomous Navigation for Flying Robots
+- **Udacity**: Self-Driving Car Engineer Nanodegree
+
+### Books
+- **"Probabilistic Robotics"** by Sebastian Thrun
+- **"Introduction to Autonomous Mobile Robots"** by Roland Siegwart
+- **"Reinforcement Learning"** by Richard Sutton
+
+### Communities
+- **Reddit**: r/robotics, r/ROS
+- **Discord**: Robotics communities
+- **Forums**: RobotShop, Pololu forums
+
+## 🚀 Next Steps
+
+Ready to start building? Choose your path:
+
+- **Complete Beginner**: Start with [Line Following Tutorial](/docs/autonomous/line-following)
+- **Some Experience**: Try [Obstacle Avoidance](/docs/autonomous/obstacle-avoidance)
+- **Advanced Builder**: Explore [SLAM Implementation](/docs/autonomous/slam-basics)
+
+Remember: Start simple, iterate often, and don't be afraid to experiment. Autonomous robotics is as much about learning from failures as it is about implementing algorithms!
+
+---
+
+**Happy Building!** 🤖

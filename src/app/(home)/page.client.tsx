@@ -19,6 +19,7 @@ import {
 } from '@paper-design/shaders-react';
 // import HeroImage from './hero-preview.jpeg';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
 
 export function Hero() {
   const { resolvedTheme } = useTheme();
@@ -62,16 +63,18 @@ export function Hero() {
           className="absolute max-lg:bottom-[-50%] max-lg:left-[-200px] animate-fd-fade-in duration-800 lg:top-[-5%] lg:right-0"
         />
       )}
-      {/* <Image
-        src={HeroImage}
+      <Image
+        src='/home.png'
         alt="Chronicle robot preview"
+        width={1200}
+        height={800}
         className={cn(
           'absolute top-[460px] left-[20%] max-w-[1200px] rounded-xl border-2 lg:top-[400px]',
           imageReady ? 'animate-in fade-in duration-400' : 'invisible',
         )}
         onLoad={() => setImageReady(true)}
         priority
-      /> */}
+      />
     </>
   );
 }
@@ -198,15 +201,18 @@ export function PreviewImages(props: ComponentProps<'div'>) {
   const previews = [
     {
       name: 'Basics',
-      color: 'from-green-500/20 to-blue-500/20',
+      image: '/home.png',
+      alt: 'Robotics basics documentation preview',
     },
     {
       name: 'Combat',
-      color: 'from-red-500/20 to-orange-500/20',
+      image: '/combat.png',
+      alt: 'Combat robotics documentation preview',
     },
     {
       name: 'Drone',
-      color: 'from-purple-500/20 to-pink-500/20',
+      image: '/drone.png',
+      alt: 'Drone robotics documentation preview',
     },
   ];
 
@@ -234,18 +240,22 @@ export function PreviewImages(props: ComponentProps<'div'>) {
         <div
           key={i}
           className={cn(
-            'col-start-1 row-start-1 select-none rounded-xl border-2 bg-gradient-to-br',
+            'col-start-1 row-start-1 select-none rounded-xl border-2',
             item.color,
-            'min-h-[400px] flex items-center justify-center',
+            'min-h-[320] flex items-center justify-center overflow-hidden',
             active === i
               ? 'animate-in fade-in slide-in-from-bottom-12 duration-800'
               : 'invisible',
           )}
         >
-          <div className="text-center p-8">
-            <h3 className="text-2xl font-bold mb-2">{item.name} Documentation</h3>
-            <p className="text-fd-muted-foreground">Preview coming soon</p>
-          </div>
+          <Image
+            src={item.image}
+            alt={item.alt}
+            width={400}
+            height={320}
+            className="object-fill w-full h-full rounded-2xl"
+            priority={i === 0}
+          />
         </div>
       ))}
     </div>

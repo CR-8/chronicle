@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Image from 'next/image';
 import type { Metadata } from 'next';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import {
@@ -78,8 +79,14 @@ export default function Layout({
                     </NavbarMenuTrigger>
                     <NavbarMenuContent className="text-[15px]">
                       <NavbarMenuLink href="/en/docs/basics/welcome" className="md:row-span-2">
-                        <div className="p-4 rounded-lg bg-brand mb-2">
-                          <Sprout className="size-8 text-fd-primary-foreground" />
+                        <div className="p-1 rounded-lg bg-brand mb-2">
+                          <Image
+                            src="/home.png"
+                            alt="Getting Started"
+                            width={520}
+                            height={300}
+                            className="rounded-lg"
+                          />
                         </div>
                         <p className="font-medium">Getting Started</p>
                         <p className="text-fd-muted-foreground text-sm">
@@ -133,14 +140,18 @@ export default function Layout({
                     </NavbarMenuContent>
                   </NavbarMenu>
                 ),
-              },
-              {
+                },
+                {
+                text: 'Documentation',
+                url: "/en/docs/basics/welcome",
+                on: 'menu',
+                },
+               {
                 text: 'Blog',
                 url: '/blog',
-                icon: <BookOpen className="size-4" />,
-              },
-            ]}
-          >
+                },
+              ]}
+              >
             {children}
           </HomeLayout>
         </RootProvider>

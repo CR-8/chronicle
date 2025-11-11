@@ -1,40 +1,388 @@
 ---
-title: Getting Started
-description: Learn how to get started with soccer
+title: Getting Started with Soccer Robotics
+description: Build autonomous soccer-playing robots, master team coordination, and compete in RoboCup soccer leagues
 ---
 
-# Getting Started
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-Welcome to the soccer documentation. This guide will help you get started quickly.
+# Getting Started with Soccer Robotics
 
-## Introduction
+Welcome to the dynamic world of soccer robotics! This section covers everything from building your first soccer robot to advanced multi-robot coordination, AI-powered strategies, and international RoboCup competitions.
 
-This section provides an overview of the basics you need to know.
+## ⚽ What is Soccer Robotics?
 
-## Prerequisites
+Soccer robotics involves designing autonomous robots that can play soccer as a coordinated team. Robots must navigate the field, track the ball, make strategic decisions, and work together to score goals while preventing opponents from doing the same.
 
-Before you begin, make sure you have:
+### Competition Levels
+- **KidSize**: Humanoid robots (40-60cm tall)
+- **AdultSize**: Full-size humanoid robots
+- **Small Size League (SSL)**: Fast wheeled robots
+- **Middle Size League (MSL)**: Larger wheeled robots
+- **Standard Platform League (SPL)**: Standardized robots
 
-- Item 1
-- Item 2
-- Item 3
+## 📋 Prerequisites
 
-## Quick Start
+<Callout type="info" title="Before You Start">
 
-Follow these steps to get started:
+**Essential Knowledge:**
+- Robotics fundamentals and programming
+- Computer vision and image processing
+- Multi-robot coordination algorithms
+- Real-time control systems
 
-1. First step
-2. Second step
-3. Third step
+**Recommended Experience:**
+- Built autonomous robots before
+- Experience with computer vision
+- Understanding of AI/ML concepts
+- Team collaboration skills
 
-## Next Steps
+**Technical Skills:**
+- Python or C++ programming
+- ROS (Robot Operating System)
+- Computer vision libraries (OpenCV)
+- Machine learning frameworks
 
-Now that you're set up, explore these topics:
+**Hardware Experience:**
+- Microcontrollers and sensors
+- Camera systems and processing
+- Wireless communication
+- Power management
 
-- [Topic 1](#)
-- [Topic 2](#)
-- [Topic 3](#)
+</Callout>
 
-## Need Help?
+## 🛠️ Soccer Robot Building Guide
 
-If you run into any issues, check out our support resources.
+<Steps>
+<Step>
+**Choose Your League**
+
+Select appropriate competition level:
+- **Small Size League**: Fast-paced, wheeled robots
+- **Middle Size League**: Larger, more complex systems
+- **Humanoid League**: Bipedal walking robots
+- **Standard Platform**: Pre-built robot platforms
+</Step>
+
+<Step>
+**Design Core Systems**
+
+Essential soccer robot components:
+- **Locomotion**: Wheels, legs, or omnidirectional drive
+- **Vision System**: Cameras for ball and field detection
+- **Communication**: Wireless coordination with teammates
+- **Control System**: Real-time decision making
+- **Power System**: Extended runtime capabilities
+</Step>
+
+<Step>
+**Implement AI Systems**
+
+Develop intelligent behaviors:
+1. **Ball Detection**: Computer vision algorithms
+2. **Path Planning**: Navigation around field
+3. **Strategy**: Offensive and defensive plays
+4. **Coordination**: Multi-robot team strategies
+5. **Opponent Analysis**: Adaptive behaviors
+</Step>
+
+<Step>
+**Testing & Optimization**
+
+Iterative development process:
+1. Individual robot testing
+2. Computer vision calibration
+3. Multi-robot coordination testing
+4. Strategy optimization
+5. Competition preparation
+</Step>
+</Steps>
+
+## 🎯 League Categories & Requirements
+
+### By Robot Type
+
+<Tabs items={['Small Size', 'Middle Size', 'Humanoid', 'Standard']}>
+<Tab>
+**Small Size League (SSL)**
+
+**Robot Specs:**
+- Maximum size: 18cm x 18cm x 15cm
+- Weight limit: 2kg
+- 4 omnidirectional wheels
+- Wireless communication
+
+**Field:** 6m x 4m with 11cm goals
+
+**Focus:** High-speed coordination, precise control
+
+**Best For:** Fast-paced robotics, advanced AI
+</Tab>
+
+<Tab>
+**Middle Size League (MSL)**
+
+**Robot Specs:**
+- Maximum size: 50cm x 50cm x 80cm
+- Weight limit: 40kg
+- Various drive configurations
+- Advanced sensor suites
+
+**Field:** 10m x 6m with 25cm goals
+
+**Focus:** Complex strategies, heavy-duty construction
+
+**Best For:** Research institutions, advanced projects
+</Tab>
+
+<Tab>
+**Humanoid League**
+
+**Robot Specs:**
+- Height: 40-90cm (KidSize/AdultSize)
+- Humanoid form with legs and arms
+- Walking and ball manipulation
+- Advanced balance control
+
+**Field:** Standard soccer field proportions
+
+**Focus:** Bipedal locomotion, human-like skills
+
+**Best For:** Humanoid robotics research
+</Tab>
+
+<Tab>
+**Standard Platform League**
+
+**Robot Specs:**
+- Standardized NAO robots
+- Pre-built hardware platform
+- Focus on software development
+- Consistent performance
+
+**Field:** 6m x 4m with standardized goals
+
+**Focus:** Software innovation, fair competition
+
+**Best For:** Software developers, AI research
+</Tab>
+</Tabs>
+
+## 🔧 Essential Systems
+
+### Vision & Perception
+- **Cameras**: High-frame-rate color cameras
+- **Image Processing**: Real-time ball and field detection
+- **Object Recognition**: Players, goals, boundaries
+- **Depth Sensing**: Distance measurement systems
+
+### Locomotion Systems
+- **Drive Motors**: High-torque servo motors
+- **Wheel Encoders**: Position and velocity feedback
+- **Omnidirectional Wheels**: Multi-directional movement
+- **Balance Control**: IMU and gyro stabilization
+
+### Control & Computing
+- **Microcontrollers**: High-performance processors
+- **Real-time OS**: Deterministic control loops
+- **Communication**: Wireless mesh networks
+- **Power Management**: Efficient energy distribution
+
+### Coordination Systems
+- **Team Communication**: Inter-robot messaging
+- **Role Assignment**: Dynamic position allocation
+- **Strategy Engine**: Play selection and execution
+- **Opponent Modeling**: Adaptive behavior systems
+
+## 🧠 AI & Strategy Systems
+
+<Callout type="success" title="Soccer AI Development">
+
+**Computer Vision Pipeline:**
+- Ball detection using color segmentation
+- Field line detection and localization
+- Obstacle avoidance and teammate recognition
+- Goal detection and aiming calculations
+
+**Decision Making:**
+- Finite state machines for behavior control
+- Role-based coordination (striker, defender, goalkeeper)
+- Strategic positioning and formation control
+- Real-time tactical adjustments
+
+**Path Planning:**
+- Obstacle avoidance algorithms
+- Optimal trajectory calculation
+- Collision prediction and prevention
+- Dynamic path replanning
+
+**Team Coordination:**
+- Communication protocols for information sharing
+- Formation control and positioning
+- Play execution and synchronization
+- Recovery from communication failures
+
+</Callout>
+
+## 📊 Performance Metrics
+
+Track these for optimization:
+
+- **Ball Control**: Successful ball possession time
+- **Shooting Accuracy**: Goals scored vs attempts
+- **Team Coordination**: Successful pass completion rate
+- **Defensive Performance**: Goals prevented
+- **Speed & Agility**: Movement efficiency on field
+
+## 🏆 Competition Preparation
+
+### RoboCup Structure
+- **Local Competitions**: Regional qualifying events
+- **National Tournaments**: Country-level championships
+- **World Championship**: Annual international finals
+- **Technical Challenges**: Specialized skill competitions
+
+### Training Regimen
+- **Individual Skills**: Ball control, navigation, shooting
+- **Team Drills**: Passing, positioning, set plays
+- **Strategy Sessions**: Opponent analysis, play development
+- **Technical Testing**: System reliability and performance
+
+## 💰 Budget Considerations
+
+### Entry Level ($1000-5000)
+- Basic robot platform
+- Standard cameras and sensors
+- Entry-level computing
+- Basic development tools
+
+### Competitive ($5000-15000)
+- High-performance components
+- Advanced vision systems
+- Professional computing hardware
+- Specialized tools and testing equipment
+
+### Research Level ($15000+)
+- Custom-built robots
+- Research-grade sensors
+- High-end computing clusters
+- Professional development environment
+
+## 🔍 Common Challenges
+
+<Callout type="error" title="Soccer Robotics Issues">
+
+**Vision Problems:**
+- Lighting variations affecting detection
+- Camera calibration drift
+- Processing latency for real-time decisions
+- Field marking recognition issues
+
+**Coordination Issues:**
+- Communication delays and dropouts
+- Synchronization between robots
+- Role conflict resolution
+- Strategy adaptation to opponents
+
+**Mechanical Problems:**
+- Wheel slippage on different surfaces
+- Motor torque limitations
+- Balance issues in dynamic movement
+- Power delivery during high activity
+
+**AI Challenges:**
+- Real-time decision making constraints
+- Complex multi-agent coordination
+- Adaptive strategy development
+- Learning from limited training data
+
+</Callout>
+
+## 📚 Learning Resources
+
+### RoboCup Resources
+- **RoboCup Official Website**: Competition rules and resources
+- **Team Wikis**: Documentation from winning teams
+- **Technical Papers**: Research publications
+- **Code Repositories**: Open-source implementations
+
+### Academic Resources
+- **Research Papers**: Computer vision, multi-robot systems
+- **Online Courses**: Robotics and AI specializations
+- **Textbooks**: Multi-robot systems, autonomous agents
+- **Conferences**: Robotics and AI conferences
+
+### Communities
+- **RoboCup Forums**: Technical discussions
+- **Local RoboCup Teams**: Regional collaboration
+- **GitHub Repositories**: Open-source projects
+- **Social Media Groups**: Team networking
+
+## 🎓 Development Frameworks
+
+### Software Stacks
+
+<Tabs items={['ROS', 'OpenCV', 'Machine Learning']}>
+<Tab>
+**Robot Operating System (ROS)**
+
+**Benefits:**
+- Standardized robotics middleware
+- Extensive library ecosystem
+- Multi-robot coordination tools
+- Simulation and visualization
+
+**Common Packages:**
+- navigation, perception, control
+- Multi-robot communication
+- SLAM and localization
+- Path planning frameworks
+</Tab>
+
+<Tab>
+**Computer Vision (OpenCV)**
+
+**Applications:**
+- Ball and field detection
+- Object recognition and tracking
+- Image processing pipelines
+- Real-time video analysis
+
+**Key Features:**
+- Color segmentation algorithms
+- Contour detection and analysis
+- Camera calibration tools
+- Machine learning integration
+</Tab>
+
+<Tab>
+**Machine Learning Frameworks**
+
+**Techniques:**
+- Reinforcement learning for strategy
+- Computer vision models
+- Path prediction algorithms
+- Opponent behavior modeling
+
+**Tools:**
+- TensorFlow/PyTorch for deep learning
+- Scikit-learn for traditional ML
+- OpenAI Gym for reinforcement learning
+- Custom training environments
+</Tab>
+</Tabs>
+
+## 🚀 Next Steps
+
+Ready to start soccer robotics?
+
+- **Complete Beginner**: Read [Robotics Fundamentals](/docs/basics/introduction/definition-history)
+- **Some Experience**: Try [Computer Vision Basics](/docs/autonomous/computer-vision)
+- **Team Ready**: Join [Local RoboCup Team](/docs/soccer/getting-involved)
+
+Remember: Soccer robotics combines individual robot intelligence with team coordination. Start with reliable vision systems, master basic ball control before complex strategies, and focus on robust multi-robot communication!
+
+---
+
+**Score Big!** ⚽🤖

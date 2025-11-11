@@ -1,18 +1,388 @@
 ---
-title: Getting Started
-description: Quick start guide
+title: Getting Started with Drone Robotics
+description: Build, program, and fly autonomous drones with comprehensive guides for aerial robotics
 ---
 
-## Getting Started
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
-Welcome to Chronicle! This guide will help you get started.
+# Getting Started with Drone Robotics
 
-### Installation
+Welcome to the fascinating world of drone robotics! This section covers everything from building your first drone to advanced autonomous flight systems, computer vision, and aerial robotics applications.
 
-Follow these steps to install and set up the project.
+## 🚁 What is Drone Robotics?
 
-### Next Steps
+Drone robotics combines aerial vehicles with intelligent control systems. Modern drones can fly autonomously, perform complex tasks, and integrate with ground-based systems for coordinated operations.
 
-- Read the documentation
-- Explore components
-- Build your first page
+### Drone Categories
+- **Multirotor**: Quadcopters, hexacopters, octocopters
+- **Fixed-wing**: Traditional airplane-style drones
+- **VTOL**: Vertical takeoff and landing aircraft
+- **Hybrid**: Combined capabilities systems
+
+## 📋 Prerequisites
+
+<Callout type="info" title="Before You Start">
+
+**Essential Knowledge:**
+- Basic electronics and circuits
+- Programming fundamentals (Arduino/Python)
+- Understanding of flight physics
+- Safety awareness for aerial operations
+
+**Recommended Experience:**
+- Built basic robots or RC vehicles
+- Familiar with sensors and microcontrollers
+- Basic understanding of aerodynamics
+- Comfortable with soldering and assembly
+
+**Legal Requirements:**
+- Check local drone regulations
+- Obtain necessary permits
+- Understand no-fly zones
+- Follow FAA/equivalent authority rules
+
+</Callout>
+
+## 🛠️ Drone Building Guide
+
+<Steps>
+<Step>
+**Choose Your Drone Type**
+
+Start with appropriate complexity:
+- **Beginner**: Ready-to-fly (RTF) quadcopter
+- **Intermediate**: Build-your-own kit
+- **Advanced**: Custom-designed drone
+- **Professional**: Industrial/commercial systems
+</Step>
+
+<Step>
+**Select Components**
+
+Essential drone components:
+- **Frame**: Carbon fiber or plastic structure
+- **Motors**: Brushless motors with ESCs
+- **Propellers**: Correct size and pitch
+- **Flight Controller**: Pixhawk, Betaflight, or ArduPilot
+- **Power System**: LiPo batteries and regulators
+- **Telemetry**: Radio control and monitoring
+</Step>
+
+<Step>
+**Assembly Process**
+
+Systematic build approach:
+1. Mount motors and ESCs to frame
+2. Install flight controller
+3. Connect power distribution
+4. Attach propellers carefully
+5. Configure radio system
+6. Calibrate sensors and systems
+</Step>
+
+<Step>
+**Software Setup**
+
+Programming and configuration:
+1. Install flight control software
+2. Configure PID settings
+3. Set up radio calibration
+4. Test autonomous modes
+5. Implement safety features
+</Step>
+</Steps>
+
+## 🎯 Drone Types & Applications
+
+### By Size & Purpose
+
+<Tabs items={['Nano', 'Mini', 'Standard', 'Heavy-lift']}>
+<Tab>
+**Nano Drones (&lt;250g)**
+
+**Characteristics:**
+- Very small and lightweight
+- Limited payload capacity
+- Short flight times (5-15 min)
+- Indoor/outdoor capable
+
+**Applications:**
+- Indoor inspection
+- Personal photography
+- Education and training
+- Research and development
+
+**Best For:** Learning, indoor use, cost-effective
+</Tab>
+
+<Tab>
+**Mini Drones (250g-2kg)**
+
+**Characteristics:**
+- Portable and versatile
+- Good payload capacity
+- Flight times (15-30 min)
+- Weather resistant options
+
+**Applications:**
+- Aerial photography/videography
+- Light delivery services
+- Agricultural monitoring
+- Search and rescue
+
+**Best For:** Professional photography, light commercial use
+</Tab>
+
+<Tab>
+**Standard Drones (2-25kg)**
+
+**Characteristics:**
+- High payload capacity
+- Extended flight times
+- Advanced autonomous features
+- Industrial-grade components
+
+**Applications:**
+- Industrial inspection
+- Heavy cargo delivery
+- Surveying and mapping
+- Emergency response
+
+**Best For:** Commercial operations, heavy payloads
+</Tab>
+
+<Tab>
+**Heavy-lift Drones (&gt;25kg)**
+
+**Characteristics:**
+- Very high payload capacity
+- Long endurance flights
+- Specialized components
+- Regulatory restrictions
+
+**Applications:**
+- Large cargo transport
+- Military operations
+- Disaster relief
+- Specialized industrial tasks
+
+**Best For:** Heavy commercial/military applications
+</Tab>
+</Tabs>
+
+## 🔧 Essential Components
+
+### Airframe & Structure
+- **Frame**: Carbon fiber, aluminum, or plastic
+- **Landing Gear**: Fixed or retractable
+- **Protection**: Propeller guards for safety
+- **Mounting Points**: For payloads and accessories
+
+### Power System
+- **Motors**: Brushless outrunner motors
+- **ESCs**: Electronic speed controllers
+- **Batteries**: LiPo/Li-ion high discharge rate
+- **Power Distribution**: PDB boards
+- **Charging System**: Smart chargers and balancers
+
+### Flight Control
+- **Flight Controller**: Pixhawk, Naze32, or KK boards
+- **IMU/Gyro**: Inertial measurement unit
+- **GPS/Compass**: For autonomous navigation
+- **Barometer**: Altitude measurement
+- **Telemetry**: Real-time data transmission
+
+### Communication
+- **Radio Transmitter**: 2.4GHz/915MHz systems
+- **Receiver**: Compatible with transmitter
+- **Telemetry Module**: MAVLink protocol
+- **Ground Station**: Mission planning software
+
+## 📡 Flight Control Software
+
+### Popular Platforms
+
+<Tabs items={['ArduPilot', 'PX4', 'Betaflight']}>
+<Tab>
+**ArduPilot**
+
+**Best For:** Complex autonomous missions, research
+
+**Features:**
+- Advanced autonomous capabilities
+- Multiple vehicle types support
+- Extensive community support
+- Professional-grade reliability
+
+**Vehicles:** Planes, copters, rovers, boats
+</Tab>
+
+<Tab>
+**PX4**
+
+**Best For:** High-performance applications, commercial use
+
+**Features:**
+- Real-time operating system
+- Advanced control algorithms
+- Industrial applications
+- Safety-critical systems
+
+**Vehicles:** Multirotors, fixed-wing, VTOL
+</Tab>
+
+<Tab>
+**Betaflight**
+
+**Best For:** Racing drones, FPV flying
+
+**Features:**
+- High-speed flight control
+- Advanced filtering
+- Custom mixer support
+- Racing optimizations
+
+**Vehicles:** Multirotors, especially racing quads
+</Tab>
+</Tabs>
+
+## 🛡️ Safety & Regulations
+
+<Callout type="warn" title="Drone Safety Guidelines">
+
+**Pre-Flight Checks:**
+- [ ] Battery voltage and capacity
+- [ ] Propeller condition and balance
+- [ ] Control surfaces and linkages
+- [ ] GPS lock and satellite count
+- [ ] Weather conditions acceptable
+- [ ] Emergency procedures reviewed
+
+**Flight Safety:**
+- Maintain visual line of sight
+- Keep safe distance from people/structures
+- Monitor battery levels continuously
+- Have emergency landing plan
+- Respect no-fly zones and restrictions
+
+**Legal Compliance:**
+- Register drone if required
+- Follow weight and altitude limits
+- Obtain waivers for special operations
+- Keep drone in good repair
+
+</Callout>
+
+## 📚 Learning Resources
+
+### Online Courses
+- **Coursera**: Robotics Specialization
+- **Udacity**: Flying Car Nanodegree
+- **edX**: Aerial Robotics courses
+
+### Books
+- **"Introduction to Aerial Robotics"** by Quan Quan
+- **"Small Unmanned Aircraft"** by Randall W. Beard
+- **"Multi-rotor Platform Based UAV Systems"**
+
+### Communities
+- **PX4 Slack Community**
+- **ArduPilot Discourse Forums**
+- **DroneDeploy User Community**
+- **Local Drone Clubs**
+
+## 💰 Budget Considerations
+
+### Hobby Level ($200-1000)
+- RTF quadcopter
+- Basic FPV setup
+- Entry-level camera
+- Basic accessories
+
+### Professional Level ($1000-5000)
+- Custom-built drone
+- Professional camera/gimbal
+- Advanced flight controller
+- Enterprise software
+
+### Commercial Level ($5000+)
+- Industrial-grade components
+- Specialized payloads
+- Regulatory compliance
+- Insurance and support
+
+## 🔍 Common Challenges
+
+<Callout type="error" title="Drone Building Pitfalls">
+
+**Stability Issues:**
+- Incorrect PID tuning
+- Imbalanced propellers
+- Loose motor mounts
+- Vibration problems
+
+**Range Problems:**
+- Antenna orientation
+- Interference sources
+- Low transmitter power
+- Poor receiver sensitivity
+
+**Power Issues:**
+- Insufficient battery capacity
+- High current draw
+- Poor power distribution
+- Inefficient motors
+
+**GPS Problems:**
+- Poor satellite visibility
+- Magnetic interference
+- Incorrect compass calibration
+- Firmware configuration errors
+
+</Callout>
+
+## 🎯 Applications & Projects
+
+### Beginner Projects
+- **First Flight**: RTF quadcopter setup
+- **FPV Racing**: Basic racing drone build
+- **Aerial Photography**: Camera drone assembly
+- **Follow-me Drone**: GPS tracking system
+
+### Intermediate Projects
+- **Autonomous Navigation**: GPS waypoint following
+- **Object Tracking**: Computer vision following
+- **Agricultural Monitoring**: Crop health assessment
+- **Delivery Drone**: Package transport system
+
+### Advanced Projects
+- **Swarm Coordination**: Multi-drone operations
+- **Industrial Inspection**: Infrastructure monitoring
+- **Search & Rescue**: Emergency response systems
+- **Military Applications**: Tactical operations
+
+## 📊 Performance Metrics
+
+Track these for optimization:
+
+- **Flight Time**: Actual vs theoretical endurance
+- **Payload Capacity**: Weight carrying capability
+- **Control Precision**: Position hold accuracy
+- **Wind Resistance**: Maximum wind speed handling
+- **Reliability**: Successful mission completion rate
+
+## 🚀 Next Steps
+
+Ready to start building drones?
+
+- **Complete Beginner**: Start with [Drone Basics](/docs/drone/drone-basics)
+- **Some Experience**: Try [Flight Controller Setup](/docs/drone/flight-controller)
+- **Advanced Builder**: Explore [Autonomous Systems](/docs/drone/autonomous-flight)
+
+Remember: Drone building combines mechanical engineering, electronics, and software development. Start with stable platforms, master manual flight before attempting autonomy, and always prioritize safety!
+
+---
+
+**Fly Safe!** 🚁🤖

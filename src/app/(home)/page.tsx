@@ -125,7 +125,7 @@ function Features() {
         className={cn(
           cardVariants({
             variant: 'secondary',
-            className: 'flex items-center justify-center p-0 min-h-[400px]',
+            className: 'flex items-center justify-center p-0 min-h-[280px]',
           }),
         )}
       >
