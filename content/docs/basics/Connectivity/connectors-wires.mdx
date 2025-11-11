@@ -5,6 +5,7 @@ description: Connector types (XT60, JST, bullet), wire gauges (AWG), insulation,
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import Image from 'next/image';
 
 # Connectors and Wires
 
@@ -73,6 +74,16 @@ Disadvantages:
 ✗ Not suitable for > 60A continuous
 ✗ Can wear out quickly with frequent plugging
 ```
+
+<Image
+  src="/docimg/xt60.jpg"
+  alt="XT60 power connectors showing male and female plugs"
+  width={500}
+  height={300}
+  className="rounded-lg shadow-md my-4"
+/>
+
+**Figure: XT60 connectors - Most popular choice for battery connections in robotics**
 
 ### XT90 (High-Current)
 
@@ -255,6 +266,63 @@ With relief: Strain distributed over longer area
     [→Strain relief boot→]
               ↓ ← Bending here (better)
 ```
+
+---
+
+## Prototyping Connectors
+
+### Jumper Wires
+
+Jumper wires are essential for prototyping and breadboard connections:
+
+```
+Types:
+- Male-to-Male (M-M): Breadboard connections
+- Male-to-Female (M-F): Arduino to breadboard
+- Female-to-Female (F-F): Arduino to sensors
+
+Typical gauge: 24 AWG (signal level only)
+Current limit: < 2A
+Length: 10cm, 20cm, 30cm standard
+```
+
+<Image
+  src="/docimg/jumper.jpg"
+  alt="Various types of jumper wires"
+  width={500}
+  height={300}
+  className="rounded-lg shadow-md my-4"
+/>
+
+**Figure: Jumper wires - Essential for prototyping and testing circuits**
+
+<Image
+  src="/docimg/malefemale.jpg"
+  alt="Male and female connector pins"
+  width={500}
+  height={300}
+  className="rounded-lg shadow-md my-4"
+/>
+
+**Figure: Male and female connector types for versatile connections**
+
+### Connector Converters
+
+Adapter boards for converting between different connector types:
+
+<Image
+  src="/docimg/connector_convertor.jpg"
+  alt="Connector converter boards"
+  width={500}
+  height={300}
+  className="rounded-lg shadow-md my-4"
+/>
+
+**Figure: Connector converters - Useful for interfacing different connector standards**
+
+<Callout type="info" title="Prototyping vs Production">
+Jumper wires are great for testing but not suitable for final robot builds. Use proper soldered connections or screw terminals for permanent installations.
+</Callout>
 
 ---
 
