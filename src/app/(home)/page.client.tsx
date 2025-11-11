@@ -203,16 +203,19 @@ export function PreviewImages(props: ComponentProps<'div'>) {
       name: 'Basics',
       image: '/home.png',
       alt: 'Robotics basics documentation preview',
+      color: 'border-blue-500',
     },
     {
       name: 'Combat',
       image: '/combat.png',
       alt: 'Combat robotics documentation preview',
+      color: 'border-red-500',
     },
     {
       name: 'Drone',
       image: '/drone.png',
       alt: 'Drone robotics documentation preview',
+      color: 'border-green-500',
     },
   ];
 
