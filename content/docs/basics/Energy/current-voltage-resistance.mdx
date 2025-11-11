@@ -6,6 +6,7 @@ description: Understanding the fundamental concepts of electrical current, volta
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import Image from 'next/image';
 
 # Electricity Fundamentals
 
@@ -59,6 +60,16 @@ Connect batteries in series to increase voltage:
 3 × 3.7V Li-ion cells in series = 11.1V
 4 × 3.7V Li-ion cells in series = 14.8V
 ```
+
+<Image
+  src="/docimg/xt60.jpg"
+  alt="XT60 battery connector showing series battery connection"
+  width={400}
+  height={300}
+  className="rounded-lg shadow-md"
+/>
+
+**Figure: XT60 connectors commonly used for battery connections in robotics**
 
 ---
 
@@ -154,6 +165,16 @@ Thicker wires (lower AWG number) have lower resistance:
 | **18** | 1.02 | 21 mΩ | Battery connections |
 | **16** | 1.29 | 13 mΩ | High-current power |
 | **14** | 1.63 | 8 mΩ | Very high current (>10A) |
+
+<Image
+  src="/docimg/jumper.jpg"
+  alt="Different wire gauges used in robotics - from thin signal wires to thick power cables"
+  width={400}
+  height={300}
+  className="rounded-lg shadow-md"
+/>
+
+**Figure: Wire gauge comparison - thicker wires for power, thinner for signals**
 
 ### Resistor Types in Robotics
 

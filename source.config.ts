@@ -8,6 +8,7 @@ import {
 import { z } from 'zod';
 import { transformerTwoslash } from 'fumadocs-twoslash';
 import { rehypeCodeDefaultOptions } from 'fumadocs-core/mdx-plugins';
+import { remarkMermaid } from '@theguild/remark-mermaid';
 
 // You can customise Zod schemas for frontmatter and `meta.json` here
 // see https://fumadocs.dev/docs/mdx/collections
@@ -35,7 +36,8 @@ export const blogPosts = defineCollections({
 
 export default defineConfig({
   mdxOptions: {
-rehypeCodeOptions: {
+    remarkPlugins: [remarkMermaid],
+    rehypeCodeOptions: {
       themes: {
         light: 'github-light',
         dark: 'github-dark',

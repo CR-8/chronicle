@@ -5,6 +5,7 @@ description: Understanding series and parallel circuit configurations, calculati
 
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import Image from 'next/image';
 
 # Series and Parallel Circuits
 
@@ -29,6 +30,16 @@ Battery → Component 1 → Component 2 → Component 3 → Back to Battery
 | **Total R** | R_total = R1 + R2 + R3 + ... |
 | **Advantage** | Simple, predictable |
 | **Disadvantage** | One failure breaks circuit |
+
+<Image
+  src="/docimg/malefemale.jpg"
+  alt="Male-female connectors showing series connection of components"
+  width={400}
+  height={300}
+  className="rounded-lg shadow-md"
+/>
+
+**Figure: Series connection using male-female jumper wires**
 
 ### Series Resistance
 
@@ -277,6 +288,16 @@ Check: 1.82 + 1.82 + 1.82 = 5.45A ✓
 - Use 150Ω or 180Ω resistor for each
 
 **Total current:** 4 × 20mA = 80mA (acceptable)
+
+<Image
+  src="/docimg/convert.jpg"
+  alt="LED array circuit showing parallel connection with current-limiting resistors"
+  width={400}
+  height={300}
+  className="rounded-lg shadow-md"
+/>
+
+**Figure: Parallel LED circuit with individual resistors for current limiting**
 
 ### Example 2: Sensor Network
 

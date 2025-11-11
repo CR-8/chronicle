@@ -4,7 +4,20 @@ description: Sensor types, signal conditioning, analog-to-digital conversion, an
 ---
 
 import { Callout } from 'fumadocs-ui/components/callout';
+import Image from 'next/image';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Sensor Basics and Interfacing
+
+Sensors are the robot's senses. Understanding how to read and process sensor data is critical for any autonomous system.
+
+## Sensor Types in Robotics
+
+---
+title: Sensor Basics and Interfacing
+description: Sensor types, signal conditioning, analog-to-digital conversion, and practical interfacing with microcontrollers for robotics
+---
+
 
 # Sensor Basics and Interfacing
 
@@ -23,6 +36,16 @@ Output: Pulse width (time)
 Pros: Cheap, non-contact
 Cons: Affected by temperature, soft surfaces
 ```
+
+<Image
+  src="/docimg/simesc.jpg"
+  alt="Ultrasonic sensor (HC-SR04) mounted on robot for distance measurement"
+  width={400}
+  height={300}
+  className="rounded-lg shadow-md"
+/>
+
+**Figure: HC-SR04 ultrasonic sensor - reliable distance measurement for robotics**
 
 **Infrared (Sharp GP2Y0A):**
 ```

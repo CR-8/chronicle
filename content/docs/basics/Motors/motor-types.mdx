@@ -6,6 +6,7 @@ description: Understanding DC motors, servo motors, stepper motors, and BLDC mot
 import { Callout } from 'fumadocs-ui/components/callout';
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
+import Image from 'next/image';
 
 # Motor Types and Characteristics
 
@@ -19,6 +20,16 @@ Motors are the actuators of robotics - they convert electrical energy into mecha
 | **DC Brushless (BLDC)** | 3-48V | 1K-10K | Medium-High | PWM/3-phase | Drones, efficient systems |
 | **Servo** | 4.8-7.2V | 300-500 (controlled) | Medium | PWM pulse | Arm joints, steering |
 | **Stepper** | 12-24V | 100-1000 (stepped) | Low-Medium | Step pulses | Positioning, printing |
+
+<Image
+  src="/docimg/wheels.jpg"
+  alt="Various motor types used in robotics - DC motors, servos, and stepper motors"
+  width={400}
+  height={300}
+  className="rounded-lg shadow-md"
+/>
+
+**Figure: Common motor types in robotics applications**
 
 ---
 
@@ -102,6 +113,16 @@ Torque:
 5 N·m at wheel → Force = 5 / 0.05 (radius) = 100 N
 Max pull force: 100 N (≈ 10 kg climbing horizontally)
 ```
+
+<Image
+  src="/docimg/wheels.jpg"
+  alt="DC motor mounted to wheel for mobile robot drive system"
+  width={400}
+  height={300}
+  className="rounded-lg shadow-md"
+/>
+
+**Figure: DC motor directly coupled to robot wheel for mobile base**
 
 ---
 
